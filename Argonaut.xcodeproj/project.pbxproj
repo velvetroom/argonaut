@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DA46C8C0214D33D3002E882A /* Argonaut.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46C8BF214D33D3002E882A /* Argonaut.swift */; };
-		DA46C8C3214D33DD002E882A /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46C8C2214D33DD002E882A /* Tests.swift */; };
+		DA46C8C0214D33D3002E882A /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46C8BF214D33D3002E882A /* Map.swift */; };
+		DA46C8C3214D33DD002E882A /* TestMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46C8C2214D33DD002E882A /* TestMap.swift */; };
 		DA46C8C5214D348E002E882A /* libArgonaut.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA46C8B8214D3362002E882A /* libArgonaut.a */; };
+		DA46C8C7214D449C002E882A /* Rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46C8C6214D449C002E882A /* Rect.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,8 +29,9 @@
 		DA46C8B8214D3362002E882A /* libArgonaut.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libArgonaut.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA46C8B9214D3362002E882A /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA46C8BC214D33C2002E882A /* tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = tests.plist; sourceTree = "<group>"; };
-		DA46C8BF214D33D3002E882A /* Argonaut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Argonaut.swift; sourceTree = "<group>"; };
-		DA46C8C2214D33DD002E882A /* Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		DA46C8BF214D33D3002E882A /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		DA46C8C2214D33DD002E882A /* TestMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMap.swift; sourceTree = "<group>"; };
+		DA46C8C6214D449C002E882A /* Rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rect.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,7 +71,8 @@
 		DA46C8BE214D33D3002E882A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				DA46C8BF214D33D3002E882A /* Argonaut.swift */,
+				DA46C8BF214D33D3002E882A /* Map.swift */,
+				DA46C8C6214D449C002E882A /* Rect.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -77,7 +80,7 @@
 		DA46C8C1214D33DD002E882A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				DA46C8C2214D33DD002E882A /* Tests.swift */,
+				DA46C8C2214D33DD002E882A /* TestMap.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -190,7 +193,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA46C8C0214D33D3002E882A /* Argonaut.swift in Sources */,
+				DA46C8C0214D33D3002E882A /* Map.swift in Sources */,
+				DA46C8C7214D449C002E882A /* Rect.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +202,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA46C8C3214D33DD002E882A /* Tests.swift in Sources */,
+				DA46C8C3214D33DD002E882A /* TestMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
