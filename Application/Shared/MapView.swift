@@ -1,6 +1,6 @@
 import MapKit
 
-class MapView:MKMapView {
+class MapView:MKMapView, MKMapViewDelegate {
     init() {
         super.init(frame:.zero)
         translatesAutoresizingMaskIntoConstraints = false
@@ -14,6 +14,7 @@ class MapView:MKMapView {
         showsUserLocation = true
         userTrackingMode = .follow
         layer.cornerRadius = 20
+        delegate = self
         if #available(iOS 11.0, *) {
             mapType = .mutedStandard
         } else {
@@ -22,4 +23,13 @@ class MapView:MKMapView {
     }
     
     required init?(coder:NSCoder) { return nil }
+    
+    func mapView(_:MKMapView, rendererFor overlay:MKOverlay) -> MKOverlayRenderer {
+        if let tiler = overlay as? MKTileOverlay {
+            return MKTileOverlayRenderer(tileOverlay:tiler)
+        }
+        else {
+            return MKOverlayRenderer()
+        }
+    }
 }

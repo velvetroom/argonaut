@@ -31,6 +31,10 @@ class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate
         view.addSubview(map)
         self.map = map
         
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(barButtonSystemItem:.save, target:self, action:#selector(save)),
+            UIBarButtonItem(barButtonSystemItem:.add, target:self, action:#selector(add))]
+        
         map.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         map.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         map.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
@@ -43,11 +47,24 @@ class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate
             search.obscuresBackgroundDuringPresentation = false
             search.hidesNavigationBarDuringPresentation = false
             search.searchBar.delegate = self
+            search.searchBar.keyboardAppearance = .dark
+            search.searchBar.autocorrectionType = .yes
+            search.searchBar.spellCheckingType = .yes
+            search.searchBar.autocapitalizationType = .sentences
             navigationItem.searchController = search
             navigationItem.largeTitleDisplayMode = .always
             map.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
         } else {
             map.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
         }
+    }
+    
+    @objc private func save() {
+        print("rect: \(map.visibleMapRect)")
+        presenter.save(rect:map.visibleMapRect)
+    }
+    
+    @objc private func add() {
+        
     }
 }

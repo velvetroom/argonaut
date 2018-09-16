@@ -11,13 +11,16 @@
 		DA0000BF214D50DB00AD02D2 /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000BE214D50DB00AD02D2 /* PlanView.swift */; };
 		DA0000C1214D50F900AD02D2 /* PlanPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000C0214D50F900AD02D2 /* PlanPresenter.swift */; };
 		DA0000C2214D514C00AD02D2 /* libArgonaut.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA46C8B8214D3362002E882A /* libArgonaut.a */; };
-		DA0000C4214D517700AD02D2 /* PlanInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000C3214D517700AD02D2 /* PlanInteractor.swift */; };
 		DA0000C7214D564000AD02D2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DA0000C5214D564000AD02D2 /* Localizable.strings */; };
 		DA0000C9214D56BB00AD02D2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000C8214D56BB00AD02D2 /* MapView.swift */; };
 		DA46C8C0214D33D3002E882A /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46C8BF214D33D3002E882A /* Map.swift */; };
 		DA46C8C3214D33DD002E882A /* TestMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46C8C2214D33DD002E882A /* TestMap.swift */; };
 		DA46C8C5214D348E002E882A /* libArgonaut.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA46C8B8214D3362002E882A /* libArgonaut.a */; };
-		DA46C8C7214D449C002E882A /* Rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46C8C6214D449C002E882A /* Rect.swift */; };
+		DA9A5708214E6DD60042558D /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A5707214E6DD60042558D /* TestView.swift */; };
+		DA9A570A214E73410042558D /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A5709214E73410042558D /* Exception.swift */; };
+		DA9A570C214E89960042558D /* TestTiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A570B214E89960042558D /* TestTiler.swift */; };
+		DA9A570F214E9C430042558D /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A570D214E98E60042558D /* Shot.swift */; };
+		DA9A5711214E9E1A0042558D /* TestShots.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A5710214E9E1A0042558D /* TestShots.swift */; };
 		DAF48450214D4D61000CD005 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4844F214D4D61000CD005 /* Application.swift */; };
 		DAF48453214D4E84000CD005 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF48452214D4E84000CD005 /* LaunchScreen.storyboard */; };
 		FE812D089686D87DFECCBB33 /* libPods-Application.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEADE1CED89577A8EC01893 /* libPods-Application.a */; };
@@ -42,7 +45,6 @@
 		DA0000BB214D503C00AD02D2 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		DA0000BE214D50DB00AD02D2 /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
 		DA0000C0214D50F900AD02D2 /* PlanPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanPresenter.swift; sourceTree = "<group>"; };
-		DA0000C3214D517700AD02D2 /* PlanInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanInteractor.swift; sourceTree = "<group>"; };
 		DA0000C6214D564000AD02D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DA0000C8214D56BB00AD02D2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		DA46C8B8214D3362002E882A /* libArgonaut.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libArgonaut.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,7 +52,11 @@
 		DA46C8BC214D33C2002E882A /* tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = tests.plist; sourceTree = "<group>"; };
 		DA46C8BF214D33D3002E882A /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		DA46C8C2214D33DD002E882A /* TestMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMap.swift; sourceTree = "<group>"; };
-		DA46C8C6214D449C002E882A /* Rect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rect.swift; sourceTree = "<group>"; };
+		DA9A5707214E6DD60042558D /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		DA9A5709214E73410042558D /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
+		DA9A570B214E89960042558D /* TestTiler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTiler.swift; sourceTree = "<group>"; };
+		DA9A570D214E98E60042558D /* Shot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
+		DA9A5710214E9E1A0042558D /* TestShots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestShots.swift; sourceTree = "<group>"; };
 		DAF4843C214D4CD0000CD005 /* Application.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Application.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF4844F214D4D61000CD005 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		DAF48451214D4E03000CD005 /* application.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = application.plist; sourceTree = "<group>"; };
@@ -88,9 +94,10 @@
 		DA0000BD214D50CE00AD02D2 /* Plan */ = {
 			isa = PBXGroup;
 			children = (
-				DA0000C3214D517700AD02D2 /* PlanInteractor.swift */,
 				DA0000C0214D50F900AD02D2 /* PlanPresenter.swift */,
 				DA0000BE214D50DB00AD02D2 /* PlanView.swift */,
+				DA9A5707214E6DD60042558D /* TestView.swift */,
+				DA9A570B214E89960042558D /* TestTiler.swift */,
 			);
 			path = Plan;
 			sourceTree = "<group>";
@@ -117,7 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				DA46C8BF214D33D3002E882A /* Map.swift */,
-				DA46C8C6214D449C002E882A /* Rect.swift */,
+				DA9A5709214E73410042558D /* Exception.swift */,
+				DA9A570D214E98E60042558D /* Shot.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -126,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				DA46C8C2214D33DD002E882A /* TestMap.swift */,
+				DA9A5710214E9E1A0042558D /* TestShots.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -328,7 +337,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA46C8C0214D33D3002E882A /* Map.swift in Sources */,
-				DA46C8C7214D449C002E882A /* Rect.swift in Sources */,
+				DA9A570F214E9C430042558D /* Shot.swift in Sources */,
+				DA9A570A214E73410042558D /* Exception.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA46C8C3214D33DD002E882A /* TestMap.swift in Sources */,
+				DA9A5711214E9E1A0042558D /* TestShots.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,11 +355,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA0000C4214D517700AD02D2 /* PlanInteractor.swift in Sources */,
+				DA9A5708214E6DD60042558D /* TestView.swift in Sources */,
 				DA0000C9214D56BB00AD02D2 /* MapView.swift in Sources */,
 				DA0000BC214D503C00AD02D2 /* Navigation.swift in Sources */,
 				DA0000C1214D50F900AD02D2 /* PlanPresenter.swift in Sources */,
 				DAF48450214D4D61000CD005 /* Application.swift in Sources */,
+				DA9A570C214E89960042558D /* TestTiler.swift in Sources */,
 				DA0000BF214D50DB00AD02D2 /* PlanView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
