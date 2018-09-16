@@ -1,6 +1,6 @@
 import CleanArchitecture
 
-class NavigateView:View<NavigatePresenter>, UISearchResultsUpdating, UISearchBarDelegate {
+class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate {
     private weak var map:MapView!
     
     func updateSearchResults(for search:UISearchController) {
@@ -22,7 +22,7 @@ class NavigateView:View<NavigatePresenter>, UISearchResultsUpdating, UISearchBar
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        title = NSLocalizedString("NavigateView.title", comment:String())
+        title = NSLocalizedString("PlanView.title", comment:String())
         makeOutlets()
     }
     

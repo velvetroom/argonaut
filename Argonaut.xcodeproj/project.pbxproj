@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		DA0000BC214D503C00AD02D2 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000BB214D503C00AD02D2 /* Navigation.swift */; };
-		DA0000BF214D50DB00AD02D2 /* NavigateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000BE214D50DB00AD02D2 /* NavigateView.swift */; };
-		DA0000C1214D50F900AD02D2 /* NavigatePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000C0214D50F900AD02D2 /* NavigatePresenter.swift */; };
+		DA0000BF214D50DB00AD02D2 /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000BE214D50DB00AD02D2 /* PlanView.swift */; };
+		DA0000C1214D50F900AD02D2 /* PlanPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000C0214D50F900AD02D2 /* PlanPresenter.swift */; };
 		DA0000C2214D514C00AD02D2 /* libArgonaut.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA46C8B8214D3362002E882A /* libArgonaut.a */; };
-		DA0000C4214D517700AD02D2 /* NavigateInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000C3214D517700AD02D2 /* NavigateInteractor.swift */; };
+		DA0000C4214D517700AD02D2 /* PlanInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000C3214D517700AD02D2 /* PlanInteractor.swift */; };
 		DA0000C7214D564000AD02D2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DA0000C5214D564000AD02D2 /* Localizable.strings */; };
 		DA0000C9214D56BB00AD02D2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000C8214D56BB00AD02D2 /* MapView.swift */; };
 		DA46C8C0214D33D3002E882A /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46C8BF214D33D3002E882A /* Map.swift */; };
@@ -40,9 +40,9 @@
 		1DEADE1CED89577A8EC01893 /* libPods-Application.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Application.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F47E5337ECCAFEBCD67BCA7 /* Pods-Application.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Application.release.xcconfig"; path = "Target Support Files/Pods-Application/Pods-Application.release.xcconfig"; sourceTree = "<group>"; };
 		DA0000BB214D503C00AD02D2 /* Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
-		DA0000BE214D50DB00AD02D2 /* NavigateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigateView.swift; sourceTree = "<group>"; };
-		DA0000C0214D50F900AD02D2 /* NavigatePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatePresenter.swift; sourceTree = "<group>"; };
-		DA0000C3214D517700AD02D2 /* NavigateInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigateInteractor.swift; sourceTree = "<group>"; };
+		DA0000BE214D50DB00AD02D2 /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
+		DA0000C0214D50F900AD02D2 /* PlanPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanPresenter.swift; sourceTree = "<group>"; };
+		DA0000C3214D517700AD02D2 /* PlanInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanInteractor.swift; sourceTree = "<group>"; };
 		DA0000C6214D564000AD02D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DA0000C8214D56BB00AD02D2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		DA46C8B8214D3362002E882A /* libArgonaut.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libArgonaut.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,14 +85,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DA0000BD214D50CE00AD02D2 /* Navigate */ = {
+		DA0000BD214D50CE00AD02D2 /* Plan */ = {
 			isa = PBXGroup;
 			children = (
-				DA0000C3214D517700AD02D2 /* NavigateInteractor.swift */,
-				DA0000C0214D50F900AD02D2 /* NavigatePresenter.swift */,
-				DA0000BE214D50DB00AD02D2 /* NavigateView.swift */,
+				DA0000C3214D517700AD02D2 /* PlanInteractor.swift */,
+				DA0000C0214D50F900AD02D2 /* PlanPresenter.swift */,
+				DA0000BE214D50DB00AD02D2 /* PlanView.swift */,
 			);
-			path = Navigate;
+			path = Plan;
 			sourceTree = "<group>";
 		};
 		DA46C8BB214D33C2002E882A /* Configuration */ = {
@@ -158,7 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				DAF4844E214D4D51000CD005 /* Shared */,
-				DA0000BD214D50CE00AD02D2 /* Navigate */,
+				DA0000BD214D50CE00AD02D2 /* Plan */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -344,12 +344,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA0000C4214D517700AD02D2 /* NavigateInteractor.swift in Sources */,
+				DA0000C4214D517700AD02D2 /* PlanInteractor.swift in Sources */,
 				DA0000C9214D56BB00AD02D2 /* MapView.swift in Sources */,
 				DA0000BC214D503C00AD02D2 /* Navigation.swift in Sources */,
-				DA0000C1214D50F900AD02D2 /* NavigatePresenter.swift in Sources */,
+				DA0000C1214D50F900AD02D2 /* PlanPresenter.swift in Sources */,
 				DAF48450214D4D61000CD005 /* Application.swift in Sources */,
-				DA0000BF214D50DB00AD02D2 /* NavigateView.swift in Sources */,
+				DA0000BF214D50DB00AD02D2 /* PlanView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
