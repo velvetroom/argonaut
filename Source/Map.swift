@@ -2,6 +2,8 @@ import MapKit
 
 public class Map {
     let path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
+    var success:((URL) -> Void)?
+    var error:((Error) -> Void)?
     private weak var shooter:MKMapSnapshotter?
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
     private static let pixelsCoord = 1048575.0
@@ -13,10 +15,12 @@ public class Map {
     
     public init() { }
     
-    public func create(rect:MKMapRect, success:@escaping(UIImage) -> Void, fail:@escaping(Error) -> Void) {
-        DispatchQueue.main.async { success(UIImage()) }
+    public func makeMap(rect:MKMapRect) {
         queue.async { [weak self] in
-            
+            guard
+                let shots = self?.makeShots(rect:rect)
+            else { return }
+            self?.makeMap(url:URL(string:"google.com")!, shots:shots)
         }
     }
     
@@ -50,10 +54,22 @@ public class Map {
 //        success(url)
     }
     
-    func shots(rect:MKMapRect) -> [Shot] {
+    func makeUrl() -> URL {
+        let url = path.appendingPathComponent(UUID().uuidString)
+        try! FileManager.default.createDirectory(at:url, withIntermediateDirectories:true)
+        return url
+    }
+    
+    func makeShots(rect:MKMapRect) -> [Shot] {
         var list = [Shot]()
-        list.append(contentsOf:shots(rect:rect, zoom:10))
+        list.append(contentsOf:makeShots(rect:rect, zoom:10))
         return list
+    }
+    
+    func makeTiles(image:UIImage) -> [UIImage] {
+        var width:Double = 0
+        var height:Double = 0
+        return []
     }
     
     func crop(image:UIImage, rect:CGRect) -> UIImage {
@@ -68,44 +84,28 @@ public class Map {
         return cropped
     }
     
-    private func shots(rect:MKMapRect, zoom:Int) -> [Shot] {
+    private func makeMap(url:URL, shots:[Shot]) {
+        //guard let shot = shots.first else { success(url) }
+    }
+    
+    private func makeShots(rect:MKMapRect, zoom:Int) -> [Shot] {
         let pixels = pixelsFor(zoom:zoom)
         let horizontal = Int(ceil(rect.width / pixels))
         let vertical = Int(ceil(rect.height / pixels))
         var list = [Shot]()
-        print("pixels10 \(horizontal) \(vertical)")
-        let startX = max(Int(rect.minX / pixels), 0)
-        let startY = max(Int(rect.minY / pixels), 0)
+        let startX = Int(rect.minX / pixels)
+        let startY = Int(rect.minY / pixels)
         for h in 0 ..< horizontal {
-            let mapX = rect.minX + (pixels * Double(h))
             let tileX = h + startX
+            let mapX = Double(tileX) * pixels
             for v in 0 ..< vertical {
-                let mapY = rect.minY + (pixels * Double(v))
                 let tileY = v + startY
+                let mapY = Double(tileY) * pixels
                 list.append(Shot(mapX:mapX, mapY:mapY, tileX:tileX, tileY:tileY, tileZ:zoom))
             }
         }
         return list
     }
     
-    private func pixelsFor(zoom:Int) -> Double { return ceil(1/(Double(1 << zoom)/Map.pixelsCoord)) }
+    private func pixelsFor(zoom:Int) -> Double { return ceil(1 / (Double(1 << zoom) / Map.pixelsCoord)) }
 }
-/*
-
-open var mapRect: MKMapRect
-
-open var region: MKCoordinateRegion
-
-open var mapType: MKMapType
-
-
-open var showsPointsOfInterest: Bool
-
-open var showsBuildings: Bool
-
-
-open var size: CGSize
-
-
-open var scale: CGFloat
-*/

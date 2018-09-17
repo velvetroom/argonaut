@@ -21,6 +21,7 @@
 		DA9A570C214E89960042558D /* TestTiler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A570B214E89960042558D /* TestTiler.swift */; };
 		DA9A570F214E9C430042558D /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A570D214E98E60042558D /* Shot.swift */; };
 		DA9A5711214E9E1A0042558D /* TestShots.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A5710214E9E1A0042558D /* TestShots.swift */; };
+		DAA83B05214FD7A500CD66B6 /* TestImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA83B04214FD7A500CD66B6 /* TestImages.swift */; };
 		DAF48450214D4D61000CD005 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4844F214D4D61000CD005 /* Application.swift */; };
 		DAF48453214D4E84000CD005 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF48452214D4E84000CD005 /* LaunchScreen.storyboard */; };
 		FE812D089686D87DFECCBB33 /* libPods-Application.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEADE1CED89577A8EC01893 /* libPods-Application.a */; };
@@ -57,6 +58,7 @@
 		DA9A570B214E89960042558D /* TestTiler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTiler.swift; sourceTree = "<group>"; };
 		DA9A570D214E98E60042558D /* Shot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
 		DA9A5710214E9E1A0042558D /* TestShots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestShots.swift; sourceTree = "<group>"; };
+		DAA83B04214FD7A500CD66B6 /* TestImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestImages.swift; sourceTree = "<group>"; };
 		DAF4843C214D4CD0000CD005 /* Application.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Application.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF4844F214D4D61000CD005 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		DAF48451214D4E03000CD005 /* application.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = application.plist; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				DA46C8C2214D33DD002E882A /* TestMap.swift */,
+				DAA83B04214FD7A500CD66B6 /* TestImages.swift */,
 				DA9A5710214E9E1A0042558D /* TestShots.swift */,
 			);
 			path = Tests;
@@ -347,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA46C8C3214D33DD002E882A /* TestMap.swift in Sources */,
+				DAA83B05214FD7A500CD66B6 /* TestImages.swift in Sources */,
 				DA9A5711214E9E1A0042558D /* TestShots.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

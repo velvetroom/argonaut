@@ -10,31 +10,22 @@ class TestMap:XCTestCase {
     }
     
     override func tearDown() {
-//        try! FileManager.default.removeItem(at:map.directory)
+        try? FileManager.default.removeItem(at:map.path)
     }
     
     func testCreateMap() {
         let expect = expectation(description:String())
-        DispatchQueue.global(qos:.background).async {
-            self.map.create(rect:MKMapRect(), success: { image in
-                XCTAssertEqual(Thread.main, Thread.current)
-                expect.fulfill()
-            }, fail: { _ in } )
+        map.success = { _ in
+            XCTAssertEqual(Thread.main, Thread.current)
+            expect.fulfill()
         }
+        DispatchQueue.global(qos:.background).async { self.map.makeMap(rect:MKMapRect()) }
         waitForExpectations(timeout:1)
     }
     
-    func testCropImage() {
-        UIGraphicsBeginImageContext(CGSize(width:100, height:100))
-        UIGraphicsGetCurrentContext()!.setFillColor(UIColor.black.cgColor)
-        UIGraphicsGetCurrentContext()!.fill(CGRect(x:0, y:0, width:100, height:100))
-        let image = UIImage(cgImage:UIGraphicsGetCurrentContext()!.makeImage()!)
-        UIGraphicsEndImageContext()
-        let result = map.crop(image:image, rect:CGRect(x:0, y:0, width:1, height:1))
-        XCTAssertEqual(510, image.pngData()!.count)
-        XCTAssertEqual(83, map.crop(image:image, rect:CGRect(x:0, y:0, width:1, height:1)).pngData()!.count)
-        XCTAssertEqual(83, result.pngData()!.count)
-        XCTAssertEqual(1, result.size.width)
-        XCTAssertEqual(1, result.size.height)
+    func testCreteUrl() {
+        let url = map.makeUrl()
+        XCTAssertTrue(FileManager.default.fileExists(atPath:url.path))
+        XCTAssertTrue(url.path.contains(map.path.path))
     }
 }
