@@ -70,16 +70,18 @@ public class Map {
     
     private func shots(rect:MKMapRect, zoom:Int) -> [Shot] {
         let pixels = Double(1 << zoom) / Map.pixelsCoord
-        let horizontal = Int(rect.width * pixels)
-        let vertical = Int(rect.height * pixels)
+        let horizontal = Int(ceil(rect.width * pixels))
+        let vertical = Int(ceil(rect.height * pixels))
         var list = [Shot]()
+        print("pixels \(rect.width/(pixels * rect.width))")
+        let startX = max(Int(rect.minX * pixels), 0)
+        let startY = max(Int(rect.minY * pixels), 0)
         for h in 0 ..< horizontal {
             
             for v in 0 ..< vertical {
-                
+                list.append(Shot(mapX:0, mapY:0, tileX:h + startX, tileY:v + startY, tileZ:zoom))
             }
         }
-        list.append(Shot(mapX:0, mapY:0, tileX:0, tileY:0, tileZ:zoom))
         return list
     }
 }
