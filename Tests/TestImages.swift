@@ -8,6 +8,10 @@ class TestImages:XCTestCase {
         map = Map()
     }
     
+    override func tearDown() {
+        try? FileManager.default.removeItem(at:map.path)
+    }
+    
     func testCropImage() {
         let image = makeImage(width:100, height:100)
         let result = map.crop(image:image, rect:CGRect(x:0, y:0, width:1, height:1))
@@ -19,11 +23,16 @@ class TestImages:XCTestCase {
     }
     
     func testMakeTiles() {
-        let images = map.makeTiles(image:makeImage(width:2560, height:2560))
-        XCTAssertEqual(100, images.count)
-        images.forEach { image in
-            XCTAssertEqual(256, image.size.width)
-            XCTAssertEqual(256, image.size.height)
+        let url = map.path.appendingPathComponent("test")
+        try! FileManager.default.createDirectory(at:url, withIntermediateDirectories:true)
+        map.makeTiles(url:url, shot:Shot(tileX:1, tileY:1, zoom:Zoom(level:10)),
+                      image:makeImage(width:2560, height:2560))
+        for y in 0 ..< 10 {
+            for x in 0 ..< 10 {
+                let image = UIImage(data:try! Data(contentsOf:url.appendingPathComponent("10.\(1 + x).\(1 + y)")))
+                XCTAssertEqual(256, image?.size.width)
+                XCTAssertEqual(256, image?.size.height)
+            }
         }
     }
     

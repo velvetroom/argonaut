@@ -31,10 +31,14 @@ public class Map {
         return list
     }
     
-    func makeTiles(image:UIImage) -> [UIImage] {
-        var width:Double = 0
-        var height:Double = 0
-        return []
+    func makeTiles(url:URL, shot:Shot, image:UIImage) {
+        for y in 0 ..< 10 {
+            for x in 0 ..< 10 {
+                let cropped = crop(image:image, rect:CGRect(x:x, y:y, width:256, height:256))
+                let location = "\(shot.zoom.level).\(shot.tileX + x).\(shot.tileY + y)"
+                try! cropped.pngData()?.write(to:url.appendingPathComponent(location))
+            }
+        }
     }
     
     func crop(image:UIImage, rect:CGRect) -> UIImage {
@@ -53,10 +57,11 @@ public class Map {
         guard let shot = shots.first else { return succedes(url:url) }
         MKMapSnapshotter(options:shot.options()).start(with:queue) { [weak self] snapshot, error in
             if let image = snapshot?.image {
+                self?.makeTiles(url:url, shot:shot, image:image)
                 self?.makeMap(url:url, shots:Array(shots.suffix(from:1)))
-                return
+            } else {
+                self?.failes(error:error == nil ? Exception.mapUnknownError : error!)
             }
-            self?.failes(error:error == nil ? Exception.mapUnknownError : error!)
         }
     }
     
