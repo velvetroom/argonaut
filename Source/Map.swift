@@ -7,7 +7,7 @@ public class Map {
     private weak var shooter:MKMapSnapshotter?
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
     private static let pixelsCoord = 1048575.0
-    private static let zoom10 = Double(1 << 10) / pixelsCoord
+    private static let zooms = [Zoom(level:10)]
 //    private static let zoom12 = Double(1 << 12) / pixelsCoord
 //    private static let zoom14 = Double(1 << 14) / pixelsCoord
 //    private static let zoom17 = Double(1 << 17) / pixelsCoord
@@ -19,36 +19,6 @@ public class Map {
         queue.async { self.makeMap(url:self.makeUrl(), shots:self.makeShots(rect:rect)) }
     }
     
-    public func acreate(rect:MKMapRect, success:@escaping(UIImage) -> Void, fail:@escaping(Error) -> Void) {
-//        let url = directory.appendingPathComponent("a")
-        let options = MKMapSnapshotter.Options()
-        let pixelX = Map.zoom10 * rect.minX
-        let pixelY = Map.zoom10 * rect.minY
-        let pixelWidth = (Map.zoom10 * rect.maxX) - options.mapRect.origin.x
-        let pixelHeight = (Map.zoom10 * rect.maxY) - options.mapRect.origin.y
-        
-        let tilesHorizontal = ceil(rect.width * Map.zoom10) / 5
-        let tilesVertical = ceil(rect.height * Map.zoom10) / 5
-        print("ho \(tilesHorizontal) ve \(tilesVertical)")
-        
-        options.mapRect = rect
-        options.mapRect.size.width = rect.width / tilesHorizontal
-        options.mapRect.size.height = rect.height / tilesVertical
-        options.size = CGSize(width:Map.imageSize, height:Map.imageSize)
-        
-        print(options.mapRect)
-        
-        MKMapSnapshotter(options:options).start(with:queue) { snapshot, error in
-            DispatchQueue.main.async {
-                guard let image = snapshot?.image
-                else { return fail(error == nil ? Exception.mapUnknownError : error!) }
-                success(image)
-            }
-        }
-//        try! FileManager.default.createDirectory(at:url, withIntermediateDirectories:true)
-//        success(url)
-    }
-    
     func makeUrl() -> URL {
         let url = path.appendingPathComponent(UUID().uuidString)
         try! FileManager.default.createDirectory(at:url, withIntermediateDirectories:true)
@@ -57,7 +27,7 @@ public class Map {
     
     func makeShots(rect:MKMapRect) -> [Shot] {
         var list = [Shot]()
-        list.append(contentsOf:makeShots(rect:rect, zoom:10))
+        Map.zooms.forEach { zoom in list.append(contentsOf:makeShots(rect:rect, zoom:zoom)) }
         return list
     }
     
@@ -81,7 +51,7 @@ public class Map {
     
     private func makeMap(url:URL, shots:[Shot]) {
         guard let shot = shots.first else { return succedes(url:url) }
-        MKMapSnapshotter(options:optionsFor(shot:shot)).start(with:queue) { [weak self] snapshot, error in
+        MKMapSnapshotter(options:shot.options()).start(with:queue) { [weak self] snapshot, error in
             if let image = snapshot?.image {
                 self?.makeMap(url:url, shots:Array(shots.suffix(from:1)))
                 return
@@ -90,33 +60,18 @@ public class Map {
         }
     }
     
-    private func makeShots(rect:MKMapRect, zoom:Int) -> [Shot] {
-        let mapSize = pixelsFor(zoom:zoom)
-        let horizontal = Int(ceil(rect.width / mapSize))
-        let vertical = Int(ceil(rect.height / mapSize))
+    private func makeShots(rect:MKMapRect, zoom:Zoom) -> [Shot] {
+        let horizontal = Int(ceil(rect.width / zoom.size))
+        let vertical = Int(ceil(rect.height / zoom.size))
         var list = [Shot]()
-        let startX = Int(rect.minX / mapSize)
-        let startY = Int(rect.minY / mapSize)
         for h in 0 ..< horizontal {
-            let tileX = h + startX
-            let mapX = Double(tileX) * mapSize
             for v in 0 ..< vertical {
-                let tileY = v + startY
-                let mapY = Double(tileY) * mapSize
-                list.append(Shot(mapX:mapX, mapY:mapY, mapSize:mapSize, tileX:tileX, tileY:tileY, tileZ:zoom))
+                list.append(Shot(tileX:h + Int(rect.minX / zoom.size), tileY:v + Int(rect.minY / zoom.size), zoom:zoom))
             }
         }
         return list
     }
     
-    private func optionsFor(shot:Shot) -> MKMapSnapshotter.Options {
-        let options = MKMapSnapshotter.Options()
-        options.mapRect = MKMapRect(x:shot.mapX, y:shot.mapY, width:shot.mapSize, height:shot.mapSize)
-        options.size = CGSize(width:2560, height:2560)
-        return options
-    }
-    
-    private func pixelsFor(zoom:Int) -> Double { return ceil(1 / (Double(1 << zoom) / Map.pixelsCoord)) }
     private func succedes(url:URL) { DispatchQueue.main.async { [weak self] in self?.success?(url) } }
     private func failes(error:Error) { DispatchQueue.main.async { [weak self] in self?.fail?(error) } }
 }
