@@ -15,8 +15,9 @@ class TestMap:XCTestCase {
     
     func testCreateMap() {
         let expect = expectation(description:String())
-        map.success = { _ in
+        map.success = { url in
             XCTAssertEqual(Thread.main, Thread.current)
+            XCTAssertTrue(FileManager.default.fileExists(atPath:url.path))
             expect.fulfill()
         }
         DispatchQueue.global(qos:.background).async { self.map.makeMap(rect:MKMapRect()) }
