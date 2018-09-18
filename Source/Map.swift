@@ -64,8 +64,8 @@ public class Map {
         let horizontal = Int(ceil(rect.width / zoom.size))
         let vertical = Int(ceil(rect.height / zoom.size))
         var list = [Shot]()
-        for h in 0 ..< horizontal {
-            for v in 0 ..< vertical {
+        for h in stride(from:0, to:horizontal, by:10) {
+            for v in stride(from:0, to:vertical, by:10) {
                 list.append(Shot(tileX:h + Int(rect.minX / zoom.size), tileY:v + Int(rect.minY / zoom.size), zoom:zoom))
             }
         }

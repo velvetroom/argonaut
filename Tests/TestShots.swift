@@ -16,24 +16,26 @@ class TestShots:XCTestCase {
         XCTAssertEqual(0, shots[0].tileY)
         XCTAssertEqual(0, shots[0].options().mapRect.minX)
         XCTAssertEqual(0, shots[0].options().mapRect.minY)
+        XCTAssertEqual(1024, shots[0].options().mapRect.maxX)
+        XCTAssertEqual(1024, shots[0].options().mapRect.maxY)
     }
     
     func testCreate2() {
-        let shots = map.makeShots(rect:MKMapRect(x:0, y:0, width:2048, height:1024))
+        let shots = map.makeShots(rect:MKMapRect(x:0, y:0, width:20480, height:1024))
         XCTAssertEqual(10, shots[1].zoom.level)
-        XCTAssertEqual(1, shots[1].tileX)
+        XCTAssertEqual(10, shots[1].tileX)
         XCTAssertEqual(0, shots[1].tileY)
-        XCTAssertEqual(1024, shots[1].options().mapRect.minX)
+        XCTAssertEqual(10240, shots[1].options().mapRect.minX)
         XCTAssertEqual(0, shots[1].options().mapRect.minY)
     }
     
     func testCreate4() {
-        let shots = map.makeShots(rect:MKMapRect(x:0, y:0, width:2048, height:2048))
+        let shots = map.makeShots(rect:MKMapRect(x:0, y:0, width:20480, height:20480))
         XCTAssertEqual(10, shots[3].zoom.level)
-        XCTAssertEqual(1, shots[3].tileX)
-        XCTAssertEqual(1, shots[3].tileY)
-        XCTAssertEqual(1024, shots[3].options().mapRect.minX)
-        XCTAssertEqual(1024, shots[3].options().mapRect.minY)
+        XCTAssertEqual(10, shots[3].tileX)
+        XCTAssertEqual(10, shots[3].tileY)
+        XCTAssertEqual(10240, shots[3].options().mapRect.minX)
+        XCTAssertEqual(10240, shots[3].options().mapRect.minY)
     }
     
     func testCreateDisplacedHorizontal() {
@@ -64,11 +66,11 @@ class TestShots:XCTestCase {
     }
     
     func testCreateBig() {
-        let shots = map.makeShots(rect:MKMapRect(x:0, y:0, width:1025, height:1025))
+        let shots = map.makeShots(rect:MKMapRect(x:0, y:0, width:10241, height:10241))
         XCTAssertEqual(10, shots[3].zoom.level)
-        XCTAssertEqual(1, shots[3].tileX)
-        XCTAssertEqual(1, shots[3].tileY)
-        XCTAssertEqual(1024, shots[3].options().mapRect.minX)
-        XCTAssertEqual(1024, shots[3].options().mapRect.minY)
+        XCTAssertEqual(10, shots[3].tileX)
+        XCTAssertEqual(10, shots[3].tileY)
+        XCTAssertEqual(10240, shots[3].options().mapRect.minX)
+        XCTAssertEqual(10240, shots[3].options().mapRect.minY)
     }
 }
