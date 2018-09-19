@@ -3,8 +3,9 @@ import MapKit
 public class Map {
     public var onSuccess:((URL) -> Void)?
     public var onFail:((Error) -> Void)?
+    var shooterType:Shooter.Type = MapShooter.self
     let path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
-    private weak var shooter:MKMapSnapshotter?
+    private weak var shooter:Shooter?
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
     private static let pixelsCoord = 1048575.0
     private static let zooms = [Zoom(level:10)]
@@ -36,6 +37,7 @@ public class Map {
             for x in 0 ..< 10 {
                 let cropped = crop(image:image, rect:CGRect(x:x, y:y, width:256, height:256))
                 let location = "\(shot.zoom.level).\(shot.tileX + x).\(shot.tileY + y)"
+                print("writing to: \(url.appendingPathComponent(location))")
                 try! cropped.pngData()?.write(to:url.appendingPathComponent(location))
             }
         }
@@ -55,14 +57,10 @@ public class Map {
     
     private func makeMap(url:URL, shots:[Shot]) {
         guard let shot = shots.first else { return success(url:url) }
-        MKMapSnapshotter(options:shot.options()).start(with:queue) { [weak self] snapshot, error in
-            if let image = snapshot?.image {
-                self?.makeTiles(url:url, shot:shot, image:image)
-                self?.makeMap(url:url, shots:Array(shots.suffix(from:1)))
-            } else {
-                self?.fails(error:error == nil ? Exception.mapUnknownError : error!)
-            }
-        }
+        shooterType.init(shot:shot).make(queue:queue, success: { [weak self] image in
+            self?.makeTiles(url:url, shot:shot, image:image)
+            self?.makeMap(url:url, shots:Array(shots.suffix(from:1)))
+        }) { [weak self] error in self?.fails(error:error) }
     }
     
     private func makeShots(rect:MKMapRect, zoom:Zoom) -> [Shot] {
@@ -71,6 +69,7 @@ public class Map {
         var list = [Shot]()
         for h in stride(from:0, to:horizontal, by:10) {
             for v in stride(from:0, to:vertical, by:10) {
+                print("tilex: \(h + Int(rect.minX / zoom.size))")
                 list.append(Shot(tileX:h + Int(rect.minX / zoom.size), tileY:v + Int(rect.minY / zoom.size), zoom:zoom))
             }
         }
