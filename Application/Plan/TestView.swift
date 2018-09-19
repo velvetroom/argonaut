@@ -1,12 +1,14 @@
 import MapKit
 
 class TestView:UIViewController {
+    var url:URL?
     private weak var map:MapView!
     let tiler = TestTiler()
     var image:UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tiler.url = url
         
         
         view.backgroundColor = .black

@@ -13,11 +13,11 @@ class TestImages:XCTestCase {
     }
     
     func testCropImage() {
-        let image = makeImage(width:100, height:100)
+        let image = makeImage(width:10, height:10)
         let result = map.crop(image:image, rect:CGRect(x:0, y:0, width:1, height:1))
-        XCTAssertEqual(510, image.pngData()!.count)
-        XCTAssertEqual(83, map.crop(image:image, rect:CGRect(x:0, y:0, width:1, height:1)).pngData()!.count)
-        XCTAssertEqual(83, result.pngData()!.count)
+        XCTAssertEqual(144, image.pngData()!.count)
+        XCTAssertEqual(81, map.crop(image:image, rect:CGRect(x:0, y:0, width:1, height:1)).pngData()!.count)
+        XCTAssertEqual(81, result.pngData()!.count)
         XCTAssertEqual(1, result.size.width)
         XCTAssertEqual(1, result.size.height)
     }
@@ -38,8 +38,6 @@ class TestImages:XCTestCase {
     
     private func makeImage(width:Double, height:Double) -> UIImage {
         UIGraphicsBeginImageContext(CGSize(width:width, height:height))
-        UIGraphicsGetCurrentContext()!.setFillColor(UIColor.black.cgColor)
-        UIGraphicsGetCurrentContext()!.fill(CGRect(x:0, y:0, width:100, height:100))
         let image = UIImage(cgImage:UIGraphicsGetCurrentContext()!.makeImage()!)
         UIGraphicsEndImageContext()
         return image

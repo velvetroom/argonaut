@@ -1,8 +1,10 @@
 import MapKit
 
 class TestTiler:MKTileOverlay {
+    var url:URL?
+    
     init() {
-        super.init(urlTemplate:"{x}.{y}.{z}")
+        super.init(urlTemplate:"{z}.{x}.{y}")
         canReplaceMapContent = true
         tileSize = CGSize(width:512, height:512)
     }
@@ -12,6 +14,7 @@ class TestTiler:MKTileOverlay {
         let location = url(forTilePath:path)
         print("path: \(path)")
         print("location: \(location)")
-        result(try? Data(contentsOf:location), nil)
+        print("composed: \(url!.appendingPathComponent(location.path))")
+        result(try? Data(contentsOf:url!.appendingPathComponent(location.path)), nil)
     }
 }

@@ -7,6 +7,7 @@ class TestMap:XCTestCase {
     
     override func setUp() {
         map = Map()
+        map.shooterType = MockShooter.self
     }
     
     override func tearDown() {
@@ -21,6 +22,17 @@ class TestMap:XCTestCase {
             expect.fulfill()
         }
         DispatchQueue.global(qos:.background).async { self.map.makeMap(rect:MKMapRect()) }
+        waitForExpectations(timeout:1)
+    }
+    
+    func testGetError() {
+        MockShooter.error = Exception.mapUnknownError
+        let expect = expectation(description:String())
+        map.onFail = { error in
+            XCTAssertEqual(Thread.main, Thread.current)
+            expect.fulfill()
+        }
+        DispatchQueue.global(qos:.background).async { self.map.makeMap(rect:MKMapRect(x:0, y:0, width:1, height:1)) }
         waitForExpectations(timeout:1)
     }
     
