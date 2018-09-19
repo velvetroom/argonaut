@@ -7,6 +7,7 @@ class TestShots:XCTestCase {
     
     override func setUp() {
         map = Map()
+        map.zooms = [Zoom(level:10)]
     }
     
     func testCreate1() {
@@ -39,7 +40,7 @@ class TestShots:XCTestCase {
     }
     
     func testCreateDisplacedHorizontal() {
-        let shots = map.makeShots(rect:MKMapRect(x:262145, y:0, width:1, height:1))
+        let shots = map.makeShots(rect:MKMapRect(x:1310720, y:0, width:1, height:1))
         XCTAssertEqual(10, shots[0].zoom.level)
         XCTAssertEqual(1, shots[0].tileX)
         XCTAssertEqual(0, shots[0].tileY)
@@ -48,11 +49,22 @@ class TestShots:XCTestCase {
     }
     
     func testCreateDisplacedVertical() {
-        let shots = map.makeShots(rect:MKMapRect(x:0, y:262145, width:1, height:1))
+        let shots = map.makeShots(rect:MKMapRect(x:0, y:1310720, width:1, height:1))
         XCTAssertEqual(10, shots[0].zoom.level)
         XCTAssertEqual(0, shots[0].tileX)
         XCTAssertEqual(1, shots[0].tileY)
         XCTAssertEqual(0, shots[0].options().mapRect.minX)
         XCTAssertEqual(262144, shots[0].options().mapRect.minY)
+    }
+    
+    func testCenterShot() {
+        let shots = map.makeShots(rect:MKMapRect(x:1310719, y:1310719, width:1, height:1))
+        XCTAssertEqual(10, shots[0].zoom.level)
+        XCTAssertEqual(0, shots[0].tileX)
+        XCTAssertEqual(0, shots[0].tileY)
+        XCTAssertEqual(0, shots[0].options().mapRect.minX)
+        XCTAssertEqual(0, shots[0].options().mapRect.minY)
+        XCTAssertEqual(2621440, shots[0].options().mapRect.maxX)
+        XCTAssertEqual(2621440, shots[0].options().mapRect.maxY)
     }
 }

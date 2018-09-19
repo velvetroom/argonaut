@@ -10,7 +10,7 @@ class TestView:UIViewController {
         super.viewDidLoad()
         tiler.url = url
         
-//        Application.navigation.present(UIActivityViewController(activityItems:[url!], applicationActivities:nil), animated:true)
+        Application.navigation.present(UIActivityViewController(activityItems:[url!], applicationActivities:nil), animated:true)
         
         
         view.backgroundColor = .black
@@ -18,8 +18,8 @@ class TestView:UIViewController {
         let map = MapView()
         map.addOverlay(tiler, level:.aboveLabels)
         var region = MKCoordinateRegion()
-        region.span.latitudeDelta = 0.4
-        region.span.longitudeDelta = 0.4
+        region.span.latitudeDelta = 0.002
+        region.span.longitudeDelta = 0.002
         region.center = CLLocationCoordinate2D(latitude:52.521912, longitude:13.413354)
         map.setRegion(region, animated:false)
         self.map = map

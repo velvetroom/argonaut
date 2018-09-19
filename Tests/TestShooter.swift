@@ -8,6 +8,7 @@ class TestShooter:XCTestCase {
     override func setUp() {
         map = Map()
         map.shooterType = MockShooter.self
+        map.zooms = [Zoom(level:10)]
     }
     
     override func tearDown() {

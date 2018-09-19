@@ -6,6 +6,7 @@ class TestImages:XCTestCase {
     
     override func setUp() {
         map = Map()
+        map.zooms = [Zoom(level:10)]
     }
     
     override func tearDown() {
@@ -29,9 +30,12 @@ class TestImages:XCTestCase {
                       image:makeImage(width:2560, height:2560))
         for y in 0 ..< 10 {
             for x in 0 ..< 10 {
-                let image = UIImage(data:try! Data(contentsOf:url.appendingPathComponent("10_\(1 + x)_\(1 + y).png")))
+                let image = UIImage(data:
+                    try! Data(contentsOf:url.appendingPathComponent("10_\(1 + x)_\(1 + y).png")), scale:2)
                 XCTAssertEqual(256, image?.size.width)
                 XCTAssertEqual(256, image?.size.height)
+                XCTAssertEqual(512, image?.cgImage?.width)
+                XCTAssertEqual(512, image?.cgImage?.height)
             }
         }
     }

@@ -11,7 +11,6 @@ class TestTiler:MKTileOverlay {
     
     override func loadTile(at path:MKTileOverlayPath, result:@escaping(Data?, Error?) -> Void) {
         let location = url(forTilePath:path)
-        print("location: \(location)")
         result(try? Data(contentsOf:url!.appendingPathComponent("\(location.path).png")), nil)
     }
 }

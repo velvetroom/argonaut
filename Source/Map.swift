@@ -4,15 +4,10 @@ public class Map {
     public var onSuccess:((URL) -> Void)?
     public var onFail:((Error) -> Void)?
     var shooterType:Shooter.Type = MapShooter.self
+    var zooms = [Zoom(level:16), Zoom(level:18)]
     let path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
     private weak var shooter:Shooter?
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
-    private static let pixelsCoord = 1048575.0
-    private static let zooms = [Zoom(level:10)]
-//    private static let zoom12 = Double(1 << 12) / pixelsCoord
-//    private static let zoom14 = Double(1 << 14) / pixelsCoord
-//    private static let zoom17 = Double(1 << 17) / pixelsCoord
-    private static let imageSize = 2560.0
     
     public init() { }
     
@@ -28,16 +23,15 @@ public class Map {
     
     func makeShots(rect:MKMapRect) -> [Shot] {
         var list = [Shot]()
-        Map.zooms.forEach { zoom in list.append(contentsOf:makeShots(rect:rect, zoom:zoom)) }
+        zooms.forEach { zoom in list.append(contentsOf:makeShots(rect:rect, zoom:zoom)) }
         return list
     }
     
     func makeTiles(url:URL, shot:Shot, image:UIImage) {
         for y in 0 ..< 10 {
             for x in 0 ..< 10 {
-                let cropped = crop(image:image, rect:CGRect(x:x * 256, y:y * 256, width:256, height:256))
+                let cropped = crop(image:image, rect:CGRect(x:x * 512, y:y * 512, width:512, height:512))
                 let location = "\(shot.zoom.level)_\(shot.tileX + x)_\(shot.tileY + y).png"
-                print("writing to: \(url.appendingPathComponent(location))")
                 try! cropped.pngData()?.write(to:url.appendingPathComponent(location))
             }
         }
@@ -65,14 +59,22 @@ public class Map {
     
     private func makeShots(rect:MKMapRect, zoom:Zoom) -> [Shot] {
         var list = [Shot]()
-        let x = Int(rect.minX / zoom.tile)
-        let y = Int(rect.minY / zoom.tile)
-        for h in stride(from:x, to:x + Int(ceil(rect.width / zoom.tile)), by:10) {
-            for v in stride(from:y, to:y + Int(ceil(rect.height / zoom.tile)), by:10) {
+        for h in strideIn(start:rect.minX, size:rect.width, tile:zoom.tile) {
+            for v in strideIn(start:rect.minY, size:rect.height, tile:zoom.tile) {
                 list.append(Shot(tileX:h, tileY:v, zoom:zoom))
             }
         }
         return list
+    }
+    
+    private func strideIn(start:Double, size:Double, tile:Double) -> StrideTo<Int> {
+        var start = Int(start / tile)
+        let size = Int(ceil(size / tile))
+        let delta = (10 - size) / 2
+        if delta > 0 {
+            start = max(0, start - delta)
+        }
+        return stride(from:start, to:start + size, by:10)
     }
     
     private func success(url:URL) { DispatchQueue.main.async { [weak self] in self?.onSuccess?(url) } }
