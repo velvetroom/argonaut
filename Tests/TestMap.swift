@@ -15,7 +15,7 @@ class TestMap:XCTestCase {
     
     func testCreateMap() {
         let expect = expectation(description:String())
-        map.success = { url in
+        map.onSuccess = { url in
             XCTAssertEqual(Thread.main, Thread.current)
             XCTAssertTrue(FileManager.default.fileExists(atPath:url.path))
             expect.fulfill()

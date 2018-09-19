@@ -1,9 +1,9 @@
 import MapKit
 
 public class Map {
+    public var onSuccess:((URL) -> Void)?
+    public var onFail:((Error) -> Void)?
     let path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
-    var success:((URL) -> Void)?
-    var fail:((Error) -> Void)?
     private weak var shooter:MKMapSnapshotter?
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
     private static let pixelsCoord = 1048575.0
@@ -54,13 +54,13 @@ public class Map {
     }
     
     private func makeMap(url:URL, shots:[Shot]) {
-        guard let shot = shots.first else { return succedes(url:url) }
+        guard let shot = shots.first else { return success(url:url) }
         MKMapSnapshotter(options:shot.options()).start(with:queue) { [weak self] snapshot, error in
             if let image = snapshot?.image {
                 self?.makeTiles(url:url, shot:shot, image:image)
                 self?.makeMap(url:url, shots:Array(shots.suffix(from:1)))
             } else {
-                self?.failes(error:error == nil ? Exception.mapUnknownError : error!)
+                self?.fails(error:error == nil ? Exception.mapUnknownError : error!)
             }
         }
     }
@@ -77,6 +77,6 @@ public class Map {
         return list
     }
     
-    private func succedes(url:URL) { DispatchQueue.main.async { [weak self] in self?.success?(url) } }
-    private func failes(error:Error) { DispatchQueue.main.async { [weak self] in self?.fail?(error) } }
+    private func success(url:URL) { DispatchQueue.main.async { [weak self] in self?.onSuccess?(url) } }
+    private func fails(error:Error) { DispatchQueue.main.async { [weak self] in self?.onFail?(error) } }
 }
