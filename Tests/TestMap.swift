@@ -11,6 +11,8 @@ class TestMap:XCTestCase {
     }
     
     override func tearDown() {
+        MockShooter.image = nil
+        MockShooter.error = nil
         try? FileManager.default.removeItem(at:map.path)
     }
     

@@ -24,8 +24,6 @@ class TestShooter:XCTestCase {
         waitForExpectations(timeout:1)
     }
     
-    
-    
     private func makeImage(width:Double, height:Double) -> UIImage {
         UIGraphicsBeginImageContext(CGSize(width:width, height:height))
         let image = UIImage(cgImage:UIGraphicsGetCurrentContext()!.makeImage()!)

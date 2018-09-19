@@ -15,10 +15,5 @@ class PlanPresenter:Presenter {
             print(error)
         }
         map.makeMap(rect:rect)
-//        map.makeMap(rect:rect, success: { image in
-
-//        }) { error in
-//            print(error)
-//        }
     }
 }

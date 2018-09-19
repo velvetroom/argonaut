@@ -29,7 +29,7 @@ class TestImages:XCTestCase {
                       image:makeImage(width:2560, height:2560))
         for y in 0 ..< 10 {
             for x in 0 ..< 10 {
-                let image = UIImage(data:try! Data(contentsOf:url.appendingPathComponent("10.\(1 + x).\(1 + y)")))
+                let image = UIImage(data:try! Data(contentsOf:url.appendingPathComponent("10_\(1 + x)_\(1 + y).png")))
                 XCTAssertEqual(256, image?.size.width)
                 XCTAssertEqual(256, image?.size.height)
             }

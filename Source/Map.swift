@@ -35,8 +35,8 @@ public class Map {
     func makeTiles(url:URL, shot:Shot, image:UIImage) {
         for y in 0 ..< 10 {
             for x in 0 ..< 10 {
-                let cropped = crop(image:image, rect:CGRect(x:x, y:y, width:256, height:256))
-                let location = "\(shot.zoom.level).\(shot.tileX + x).\(shot.tileY + y)"
+                let cropped = crop(image:image, rect:CGRect(x:x * 256, y:y * 256, width:256, height:256))
+                let location = "\(shot.zoom.level)_\(shot.tileX + x)_\(shot.tileY + y).png"
                 print("writing to: \(url.appendingPathComponent(location))")
                 try! cropped.pngData()?.write(to:url.appendingPathComponent(location))
             }
@@ -64,13 +64,12 @@ public class Map {
     }
     
     private func makeShots(rect:MKMapRect, zoom:Zoom) -> [Shot] {
-        let horizontal = Int(ceil(rect.width / zoom.size))
-        let vertical = Int(ceil(rect.height / zoom.size))
         var list = [Shot]()
-        for h in stride(from:0, to:horizontal, by:10) {
-            for v in stride(from:0, to:vertical, by:10) {
-                print("tilex: \(h + Int(rect.minX / zoom.size))")
-                list.append(Shot(tileX:h + Int(rect.minX / zoom.size), tileY:v + Int(rect.minY / zoom.size), zoom:zoom))
+        let x = Int(rect.minX / zoom.tile)
+        let y = Int(rect.minY / zoom.tile)
+        for h in stride(from:x, to:x + Int(ceil(rect.width / zoom.tile)), by:10) {
+            for v in stride(from:y, to:y + Int(ceil(rect.height / zoom.tile)), by:10) {
+                list.append(Shot(tileX:h, tileY:v, zoom:zoom))
             }
         }
         return list

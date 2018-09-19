@@ -1,4 +1,5 @@
 import CleanArchitecture
+import MapKit
 
 class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate {
     private weak var map:MapView!
@@ -24,6 +25,11 @@ class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate
         view.backgroundColor = .black
         title = NSLocalizedString("PlanView.title", comment:String())
         makeOutlets()
+        var region = MKCoordinateRegion()
+        region.span.latitudeDelta = 0.002
+        region.span.longitudeDelta = 0.002
+        region.center = CLLocationCoordinate2D(latitude:52.521912, longitude:13.413354)
+        map.setRegion(region, animated:false)
     }
     
     private func makeOutlets() {
@@ -60,7 +66,6 @@ class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate
     }
     
     @objc private func save() {
-        print("rect: \(map.visibleMapRect)")
         presenter.save(rect:map.visibleMapRect)
     }
     

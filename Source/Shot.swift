@@ -7,9 +7,9 @@ struct Shot {
     
     func options() -> MKMapSnapshotter.Options {
         let options = MKMapSnapshotter.Options()
+        let size = zoom.tile * 10
         options.size = CGSize(width:2560, height:2560)
-        options.mapRect = MKMapRect(
-            x:Double(tileX) * zoom.size, y:Double(tileY) * zoom.size, width:zoom.size, height:zoom.size)
+        options.mapRect = MKMapRect(x:Double(tileX) * zoom.tile, y:Double(tileY) * zoom.tile, width:size, height:size)
         return options
     }
 }
