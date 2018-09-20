@@ -6,7 +6,7 @@ class Navigation:UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigation()
-        setViewControllers([PlanView()], animated:false)
+        setViewControllers([PermissionView()], animated:false)
     }
     
     override func viewDidAppear(_ animated:Bool) {
