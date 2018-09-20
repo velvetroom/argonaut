@@ -7,8 +7,9 @@ class TestShooter:XCTestCase {
     
     override func setUp() {
         map = Map()
+        map.path = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("test")
         map.shooterType = MockShooter.self
-        map.zooms = [Zoom(level:10)]
+        map.zooms = [Zoom(level:2)]
     }
     
     override func tearDown() {
@@ -18,11 +19,11 @@ class TestShooter:XCTestCase {
     }
     
     func testHappyPath() {
-        MockShooter.image = makeImage(width:1, height:1)
         let expect = expectation(description:String())
+        MockShooter.image = makeImage(width:1, height:1)
         map.onSuccess = { url in expect.fulfill() }
         map.makeMap(rect:MKMapRect(x:0, y:0, width:1, height:1))
-        waitForExpectations(timeout:1)
+        waitForExpectations(timeout:10)
     }
     
     private func makeImage(width:Double, height:Double) -> UIImage {

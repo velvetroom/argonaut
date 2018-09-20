@@ -6,7 +6,8 @@ class TestImages:XCTestCase {
     
     override func setUp() {
         map = Map()
-        map.zooms = [Zoom(level:10)]
+        map.path = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("test")
+        map.zooms = [Zoom(level:2)]
     }
     
     override func tearDown() {
