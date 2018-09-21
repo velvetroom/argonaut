@@ -36,7 +36,7 @@ class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate
         
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem:.save, target:self, action:#selector(save)),
-            UIBarButtonItem(barButtonSystemItem:.add, target:self, action:#selector(add))]
+            UIBarButtonItem(barButtonSystemItem:.add, target:map, action:#selector(map.newAnnotation))]
         
         map.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         map.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
@@ -75,11 +75,6 @@ class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate
     
     @objc private func save() {
         presenter.save(rect:map.visibleMapRect)
-    }
-    
-    @objc private func add() {
-        map.addAnnotation(MKPlacemark(coordinate:map.convert(
-            CGPoint(x:map.bounds.midX, y:map.bounds.minY), toCoordinateFrom:nil), addressDictionary:nil))
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
