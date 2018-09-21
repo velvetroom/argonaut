@@ -21,8 +21,8 @@ class PermissionView:View<PermissionPresenter>, CLLocationManagerDelegate {
     
     private func checkStatus() {
         switch CLLocationManager.authorizationStatus() {
-        case .authorizedAlways, .authorizedWhenInUse, .restricted: presenter.authorized()
-        case .denied: presenter.denied()
+        case .authorizedAlways, .authorizedWhenInUse, .restricted: presenter.done()
+        case .denied: presenter.done()
         case .notDetermined: notDetermined()
         }
     }

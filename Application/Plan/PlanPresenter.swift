@@ -16,4 +16,8 @@ class PlanPresenter:Presenter {
         }
         map.makeMap(rect:rect)
     }
+    
+    override func didLoad() {
+        
+    }
 }

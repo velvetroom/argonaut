@@ -1,11 +1,7 @@
 import CleanArchitecture
 
 class PermissionPresenter:Presenter {
-    func authorized() {
-        
-    }
-    
-    func denied() {
-        
+    func done() {
+        Application.navigation.setViewControllers([PlanView()], animated:true)
     }
 }

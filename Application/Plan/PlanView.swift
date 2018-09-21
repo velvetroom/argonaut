@@ -1,7 +1,8 @@
 import CleanArchitecture
 import MapKit
 
-class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate {
+class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate, CLLocationManagerDelegate {
+    private let location = CLLocationManager()
     private weak var map:MapView!
     
     func updateSearchResults(for search:UISearchController) {
@@ -25,11 +26,7 @@ class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate
         view.backgroundColor = .black
         title = NSLocalizedString("PlanView.title", comment:String())
         makeOutlets()
-        var region = MKCoordinateRegion()
-        region.span.latitudeDelta = 0.002
-        region.span.longitudeDelta = 0.002
-        region.center = CLLocationCoordinate2D(latitude:52.521912, longitude:13.413354)
-        map.setRegion(region, animated:false)
+        startLocation()
     }
     
     private func makeOutlets() {
@@ -65,11 +62,30 @@ class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate
         }
     }
     
+    private func startLocation() {
+        location.delegate = self
+        location.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        location.distanceFilter = 100
+        location.startUpdatingLocation()
+        var region = MKCoordinateRegion()
+        region.span.latitudeDelta = 0.01
+        region.span.longitudeDelta = 0.01
+        map.setRegion(region, animated:false)
+    }
+    
     @objc private func save() {
         presenter.save(rect:map.visibleMapRect)
     }
     
     @objc private func add() {
-        
+        map.addAnnotation(MKPlacemark(coordinate:map.convert(
+            CGPoint(x:map.bounds.midX, y:map.bounds.minY), toCoordinateFrom:nil), addressDictionary:nil))
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        var region = MKCoordinateRegion()
+        region.span = map.region.span
+        region.center = locations.last!.coordinate
+        map.setRegion(region, animated:false)
     }
 }

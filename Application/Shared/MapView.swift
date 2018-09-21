@@ -9,10 +9,10 @@ class MapView:MKMapView, MKMapViewDelegate {
         showsBuildings = true
         showsPointsOfInterest = true
         showsCompass = true
-        showsScale = true
+        showsScale = false
         showsTraffic = false
         showsUserLocation = true
-        userTrackingMode = .follow
+        userTrackingMode = .followWithHeading
         layer.cornerRadius = 20
         delegate = self
         if #available(iOS 11.0, *) {
