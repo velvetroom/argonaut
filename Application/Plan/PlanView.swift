@@ -1,9 +1,64 @@
 import CleanArchitecture
 import MapKit
 
-class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate, CLLocationManagerDelegate {
-    private let location = CLLocationManager()
+class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate, MKMapViewDelegate,
+CLLocationManagerDelegate {
     private weak var map:MapView!
+    private var line:MKRoute?
+    private var plan = [MKAnnotation]()
+    private let geocoder = CLGeocoder()
+    private let location = CLLocationManager()
+    
+    func mapView(_:MKMapView, viewFor annotation:MKAnnotation) -> MKAnnotationView? {
+        guard let mark = annotation as? MKPointAnnotation else { return map.view(for:annotation) }
+        var point:MKAnnotationView!
+        if let reuse = map.dequeueReusableAnnotationView(withIdentifier:"mark") {
+            reuse.annotation = mark
+            point = reuse
+        } else {
+            if #available(iOS 11.0, *) {
+                let marker = MKMarkerAnnotationView(annotation:mark, reuseIdentifier:"mark")
+                marker.markerTintColor = .black
+                marker.animatesWhenAdded = true
+                point = marker
+            } else {
+                let marker = MKPinAnnotationView(annotation:mark, reuseIdentifier:"mark")
+                marker.pinTintColor = .black
+                marker.animatesDrop = true
+                point = marker
+            }
+            point.isDraggable = true
+        }
+        return point
+    }
+    
+    func mapView(_:MKMapView, rendererFor overlay:MKOverlay) -> MKOverlayRenderer {
+        if let tiler = overlay as? MKTileOverlay {
+            return MKTileOverlayRenderer(tileOverlay:tiler)
+        } else if let polyline = overlay as? MKPolyline {
+            let renderer = MKPolylineRenderer(polyline:polyline)
+            renderer.lineWidth = 2
+            renderer.strokeColor = .black
+            return renderer
+        } else {
+            return MKOverlayRenderer()
+        }
+    }
+    
+    func mapView(_:MKMapView, annotationView view:MKAnnotationView, didChange state:MKAnnotationView.DragState,
+                 fromOldState:MKAnnotationView.DragState) {
+        if state == .ending {
+            geocode(mark:view.annotation as! MKPointAnnotation)
+        }
+    }
+    
+    func locationManager(_:CLLocationManager, didUpdateLocations locations:[CLLocation]) {
+        var region = MKCoordinateRegion()
+        region.span = map.region.span
+        region.center = locations.last!.coordinate
+        map.setRegion(region, animated:false)
+        plan.append(map.userLocation)
+    }
     
     func updateSearchResults(for search:UISearchController) {
 //        guard
@@ -31,12 +86,13 @@ class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate
     
     private func makeOutlets() {
         let map = MapView()
+        map.delegate = self
         view.addSubview(map)
         self.map = map
         
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem:.save, target:self, action:#selector(save)),
-            UIBarButtonItem(barButtonSystemItem:.add, target:map, action:#selector(map.newAnnotation))]
+            UIBarButtonItem(barButtonSystemItem:.add, target:self, action:#selector(addPoint))]
         
         map.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         map.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
@@ -73,14 +129,43 @@ class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate
         map.setRegion(region, animated:false)
     }
     
-    @objc private func save() {
-        presenter.save(rect:map.visibleMapRect)
+    private func geocode(mark:MKPointAnnotation) {
+        let location = CLLocation(latitude:mark.coordinate.latitude, longitude:mark.coordinate.longitude)
+        geocoder.reverseGeocodeLocation(location) { [weak self, weak mark] marks, _ in
+            mark?.title = marks?.first?.name
+            self?.updateRoute()
+        }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        var region = MKCoordinateRegion()
-        region.span = map.region.span
-        region.center = locations.last!.coordinate
-        map.setRegion(region, animated:false)
+    private func updateRoute() {
+        if let polyline = line?.polyline { map.removeOverlay(polyline) }
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark:MKPlacemark(coordinate:plan.first!.coordinate, addressDictionary:nil))
+        request.destination = MKMapItem(placemark:MKPlacemark(coordinate:plan.last!.coordinate, addressDictionary:nil))
+        MKDirections(request:request).calculate { [weak self] response, _ in
+            guard let line = response?.routes.first else { return }
+            self?.line = line
+            self?.map.addOverlay(line.polyline, level:.aboveLabels)
+        }
+    }
+    
+    @objc private func addPoint() {
+        var mark:MKPointAnnotation!
+        if plan.first is MKUserLocation && plan.count == 2 {
+            plan.remove(at:0)
+        }
+        if plan.count == 2 {
+            mark = plan.last as? MKPointAnnotation
+        } else {
+            mark = MKPointAnnotation()
+            plan.append(mark)
+            map.addAnnotation(mark)
+        }
+        mark.coordinate = map.convert(CGPoint(x:map.bounds.midX, y:map.bounds.midY), toCoordinateFrom:map)
+        geocode(mark:mark)
+    }
+    
+    @objc private func save() {
+        presenter.save(rect:map.visibleMapRect)
     }
 }
