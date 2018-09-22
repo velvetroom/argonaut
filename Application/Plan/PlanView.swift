@@ -37,8 +37,9 @@ CLLocationManagerDelegate {
             return MKTileOverlayRenderer(tileOverlay:tiler)
         } else if let polyline = overlay as? MKPolyline {
             let renderer = MKPolylineRenderer(polyline:polyline)
-            renderer.lineWidth = 2
+            renderer.lineWidth = 3
             renderer.strokeColor = .black
+            renderer.lineCap = .round
             return renderer
         } else {
             return MKOverlayRenderer()
@@ -151,9 +152,7 @@ CLLocationManagerDelegate {
     
     @objc private func addPoint() {
         var mark:MKPointAnnotation!
-        if plan.first is MKUserLocation && plan.count == 2 {
-            plan.remove(at:0)
-        }
+        if plan.first is MKUserLocation && plan.count == 2 { plan.remove(at:0) }
         if plan.count == 2 {
             mark = plan.last as? MKPointAnnotation
         } else {
