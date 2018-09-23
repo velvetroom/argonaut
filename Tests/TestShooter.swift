@@ -23,7 +23,7 @@ class TestShooter:XCTestCase {
         MockShooter.image = makeImage(width:1, height:1)
         map.onSuccess = { url in expect.fulfill() }
         map.makeMap(rect:MKMapRect(x:0, y:0, width:1, height:1))
-        waitForExpectations(timeout:10)
+        waitForExpectations(timeout:1)
     }
     
     private func makeImage(width:Double, height:Double) -> UIImage {

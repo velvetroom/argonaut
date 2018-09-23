@@ -28,8 +28,8 @@ public class Map {
     }
     
     func makeTiles(url:URL, shot:Shot, image:UIImage) {
-        for y in 0 ..< 10 {
-            for x in 0 ..< 10 {
+        for y in 0 ..< Int(image.size.width / 256) {
+            for x in 0 ..< Int(image.size.height / 256) {
                 let cropped = crop(image:image, rect:CGRect(x:x * 512, y:y * 512, width:512, height:512))
                 let location = "\(shot.zoom.level)_\(shot.tileX + x)_\(shot.tileY + y).png"
                 try! cropped.pngData()?.write(to:url.appendingPathComponent(location))
