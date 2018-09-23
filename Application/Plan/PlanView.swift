@@ -113,6 +113,8 @@ CLLocationManagerDelegate {
             search.searchBar.autocapitalizationType = .sentences
             navigationItem.searchController = search
             navigationItem.largeTitleDisplayMode = .always
+            navigationController?.navigationBar.largeTitleTextAttributes = [.font:
+                UIFont.systemFont(ofSize:20, weight:.light),.foregroundColor:UIColor.white]
             map.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
         } else {
             map.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
@@ -145,9 +147,25 @@ CLLocationManagerDelegate {
         request.destination = MKMapItem(placemark:MKPlacemark(coordinate:plan.last!.coordinate, addressDictionary:nil))
         MKDirections(request:request).calculate { [weak self] response, _ in
             guard let line = response?.routes.first else { return }
-            self?.line = line
-            self?.map.addOverlay(line.polyline, level:.aboveLabels)
+            self?.update(line:line)
         }
+    }
+    
+    private func update(line:MKRoute) {
+        self.line = line
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        formatter.allowedUnits = [.minute]
+        var string = formatter.string(from:line.expectedTravelTime)!
+        if #available(iOS 10.0, *) {
+            let dis = MeasurementFormatter()
+            dis.unitStyle = .medium
+            dis.unitOptions = .naturalScale
+            dis.numberFormatter.maximumFractionDigits = 1
+            string += " - " + dis.string(from:Measurement(value:line.distance, unit:UnitLength.meters))
+        }
+        title = string
+        map.addOverlay(line.polyline, level:.aboveLabels)
     }
     
     @objc private func addPoint() {
