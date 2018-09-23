@@ -114,7 +114,7 @@ CLLocationManagerDelegate {
             navigationItem.searchController = search
             navigationItem.largeTitleDisplayMode = .always
             navigationController?.navigationBar.largeTitleTextAttributes = [.font:
-                UIFont.systemFont(ofSize:20, weight:.light),.foregroundColor:UIColor.white]
+                UIFont.systemFont(ofSize:22, weight:.light),.foregroundColor:UIColor.white]
             map.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
         } else {
             map.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
