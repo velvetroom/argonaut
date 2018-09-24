@@ -7,7 +7,7 @@ class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
     private let location = CLLocationManager()
     
     func startLocation() {
-        delegate = nil
+        delegate = self
         location.delegate = self
         location.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         location.distanceFilter = 100
@@ -93,8 +93,9 @@ class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     private func updateRoute() {
-        if let polyline = line?.polyline { removeOverlay(polyline) }
+        removeOverlays(overlays)
         let request = MKDirections.Request()
+        request.transportType = .walking
         request.source = MKMapItem(placemark:MKPlacemark(coordinate:plan.first!.coordinate, addressDictionary:nil))
         request.destination = MKMapItem(placemark:MKPlacemark(coordinate:plan.last!.coordinate, addressDictionary:nil))
         MKDirections(request:request).calculate { [weak self] response, _ in
