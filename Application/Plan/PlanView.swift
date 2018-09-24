@@ -1,167 +1,59 @@
 import CleanArchitecture
-import MapKit
 
-class PlanView:View<PlanPresenter>, UISearchResultsUpdating, UISearchBarDelegate, MKMapViewDelegate,
-CLLocationManagerDelegate {
-    private weak var map:MapView!
-    private var line:MKRoute?
-    private var plan = [MKAnnotation]()
-    private let geocoder = CLGeocoder()
-    private let location = CLLocationManager()
+class PlanView:View<PlanPresenter> {
+    private weak var map:PlanMapView!
+    private weak var segmented:UISegmentedControl!
     private let formatter = DateComponentsFormatter()
-    
-    func mapView(_:MKMapView, viewFor annotation:MKAnnotation) -> MKAnnotationView? {
-        guard let mark = annotation as? MKPointAnnotation else { return map.view(for:annotation) }
-        var point:MKAnnotationView!
-        if let reuse = map.dequeueReusableAnnotationView(withIdentifier:"mark") {
-            reuse.annotation = mark
-            point = reuse
-        } else {
-            if #available(iOS 11.0, *) {
-                let marker = MKMarkerAnnotationView(annotation:mark, reuseIdentifier:"mark")
-                marker.markerTintColor = .black
-                marker.animatesWhenAdded = true
-                point = marker
-            } else {
-                let marker = MKPinAnnotationView(annotation:mark, reuseIdentifier:"mark")
-                marker.pinTintColor = .black
-                marker.animatesDrop = true
-                point = marker
-            }
-            point.isDraggable = true
-        }
-        return point
-    }
-    
-    func mapView(_:MKMapView, rendererFor overlay:MKOverlay) -> MKOverlayRenderer {
-        if let tiler = overlay as? MKTileOverlay {
-            return MKTileOverlayRenderer(tileOverlay:tiler)
-        } else if let polyline = overlay as? MKPolyline {
-            let renderer = MKPolylineRenderer(polyline:polyline)
-            renderer.lineWidth = 3
-            renderer.strokeColor = .black
-            renderer.lineCap = .round
-            return renderer
-        } else {
-            return MKOverlayRenderer()
-        }
-    }
-    
-    func mapView(_:MKMapView, annotationView view:MKAnnotationView, didChange state:MKAnnotationView.DragState,
-                 fromOldState:MKAnnotationView.DragState) {
-        if state == .ending {
-            geocode(mark:view.annotation as! MKPointAnnotation)
-        }
-    }
-    
-    func locationManager(_:CLLocationManager, didUpdateLocations locations:[CLLocation]) {
-        var region = MKCoordinateRegion()
-        region.span = map.region.span
-        region.center = locations.last!.coordinate
-        map.setRegion(region, animated:false)
-        plan.append(map.userLocation)
-    }
-    
-    func updateSearchResults(for search:UISearchController) {
-//        guard
-//            let text = search.searchBar.text,
-//            !text.isEmpty
-//            else {
-//                presenter.clearSearch()
-//                return
-//        }
-//        presenter.search(text:text)
-    }
-    
-    func searchBarCancelButtonClicked(_ bar:UISearchBar) {
-//        bar.setShowsCancelButton(false, animated:true)
-//        presenter.clearSearch()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         makeOutlets()
-        startLocation()
         formatter.unitsStyle = .full
         formatter.allowedUnits = [.minute]
-        updateTitle()
+    }
+    
+    override func viewWillAppear(_ animated:Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated:true)
+    }
+    
+    override func viewWillDisappear(_ animated:Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated:true)
     }
     
     private func makeOutlets() {
-        let map = MapView()
-        map.delegate = self
+        let map = PlanMapView()
+        map.startLocation()
         view.addSubview(map)
         self.map = map
         
+        let segmented = UISegmentedControl(items:["Car", "Transit", "Walking", "Bycicle"])
+        segmented.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(segmented)
+        self.segmented = segmented
+        
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(barButtonSystemItem:.save, target:self, action:#selector(save)),
-            UIBarButtonItem(barButtonSystemItem:.add, target:self, action:#selector(addPoint))]
+            UIBarButtonItem(barButtonSystemItem:.add, target:map, action:#selector(map.addPoint))]
         
         map.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         map.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         map.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
+        map.topAnchor.constraint(equalTo:segmented.bottomAnchor).isActive = true
+        
+        segmented.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
+        
         if #available(iOS 11.0, *) {
-            let search = UISearchController(searchResultsController:nil)
-            search.searchResultsUpdater = self
-            search.searchBar.tintColor = .white
-            search.searchBar.barStyle = .black
-            search.isActive = true
-            search.obscuresBackgroundDuringPresentation = false
-            search.hidesNavigationBarDuringPresentation = false
-            search.searchBar.delegate = self
-            search.searchBar.keyboardAppearance = .dark
-            search.searchBar.autocorrectionType = .yes
-            search.searchBar.spellCheckingType = .yes
-            search.searchBar.autocapitalizationType = .sentences
-            navigationItem.searchController = search
-            navigationItem.largeTitleDisplayMode = .always
-            navigationController?.navigationBar.largeTitleTextAttributes = [.font:
-                UIFont.systemFont(ofSize:22, weight:.light),.foregroundColor:UIColor.white]
-            map.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
+            segmented.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
         } else {
-            map.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
+            segmented.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
         }
-    }
-    
-    private func startLocation() {
-        location.delegate = self
-        location.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        location.distanceFilter = 100
-        location.startUpdatingLocation()
-        var region = MKCoordinateRegion()
-        region.span.latitudeDelta = 0.01
-        region.span.longitudeDelta = 0.01
-        map.setRegion(region, animated:false)
-    }
-    
-    private func geocode(mark:MKPointAnnotation) {
-        let location = CLLocation(latitude:mark.coordinate.latitude, longitude:mark.coordinate.longitude)
-        geocoder.reverseGeocodeLocation(location) { [weak self, weak mark] marks, _ in
-            mark?.title = marks?.first?.name
-            self?.updateRoute()
-        }
-    }
-    
-    private func updateRoute() {
-        if let polyline = line?.polyline { map.removeOverlay(polyline) }
-        let request = MKDirections.Request()
-        request.source = MKMapItem(placemark:MKPlacemark(coordinate:plan.first!.coordinate, addressDictionary:nil))
-        request.destination = MKMapItem(placemark:MKPlacemark(coordinate:plan.last!.coordinate, addressDictionary:nil))
-        MKDirections(request:request).calculate { [weak self] response, _ in
-            guard let line = response?.routes.first else { return }
-            self?.update(line:line)
-        }
-    }
-    
-    private func update(line:MKRoute) {
-        self.line = line
-        updateTitle()
-        map.addOverlay(line.polyline, level:.aboveLabels)
     }
     
     private func updateTitle() {
-        if let line = self.line {
+        /*if let line = self.line {
             var string = formatter.string(from:line.expectedTravelTime)!
             if #available(iOS 10.0, *) {
                 let distance = MeasurementFormatter()
@@ -173,21 +65,7 @@ CLLocationManagerDelegate {
             title = string
         } else {
             title = NSLocalizedString("PlanView.title", comment:String())
-        }
-    }
-    
-    @objc private func addPoint() {
-        var mark:MKPointAnnotation!
-        if plan.first is MKUserLocation && plan.count == 2 { plan.remove(at:0) }
-        if plan.count == 2 {
-            mark = plan.last as? MKPointAnnotation
-        } else {
-            mark = MKPointAnnotation()
-            plan.append(mark)
-            map.addAnnotation(mark)
-        }
-        mark.coordinate = map.convert(CGPoint(x:map.bounds.midX, y:map.bounds.midY), toCoordinateFrom:map)
-        geocode(mark:mark)
+        }*/
     }
     
     @objc private func save() {
