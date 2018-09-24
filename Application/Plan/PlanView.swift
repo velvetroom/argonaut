@@ -8,6 +8,7 @@ CLLocationManagerDelegate {
     private var plan = [MKAnnotation]()
     private let geocoder = CLGeocoder()
     private let location = CLLocationManager()
+    private let formatter = DateComponentsFormatter()
     
     func mapView(_:MKMapView, viewFor annotation:MKAnnotation) -> MKAnnotationView? {
         guard let mark = annotation as? MKPointAnnotation else { return map.view(for:annotation) }
@@ -80,9 +81,11 @@ CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        title = NSLocalizedString("PlanView.title", comment:String())
         makeOutlets()
         startLocation()
+        formatter.unitsStyle = .full
+        formatter.allowedUnits = [.minute]
+        updateTitle()
     }
     
     private func makeOutlets() {
@@ -153,19 +156,24 @@ CLLocationManagerDelegate {
     
     private func update(line:MKRoute) {
         self.line = line
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .full
-        formatter.allowedUnits = [.minute]
-        var string = formatter.string(from:line.expectedTravelTime)!
-        if #available(iOS 10.0, *) {
-            let dis = MeasurementFormatter()
-            dis.unitStyle = .medium
-            dis.unitOptions = .naturalScale
-            dis.numberFormatter.maximumFractionDigits = 1
-            string += " - " + dis.string(from:Measurement(value:line.distance, unit:UnitLength.meters))
-        }
-        title = string
+        updateTitle()
         map.addOverlay(line.polyline, level:.aboveLabels)
+    }
+    
+    private func updateTitle() {
+        if let line = self.line {
+            var string = formatter.string(from:line.expectedTravelTime)!
+            if #available(iOS 10.0, *) {
+                let distance = MeasurementFormatter()
+                distance.unitStyle = .medium
+                distance.unitOptions = .naturalScale
+                distance.numberFormatter.maximumFractionDigits = 1
+                string += " - " + distance.string(from:Measurement(value:line.distance, unit:UnitLength.meters))
+            }
+            title = string
+        } else {
+            title = NSLocalizedString("PlanView.title", comment:String())
+        }
     }
     
     @objc private func addPoint() {
