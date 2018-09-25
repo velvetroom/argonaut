@@ -81,7 +81,7 @@ class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
         region.span = self.region.span
         region.center = locations.last!.coordinate
         setRegion(region, animated:false)
-        plan.append(userLocation)
+        if plan.isEmpty { plan.append(userLocation) }
     }
     
     private func geocode(mark:MKPointAnnotation) {

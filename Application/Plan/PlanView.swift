@@ -21,11 +21,6 @@ class PlanView:View<PlanPresenter> {
         navigationController?.setNavigationBarHidden(true, animated:true)
     }
     
-    override func viewWillDisappear(_ animated:Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated:true)
-    }
-    
     private func makeOutlets() {
         let map = PlanMapView()
         map.startLocation()
@@ -64,12 +59,12 @@ class PlanView:View<PlanPresenter> {
         
         add.centerYAnchor.constraint(equalTo:save.centerYAnchor).isActive = true
         add.rightAnchor.constraint(equalTo:save.leftAnchor).isActive = true
-        add.heightAnchor.constraint(equalToConstant:36).isActive = true
-        add.widthAnchor.constraint(equalToConstant:50).isActive = true
+        add.heightAnchor.constraint(equalToConstant:46).isActive = true
+        add.widthAnchor.constraint(equalToConstant:52).isActive = true
         
-        save.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
-        save.heightAnchor.constraint(equalToConstant:36).isActive = true
-        save.widthAnchor.constraint(equalToConstant:50).isActive = true
+        save.rightAnchor.constraint(equalTo:view.rightAnchor, constant:-5).isActive = true
+        save.heightAnchor.constraint(equalToConstant:46).isActive = true
+        save.widthAnchor.constraint(equalToConstant:52).isActive = true
         
         if #available(iOS 11.0, *) {
             save.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
