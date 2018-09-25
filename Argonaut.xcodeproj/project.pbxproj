@@ -32,9 +32,8 @@
 		DA9A5711214E9E1A0042558D /* TestShots.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A5710214E9E1A0042558D /* TestShots.swift */; };
 		DAA83B05214FD7A500CD66B6 /* TestImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA83B04214FD7A500CD66B6 /* TestImages.swift */; };
 		DAAB79F92159076D00A9F09E /* PlanMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAB79F82159076D00A9F09E /* PlanMapView.swift */; };
-		DADCD679215911C6009C3653 /* PlanTypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCD678215911C6009C3653 /* PlanTypesView.swift */; };
+		DADCD679215911C6009C3653 /* PlanTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCD678215911C6009C3653 /* PlanTypeView.swift */; };
 		DADCD67B21591470009C3653 /* assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DADCD67A21591470009C3653 /* assets.xcassets */; };
-		DADCD67D215915CB009C3653 /* PlanTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCD67C215915CB009C3653 /* PlanTypeView.swift */; };
 		DAF48450214D4D61000CD005 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4844F214D4D61000CD005 /* Application.swift */; };
 		DAF48453214D4E84000CD005 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF48452214D4E84000CD005 /* LaunchScreen.storyboard */; };
 		FE812D089686D87DFECCBB33 /* libPods-Application.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEADE1CED89577A8EC01893 /* libPods-Application.a */; };
@@ -83,9 +82,8 @@
 		DA9A5710214E9E1A0042558D /* TestShots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestShots.swift; sourceTree = "<group>"; };
 		DAA83B04214FD7A500CD66B6 /* TestImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestImages.swift; sourceTree = "<group>"; };
 		DAAB79F82159076D00A9F09E /* PlanMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanMapView.swift; sourceTree = "<group>"; };
-		DADCD678215911C6009C3653 /* PlanTypesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTypesView.swift; sourceTree = "<group>"; };
+		DADCD678215911C6009C3653 /* PlanTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTypeView.swift; sourceTree = "<group>"; };
 		DADCD67A21591470009C3653 /* assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = assets.xcassets; sourceTree = "<group>"; };
-		DADCD67C215915CB009C3653 /* PlanTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTypeView.swift; sourceTree = "<group>"; };
 		DAF4843C214D4CD0000CD005 /* Application.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Application.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF4844F214D4D61000CD005 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		DAF48451214D4E03000CD005 /* application.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = application.plist; sourceTree = "<group>"; };
@@ -126,8 +124,7 @@
 				DA0000C0214D50F900AD02D2 /* PlanPresenter.swift */,
 				DA0000BE214D50DB00AD02D2 /* PlanView.swift */,
 				DAAB79F82159076D00A9F09E /* PlanMapView.swift */,
-				DADCD678215911C6009C3653 /* PlanTypesView.swift */,
-				DADCD67C215915CB009C3653 /* PlanTypeView.swift */,
+				DADCD678215911C6009C3653 /* PlanTypeView.swift */,
 				DA9A5707214E6DD60042558D /* TestView.swift */,
 				DA9A570B214E89960042558D /* TestTiler.swift */,
 			);
@@ -423,11 +420,10 @@
 				DA0000BC214D503C00AD02D2 /* Navigation.swift in Sources */,
 				DA6EC958215389F9005D5795 /* PermissionView.swift in Sources */,
 				DA0000C1214D50F900AD02D2 /* PlanPresenter.swift in Sources */,
-				DADCD67D215915CB009C3653 /* PlanTypeView.swift in Sources */,
 				DAF48450214D4D61000CD005 /* Application.swift in Sources */,
 				DA9A570C214E89960042558D /* TestTiler.swift in Sources */,
 				DA0000BF214D50DB00AD02D2 /* PlanView.swift in Sources */,
-				DADCD679215911C6009C3653 /* PlanTypesView.swift in Sources */,
+				DADCD679215911C6009C3653 /* PlanTypeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

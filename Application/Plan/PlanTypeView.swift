@@ -1,51 +1,76 @@
 import UIKit
 
 class PlanTypeView:UIView {
-    private(set) weak var control:UIControl!
-    private(set) weak var image:UIImageView!
+    private weak var walking:UIButton!
+    private weak var driving:UIButton!
+    private weak var baseX:NSLayoutConstraint!
     
     init() {
         super.init(frame:.zero)
+        clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
-        layer.cornerRadius = 16
         makeOutlets()
-        notSelected()
+        selectWalking()
     }
     
     required init?(coder:NSCoder) { return nil }
-    
-    func selected() {
-        image.alpha = 1
-        backgroundColor = #colorLiteral(red: 0.07843137255, green: 0.2431372549, blue: 0.4941176471, alpha: 1)
-    }
-    
-    func notSelected() {
-        image.alpha = 0.35
-        backgroundColor = .clear
-    }
+    override var intrinsicContentSize:CGSize { return CGSize(width:70, height:32) }
     
     private func makeOutlets() {
-        let image = UIImageView()
-        image.translatesAutoresizingMaskIntoConstraints = false
-        image.clipsToBounds = true
-        image.contentMode = .center
-        image.isUserInteractionEnabled = false
-        addSubview(image)
-        self.image = image
+        let base = UIView()
+        base.backgroundColor = #colorLiteral(red: 0.07843137255, green: 0.2431372549, blue: 0.4941176471, alpha: 1)
+        base.isUserInteractionEnabled = false
+        base.translatesAutoresizingMaskIntoConstraints = false
+        base.clipsToBounds = true
+        base.layer.cornerRadius = 16
+        addSubview(base)
         
-        let control = UIControl()
-        control.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(control)
-        self.control = control
+        let walking = UIButton()
+        walking.translatesAutoresizingMaskIntoConstraints = false
+        walking.setImage(#imageLiteral(resourceName: "iconWalking.pdf"), for:[])
+        walking.addTarget(self, action:#selector(selectWalking), for:.touchUpInside)
+        walking.imageView!.clipsToBounds = true
+        walking.imageView!.contentMode = .center
+        addSubview(walking)
+        self.walking = walking
         
-        image.topAnchor.constraint(equalTo:topAnchor).isActive = true
-        image.bottomAnchor.constraint(equalTo:bottomAnchor).isActive = true
-        image.leftAnchor.constraint(equalTo:leftAnchor).isActive = true
-        image.rightAnchor.constraint(equalTo:rightAnchor).isActive = true
+        let driving = UIButton()
+        driving.translatesAutoresizingMaskIntoConstraints = false
+        driving.setImage(#imageLiteral(resourceName: "iconDriving"), for:[])
+        driving.addTarget(self, action:#selector(selectDriving), for:.touchUpInside)
+        driving.imageView!.clipsToBounds = true
+        driving.imageView!.contentMode = .center
+        addSubview(driving)
+        self.driving = driving
         
-        control.topAnchor.constraint(equalTo:topAnchor).isActive = true
-        control.bottomAnchor.constraint(equalTo:bottomAnchor).isActive = true
-        control.leftAnchor.constraint(equalTo:leftAnchor).isActive = true
-        control.rightAnchor.constraint(equalTo:rightAnchor).isActive = true
+        walking.topAnchor.constraint(equalTo:topAnchor).isActive = true
+        walking.bottomAnchor.constraint(equalTo:bottomAnchor).isActive = true
+        walking.leftAnchor.constraint(equalTo:leftAnchor).isActive = true
+        walking.widthAnchor.constraint(equalToConstant:32).isActive = true
+        
+        driving.topAnchor.constraint(equalTo:topAnchor).isActive = true
+        driving.bottomAnchor.constraint(equalTo:bottomAnchor).isActive = true
+        driving.leftAnchor.constraint(equalTo:walking.rightAnchor, constant:6).isActive = true
+        driving.widthAnchor.constraint(equalToConstant:32).isActive = true
+        
+        base.topAnchor.constraint(equalTo:topAnchor).isActive = true
+        base.bottomAnchor.constraint(equalTo:bottomAnchor).isActive = true
+        base.widthAnchor.constraint(equalToConstant:32).isActive = true
+        baseX = base.centerXAnchor.constraint(equalTo:centerXAnchor)
+        baseX.isActive = true
+    }
+    
+    @objc private func selectWalking() {
+        walking.alpha = 1
+        driving.alpha = 0.35
+        baseX.constant = -19
+        UIView.animate(withDuration:0.3) { [weak self] in self?.layoutIfNeeded() }
+    }
+    
+    @objc private func selectDriving() {
+        walking.alpha = 0.35
+        driving.alpha = 1
+        baseX.constant = 19
+        UIView.animate(withDuration:0.3) { [weak self] in self?.layoutIfNeeded() }
     }
 }

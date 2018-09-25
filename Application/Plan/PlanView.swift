@@ -2,7 +2,7 @@ import CleanArchitecture
 
 class PlanView:View<PlanPresenter> {
     private weak var map:PlanMapView!
-    private weak var type:PlanTypesView!
+    private weak var type:PlanTypeView!
     private weak var add:UIButton!
     private weak var save:UIButton!
     private let formatter = DateComponentsFormatter()
@@ -32,7 +32,7 @@ class PlanView:View<PlanPresenter> {
         view.addSubview(map)
         self.map = map
         
-        let type = PlanTypesView()
+        let type = PlanTypeView()
         view.addSubview(type)
         self.type = type
         
