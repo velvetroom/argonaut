@@ -28,6 +28,7 @@ class PlanView:View<PlanPresenter> {
         self.map = map
         
         let type = PlanTypeView()
+        type.map = map
         view.addSubview(type)
         self.type = type
         

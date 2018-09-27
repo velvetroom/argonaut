@@ -1,6 +1,7 @@
 import UIKit
 
 class PlanTypeView:UIView {
+    weak var map:PlanMapView?
     private weak var walking:UIButton!
     private weak var driving:UIButton!
     private weak var baseX:NSLayoutConstraint!
@@ -64,13 +65,23 @@ class PlanTypeView:UIView {
         walking.alpha = 1
         driving.alpha = 0.35
         baseX.constant = -19
-        UIView.animate(withDuration:0.3) { [weak self] in self?.layoutIfNeeded() }
+        map?.type = .walking
+        update()
     }
     
     @objc private func selectDriving() {
         walking.alpha = 0.35
         driving.alpha = 1
         baseX.constant = 19
-        UIView.animate(withDuration:0.3) { [weak self] in self?.layoutIfNeeded() }
+        map?.type = .automobile
+        update()
+    }
+    
+    private func update() {
+        UIView.animate(withDuration:0.3, animations: { [weak self] in
+            self?.layoutIfNeeded()
+        }) { [weak self] _ in
+            self?.map?.updateRoute()
+        }
     }
 }

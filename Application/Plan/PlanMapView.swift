@@ -1,6 +1,7 @@
 import MapKit
 
 class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
+    var type = MKDirectionsTransportType.walking
     private var line:MKRoute?
     private var plan = [MKAnnotation]()
     private let geocoder = CLGeocoder()
@@ -16,6 +17,19 @@ class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
         region.span.latitudeDelta = 0.01
         region.span.longitudeDelta = 0.01
         setRegion(region, animated:false)
+    }
+    
+    func updateRoute() {
+        removeOverlays(overlays)
+        let request = MKDirections.Request()
+        request.transportType = type
+        request.source = MKMapItem(placemark:MKPlacemark(coordinate:plan.first!.coordinate, addressDictionary:nil))
+        request.destination = MKMapItem(placemark:MKPlacemark(coordinate:plan.last!.coordinate, addressDictionary:nil))
+        MKDirections(request:request).calculate { [weak self] response, _ in
+            guard let line = response?.routes.first else { return }
+            self?.line = line
+            self?.addOverlay(line.polyline, level:.aboveLabels)
+        }
     }
     
     @objc func addPoint() {
@@ -89,19 +103,6 @@ class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
         geocoder.reverseGeocodeLocation(location) { [weak self, weak mark] marks, _ in
             mark?.title = marks?.first?.name
             self?.updateRoute()
-        }
-    }
-    
-    private func updateRoute() {
-        removeOverlays(overlays)
-        let request = MKDirections.Request()
-        request.transportType = .walking
-        request.source = MKMapItem(placemark:MKPlacemark(coordinate:plan.first!.coordinate, addressDictionary:nil))
-        request.destination = MKMapItem(placemark:MKPlacemark(coordinate:plan.last!.coordinate, addressDictionary:nil))
-        MKDirections(request:request).calculate { [weak self] response, _ in
-            guard let line = response?.routes.first else { return }
-            self?.line = line
-            self?.addOverlay(line.polyline, level:.aboveLabels)
         }
     }
 }
