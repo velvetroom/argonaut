@@ -4,17 +4,18 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate {
     private weak var map:PlanMapView!
     private weak var type:PlanTypeView!
     private weak var search:UISearchBar!
+    private weak var field:UITextField!
     private weak var add:UIButton!
     private weak var save:UIButton!
     private weak var searchWidth:NSLayoutConstraint!
     private weak var typeCenter:NSLayoutConstraint!
-    private let formatter = DateComponentsFormatter()
     override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
     
     func searchBarTextDidBeginEditing(_:UISearchBar) {
         searchWidth.constant = 270
         typeCenter.constant = 145
         UIView.animate(withDuration:0.4, animations: { [weak self] in
+            self?.field.backgroundColor = .midnightBlue
             self?.view.layoutIfNeeded()
         }) { [weak self] _ in
             self?.search.setShowsCancelButton(true, animated:true)
@@ -26,7 +27,10 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate {
             searchWidth.constant = 49
             typeCenter.constant = 0
             search.setShowsCancelButton(false, animated:false)
-            UIView.animate(withDuration:0.3) { [weak self] in self?.view.layoutIfNeeded() }
+            UIView.animate(withDuration:0.3) { [weak self] in
+                self?.field.backgroundColor = .clear
+                self?.view.layoutIfNeeded()
+            }
         }
     }
     
@@ -42,8 +46,6 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
-        formatter.unitsStyle = .full
-        formatter.allowedUnits = [.minute]
         makeOutlets()
     }
     
@@ -88,17 +90,29 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate {
         search.barStyle = .black
         search.barTintColor = .clear
         search.tintColor = .white
+        search.autocorrectionType = .yes
+        search.autocapitalizationType = .sentences
+        search.spellCheckingType = .yes
+        search.keyboardType = .asciiCapable
+        search.keyboardAppearance = .dark
         search.delegate = self
         view.addSubview(search)
         self.search = search
         
-        let field = (search.subviews.first!.subviews.first { view -> Bool in view is UITextField }) as! UITextField
-        field.backgroundColor = .midnightBlue
+        field = (search.subviews.first!.subviews.first { view -> Bool in view is UITextField }) as? UITextField
         field.textColor = .white
         
         let magnifier =  field.leftView as! UIImageView
         magnifier.image = magnifier.image!.withRenderingMode(.alwaysTemplate)
         magnifier.tintColor = .white
+        
+        let trip = UILabel()
+        trip.translatesAutoresizingMaskIntoConstraints = false
+        trip.isUserInteractionEnabled = false
+        trip.font = .systemFont(ofSize:14, weight:.light)
+        trip.textColor = .white
+        view.addSubview(trip)
+        map.trip = trip
         
         map.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         map.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
@@ -124,27 +138,14 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate {
         searchWidth = search.widthAnchor.constraint(equalToConstant:49)
         searchWidth.isActive = true
         
+        trip.centerYAnchor.constraint(equalTo:save.centerYAnchor).isActive = true
+        trip.leftAnchor.constraint(equalTo:view.leftAnchor, constant:16).isActive = true
+        
         if #available(iOS 11.0, *) {
             save.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
         } else {
             save.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
         }
-    }
-    
-    private func updateTitle() {
-        /*if let line = self.line {
-            var string = formatter.string(from:line.expectedTravelTime)!
-            if #available(iOS 10.0, *) {
-                let distance = MeasurementFormatter()
-                distance.unitStyle = .medium
-                distance.unitOptions = .naturalScale
-                distance.numberFormatter.maximumFractionDigits = 1
-                string += " - " + distance.string(from:Measurement(value:line.distance, unit:UnitLength.meters))
-            }
-            title = string
-        } else {
-            title = NSLocalizedString("PlanView.title", comment:String())
-        }*/
     }
     
 //    @objc private func save() {

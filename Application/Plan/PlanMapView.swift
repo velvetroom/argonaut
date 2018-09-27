@@ -1,14 +1,18 @@
 import MapKit
 
 class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
+    weak var trip:UILabel!
     var type = MKDirectionsTransportType.walking
     private var line:MKRoute?
     private var plan = [MKAnnotation]()
     private let geocoder = CLGeocoder()
     private let location = CLLocationManager()
+    private let formatter = DateComponentsFormatter()
     
     func startLocation() {
         delegate = self
+        formatter.unitsStyle = .full
+        formatter.allowedUnits = [.minute]
         location.delegate = self
         location.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         location.distanceFilter = 100
@@ -21,14 +25,17 @@ class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
     
     func updateRoute() {
         removeOverlays(overlays)
-        let request = MKDirections.Request()
-        request.transportType = type
-        request.source = MKMapItem(placemark:MKPlacemark(coordinate:plan.first!.coordinate, addressDictionary:nil))
-        request.destination = MKMapItem(placemark:MKPlacemark(coordinate:plan.last!.coordinate, addressDictionary:nil))
-        MKDirections(request:request).calculate { [weak self] response, _ in
-            guard let line = response?.routes.first else { return }
-            self?.line = line
-            self?.addOverlay(line.polyline, level:.aboveLabels)
+        if plan.count > 1 {
+            let request = MKDirections.Request()
+            request.transportType = type
+            request.source = MKMapItem(placemark:MKPlacemark(coordinate:plan.first!.coordinate, addressDictionary:nil))
+            request.destination = MKMapItem(placemark:MKPlacemark(coordinate:plan.last!.coordinate, addressDictionary:nil))
+            MKDirections(request:request).calculate { [weak self] response, _ in
+                guard let line = response?.routes.first else { return }
+                self?.line = line
+                self?.addOverlay(line.polyline, level:.aboveLabels)
+                self?.updateTitle()
+            }
         }
     }
     
@@ -103,6 +110,22 @@ class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
         geocoder.reverseGeocodeLocation(location) { [weak self, weak mark] marks, _ in
             mark?.title = marks?.first?.name
             self?.updateRoute()
+        }
+    }
+    
+    private func updateTitle() {
+        if let line = self.line {
+            var string = formatter.string(from:line.expectedTravelTime)!
+            if #available(iOS 10.0, *) {
+                let distance = MeasurementFormatter()
+                distance.unitStyle = .medium
+                distance.unitOptions = .naturalScale
+                distance.numberFormatter.maximumFractionDigits = 1
+                string += " - " + distance.string(from:Measurement(value:line.distance, unit:UnitLength.meters))
+            }
+            trip.text = string
+        } else {
+            trip.text = String()
         }
     }
 }
