@@ -34,6 +34,7 @@
 		DAAB79F92159076D00A9F09E /* PlanMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAB79F82159076D00A9F09E /* PlanMapView.swift */; };
 		DADCD679215911C6009C3653 /* PlanTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCD678215911C6009C3653 /* PlanTypeView.swift */; };
 		DADCD67B21591470009C3653 /* assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DADCD67A21591470009C3653 /* assets.xcassets */; };
+		DAED25F7215CD8EE00FAC1AF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAED25F6215CD8EE00FAC1AF /* UIColor.swift */; };
 		DAF48450214D4D61000CD005 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4844F214D4D61000CD005 /* Application.swift */; };
 		DAF48453214D4E84000CD005 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF48452214D4E84000CD005 /* LaunchScreen.storyboard */; };
 		FE812D089686D87DFECCBB33 /* libPods-Application.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEADE1CED89577A8EC01893 /* libPods-Application.a */; };
@@ -84,6 +85,7 @@
 		DAAB79F82159076D00A9F09E /* PlanMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanMapView.swift; sourceTree = "<group>"; };
 		DADCD678215911C6009C3653 /* PlanTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTypeView.swift; sourceTree = "<group>"; };
 		DADCD67A21591470009C3653 /* assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = assets.xcassets; sourceTree = "<group>"; };
+		DAED25F6215CD8EE00FAC1AF /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		DAF4843C214D4CD0000CD005 /* Application.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Application.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF4844F214D4D61000CD005 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		DAF48451214D4E03000CD005 /* application.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = application.plist; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				DAF4844F214D4D61000CD005 /* Application.swift */,
 				DA0000BB214D503C00AD02D2 /* Navigation.swift */,
 				DA0000C8214D56BB00AD02D2 /* MapView.swift */,
+				DAED25F6215CD8EE00FAC1AF /* UIColor.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -414,6 +417,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA9A5708214E6DD60042558D /* TestView.swift in Sources */,
+				DAED25F7215CD8EE00FAC1AF /* UIColor.swift in Sources */,
 				DA0000C9214D56BB00AD02D2 /* MapView.swift in Sources */,
 				DAAB79F92159076D00A9F09E /* PlanMapView.swift in Sources */,
 				DA6EC95A21538A17005D5795 /* PermissionPresenter.swift in Sources */,
