@@ -10,10 +10,7 @@ public class Map {
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
     
     public init() { }
-    
-    public func makeMap(rect:MKMapRect) {
-        queue.async { self.makeMap(url:self.makeUrl(), shots:self.makeShots(rect:rect)) }
-    }
+    public func makeMap(rect:MKMapRect) { queue.async { [weak self] in self?.safeMakeMap(rect:rect)  } }
     
     func makeUrl() -> URL {
         let url = path.appendingPathComponent(UUID().uuidString)
@@ -21,9 +18,13 @@ public class Map {
         return url
     }
     
-    func makeShots(rect:MKMapRect) -> [Shot] {
+    func makeShots(rect:MKMapRect, zoom:Zoom) -> [Shot] {
         var list = [Shot]()
-        zooms.forEach { zoom in list.append(contentsOf:makeShots(rect:rect, zoom:zoom)) }
+        for h in strideIn(start:rect.minX, size:rect.width, tile:zoom.tile) {
+            for v in strideIn(start:rect.minY, size:rect.height, tile:zoom.tile) {
+                list.append(Shot(tileX:h, tileY:v, zoom:zoom))
+            }
+        }
         return list
     }
     
@@ -49,22 +50,16 @@ public class Map {
         return cropped
     }
     
+    private func safeMakeMap(rect:MKMapRect) {
+        makeMap(url:makeUrl(), shots:zooms.flatMap { zoom -> [Shot] in makeShots(rect:rect, zoom:zoom) })
+    }
+    
     private func makeMap(url:URL, shots:[Shot]) {
         guard let shot = shots.first else { return success(url:url) }
         shooterType.init(shot:shot).make(queue:queue, success: { [weak self] image in
             self?.makeTiles(url:url, shot:shot, image:image)
             self?.makeMap(url:url, shots:Array(shots.suffix(from:1)))
         }) { [weak self] error in self?.fails(error:error) }
-    }
-    
-    private func makeShots(rect:MKMapRect, zoom:Zoom) -> [Shot] {
-        var list = [Shot]()
-        for h in strideIn(start:rect.minX, size:rect.width, tile:zoom.tile) {
-            for v in strideIn(start:rect.minY, size:rect.height, tile:zoom.tile) {
-                list.append(Shot(tileX:h, tileY:v, zoom:zoom))
-            }
-        }
-        return list
     }
     
     private func strideIn(start:Double, size:Double, tile:Double) -> StrideTo<Int> {
