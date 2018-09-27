@@ -1,15 +1,28 @@
 import CleanArchitecture
+import MapKit
 
-class PlanView:View<PlanPresenter>, UISearchBarDelegate {
+class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterDelegate {
     private weak var map:PlanMapView!
     private weak var type:PlanTypeView!
+    private weak var results:UIView!
     private weak var search:UISearchBar!
     private weak var field:UITextField!
     private weak var add:UIButton!
     private weak var save:UIButton!
     private weak var searchWidth:NSLayoutConstraint!
+    private weak var resultsHeight:NSLayoutConstraint!
     private weak var typeCenter:NSLayoutConstraint!
+    private var completer:NSObject!
     override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
+    
+    @available(iOS 9.3, *)
+    func completerDidUpdateResults(_ completer:MKLocalSearchCompleter) {
+        presenter.update(results:completer.results)
+    }
+    
+    func searchBar(_:UISearchBar, textDidChange text:String) {
+        
+    }
     
     func searchBarTextDidBeginEditing(_:UISearchBar) {
         searchWidth.constant = 270
@@ -99,7 +112,7 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate {
         view.addSubview(search)
         self.search = search
         
-        field = (search.subviews.first!.subviews.first { view -> Bool in view is UITextField }) as? UITextField
+        field = (search.subviews.first!.subviews.first { view in view is UITextField }) as? UITextField
         field.textColor = .white
         
         let magnifier =  field.leftView as! UIImageView
@@ -114,10 +127,14 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate {
         view.addSubview(trip)
         map.trip = trip
         
+        let results = UIView()
+        results.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(results)
+        
         map.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         map.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         map.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
-        map.topAnchor.constraint(equalTo:type.bottomAnchor, constant:15).isActive = true
+        map.topAnchor.constraint(equalTo:results.bottomAnchor).isActive = true
         
         type.topAnchor.constraint(equalTo:add.bottomAnchor, constant:10).isActive = true
         typeCenter = type.centerXAnchor.constraint(equalTo:view.centerXAnchor)
@@ -141,12 +158,27 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate {
         trip.centerYAnchor.constraint(equalTo:save.centerYAnchor).isActive = true
         trip.leftAnchor.constraint(equalTo:view.leftAnchor, constant:16).isActive = true
         
+        results.topAnchor.constraint(equalTo:type.bottomAnchor, constant:15).isActive = true
+        results.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
+        results.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
+        resultsHeight = results.heightAnchor.constraint(equalToConstant:0)
+        resultsHeight.isActive = true
+        
         if #available(iOS 11.0, *) {
+            completer = MKLocalSearchCompleter()
+            (completer as! MKLocalSearchCompleter).delegate = self
             save.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
         } else {
             save.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
         }
     }
+    
+    private func configureViewModel() {
+        presenter.viewModel { [weak self] (viewModel:[NSAttributedString]) in
+            
+        }
+    }
+    
     
 //    @objc private func save() {
 //        presenter.save(rect:map.visibleMapRect)

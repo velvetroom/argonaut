@@ -51,7 +51,7 @@ public class Map {
     }
     
     private func safeMakeMap(rect:MKMapRect) {
-        makeMap(url:makeUrl(), shots:zooms.flatMap { zoom -> [Shot] in makeShots(rect:rect, zoom:zoom) })
+        makeMap(url:makeUrl(), shots:zooms.flatMap { zoom in makeShots(rect:rect, zoom:zoom) })
     }
     
     private func makeMap(url:URL, shots:[Shot]) {
