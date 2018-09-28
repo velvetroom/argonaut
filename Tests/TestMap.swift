@@ -25,7 +25,7 @@ class TestMap:XCTestCase {
             XCTAssertTrue(FileManager.default.fileExists(atPath:url.path))
             expect.fulfill()
         }
-        DispatchQueue.global(qos:.background).async { self.map.makeMap(rect:MKMapRect()) }
+        DispatchQueue.global(qos:.background).async { self.map.makeMap(points:[]) }
         waitForExpectations(timeout:1)
     }
     
@@ -36,13 +36,23 @@ class TestMap:XCTestCase {
             XCTAssertEqual(Thread.main, Thread.current)
             expect.fulfill()
         }
-        DispatchQueue.global(qos:.background).async { self.map.makeMap(rect:MKMapRect(x:0, y:0, width:1, height:1)) }
+        DispatchQueue.global(qos:.background).async { self.map.makeMap(points:[MKPointAnnotation()]) }
         waitForExpectations(timeout:1)
     }
     
-    func testCreteUrl() {
+    func testCreateUrl() {
         let url = map.makeUrl()
         XCTAssertTrue(FileManager.default.fileExists(atPath:url.path))
         XCTAssertTrue(url.path.contains(map.path.path))
+    }
+    
+    func testMakeZeroRect() {
+        let rect = map.makeRect(points:[])
+        XCTAssertEqual(-1, rect.minX)
+        XCTAssertEqual(-1, rect.minY)
+        XCTAssertEqual(1, rect.maxX)
+        XCTAssertEqual(1, rect.maxY)
+        XCTAssertEqual(2, rect.width)
+        XCTAssertEqual(2, rect.height)
     }
 }

@@ -10,7 +10,7 @@ public class Map {
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
     
     public init() { }
-    public func makeMap(rect:MKMapRect) { queue.async { [weak self] in self?.safeMakeMap(rect:rect)  } }
+    public func makeMap(points:[MKAnnotation]) { queue.async { [weak self] in self?.safeMakeMap(points:points)  } }
     
     func makeUrl() -> URL {
         let url = path.appendingPathComponent(UUID().uuidString)
@@ -50,7 +50,13 @@ public class Map {
         return cropped
     }
     
-    private func safeMakeMap(rect:MKMapRect) {
+    func makeRect(points:[MKAnnotation]) -> MKMapRect {
+        let rects = points.map { point in MKMapRect(origin:MKMapPoint(point.coordinate), size:MKMapSize()) }
+        return rects.reduce(MKMapRect()) { rect, item in rect.union(item) }
+    }
+    
+    private func safeMakeMap(points:[MKAnnotation]) {
+        let rect = makeRect(points:points)
         makeMap(url:makeUrl(), shots:zooms.flatMap { zoom in makeShots(rect:rect, zoom:zoom) })
     }
     

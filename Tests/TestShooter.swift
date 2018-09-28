@@ -22,7 +22,7 @@ class TestShooter:XCTestCase {
         let expect = expectation(description:String())
         MockShooter.image = makeImage(width:1, height:1)
         map.onSuccess = { url in expect.fulfill() }
-        map.makeMap(rect:MKMapRect(x:0, y:0, width:1, height:1))
+        map.makeMap(points:[MKPointAnnotation()])
         waitForExpectations(timeout:1)
     }
     

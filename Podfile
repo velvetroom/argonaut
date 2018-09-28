@@ -3,6 +3,7 @@ use_modular_headers!
 
 def podlist
     pod 'CleanArchitecture'
+    pod 'MarkdownHero'
 end
 
 target 'Application' do

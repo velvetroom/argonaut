@@ -101,7 +101,7 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         save.translatesAutoresizingMaskIntoConstraints = false
         save.imageView!.clipsToBounds = true
         save.imageView!.contentMode = .center
-        save.addTarget(map, action:#selector(map.addPoint), for:.touchUpInside)
+        save.addTarget(self, action:#selector(make), for:.touchUpInside)
         view.addSubview(save)
         self.save = save
         
@@ -217,7 +217,7 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
     }
     
     
-//    @objc private func save() {
-//        presenter.save(rect:map.visibleMapRect)
-//    }
+    @objc private func make() {
+        presenter.make()
+    }
 }
