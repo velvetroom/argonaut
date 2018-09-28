@@ -4,7 +4,7 @@ import MapKit
 class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterDelegate {
     private weak var map:PlanMapView!
     private weak var type:PlanTypeView!
-    private weak var results:UIView!
+    private weak var results:UIScrollView!
     private weak var search:UISearchBar!
     private weak var field:UITextField!
     private weak var add:UIButton!
@@ -21,7 +21,9 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
     }
     
     func searchBar(_:UISearchBar, textDidChange text:String) {
-        
+        if #available(iOS 9.3, *) {
+            (completer as! MKLocalSearchCompleter).queryFragment = text
+        }
     }
     
     func searchBarTextDidBeginEditing(_:UISearchBar) {
@@ -50,6 +52,10 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
     func searchBarCancelButtonClicked(_:UISearchBar) {
         search.text = String()
         search.resignFirstResponder()
+        if #available(iOS 9.3, *) {
+            (completer as! MKLocalSearchCompleter).cancel()
+            presenter.update(results:[])
+        }
     }
     
     func searchBarSearchButtonClicked(_:UISearchBar) {
@@ -60,6 +66,9 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         super.viewDidLoad()
         view.backgroundColor = .black
         makeOutlets()
+        if #available(iOS 9.3, *) {
+            presenter.viewModel { [weak self] viewModel in self?.update(viewModel:viewModel) }
+        }
     }
     
     override func viewWillAppear(_ animated:Bool) {
@@ -127,14 +136,21 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         view.addSubview(trip)
         map.trip = trip
         
-        let results = UIView()
+        let results = UIScrollView()
+        results.backgroundColor = .clear
+        results.alwaysBounceVertical = true
+        results.alwaysBounceHorizontal = false
+        results.showsHorizontalScrollIndicator = false
+        results.showsVerticalScrollIndicator = true
         results.translatesAutoresizingMaskIntoConstraints = false
+        results.indicatorStyle = .white
         view.addSubview(results)
+        self.results = results
         
         map.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         map.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         map.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
-        map.topAnchor.constraint(equalTo:results.bottomAnchor).isActive = true
+        map.topAnchor.constraint(equalTo:results.bottomAnchor, constant:10).isActive = true
         
         type.topAnchor.constraint(equalTo:add.bottomAnchor, constant:10).isActive = true
         typeCenter = type.centerXAnchor.constraint(equalTo:view.centerXAnchor)
@@ -158,7 +174,7 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         trip.centerYAnchor.constraint(equalTo:save.centerYAnchor).isActive = true
         trip.leftAnchor.constraint(equalTo:view.leftAnchor, constant:16).isActive = true
         
-        results.topAnchor.constraint(equalTo:type.bottomAnchor, constant:15).isActive = true
+        results.topAnchor.constraint(equalTo:type.bottomAnchor, constant:10).isActive = true
         results.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         results.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         resultsHeight = results.heightAnchor.constraint(equalToConstant:0)
@@ -173,9 +189,30 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         }
     }
     
-    private func configureViewModel() {
-        presenter.viewModel { [weak self] (viewModel:[NSAttributedString]) in
-            
+    @available(iOS 9.3, *)
+    private func update(viewModel:[(NSAttributedString, MKLocalSearchCompletion)]) {
+        results.subviews.forEach { view in view.removeFromSuperview() }
+        let width = results.bounds.width
+        let height:CGFloat = viewModel.reduce(into:0) { top, item in
+            let view = PlanResultView(frame:CGRect(x:0, y:top, width:width, height:45))
+            view.configure(text:item.0)
+            view.item = item.1
+            view.addTarget(self, action:#selector(selected(view:)), for:.touchUpInside)
+            results.addSubview(view)
+            top += view.bounds.height
+        }
+        view.layoutIfNeeded()
+        results.contentSize = CGSize(width:width, height:height)
+        resultsHeight.constant = min(height, 152)
+        UIView.animate(withDuration:0.3) { [weak self] in self?.view.layoutIfNeeded() }
+    }
+    
+    @objc private func selected(view:PlanResultView) {
+        search.text = String()
+        search.resignFirstResponder()
+        if #available(iOS 9.3, *) {
+            map.selected(view:view)
+            presenter.update(results:[])
         }
     }
     

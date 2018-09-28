@@ -39,18 +39,17 @@ class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    @objc func addPoint() {
-        var mark:MKPointAnnotation!
-        if plan.first is MKUserLocation && plan.count == 2 { plan.remove(at:0) }
-        if plan.count == 2 {
-            mark = plan.last as? MKPointAnnotation
-        } else {
-            mark = MKPointAnnotation()
-            plan.append(mark)
-            addAnnotation(mark)
+    @objc func addPoint() { add(coordinate:convert(CGPoint(x:bounds.midX, y:bounds.midY), toCoordinateFrom:self)) }
+    
+    @available(iOS 9.3, *)
+    func selected(view:PlanResultView) {
+        UIApplication.shared.keyWindow!.endEditing(true)
+        let completion = view.item as! MKLocalSearchCompletion
+        MKLocalSearch(request:MKLocalSearch.Request(completion:completion)).start { [weak self] response, _ in
+            guard let coordinate = response?.mapItems.first?.placemark.coordinate else { return }
+            self?.add(coordinate:coordinate)
+            self?.centre(coordinate:coordinate)
         }
-        mark.coordinate = convert(CGPoint(x:bounds.midX, y:bounds.midY), toCoordinateFrom:self)
-        geocode(mark:mark)
     }
     
     func mapView(_:MKMapView, viewFor annotation:MKAnnotation) -> MKAnnotationView? {
@@ -98,11 +97,29 @@ class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     func locationManager(_:CLLocationManager, didUpdateLocations locations:[CLLocation]) {
+        centre(coordinate:locations.last!.coordinate)
+        if plan.isEmpty { plan.append(userLocation) }
+    }
+    
+    private func add(coordinate:CLLocationCoordinate2D) {
+        var mark:MKPointAnnotation!
+        if plan.first is MKUserLocation && plan.count == 2 { plan.remove(at:0) }
+        if plan.count == 2 {
+            mark = plan.last as? MKPointAnnotation
+        } else {
+            mark = MKPointAnnotation()
+            plan.append(mark)
+            addAnnotation(mark)
+        }
+        mark.coordinate = coordinate
+        geocode(mark:mark)
+    }
+    
+    private func centre(coordinate:CLLocationCoordinate2D) {
         var region = MKCoordinateRegion()
         region.span = self.region.span
-        region.center = locations.last!.coordinate
-        setRegion(region, animated:false)
-        if plan.isEmpty { plan.append(userLocation) }
+        region.center = coordinate
+        setRegion(region, animated:true)
     }
     
     private func geocode(mark:MKPointAnnotation) {
