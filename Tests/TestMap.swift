@@ -48,11 +48,59 @@ class TestMap:XCTestCase {
     
     func testMakeZeroRect() {
         let rect = map.makeRect(points:[])
-        XCTAssertEqual(-1, rect.minX)
-        XCTAssertEqual(-1, rect.minY)
-        XCTAssertEqual(1, rect.maxX)
-        XCTAssertEqual(1, rect.maxY)
-        XCTAssertEqual(2, rect.width)
-        XCTAssertEqual(2, rect.height)
+        XCTAssertEqual(0, rect.minX)
+        XCTAssertEqual(0, rect.minY)
+        XCTAssertEqual(0, rect.maxX)
+        XCTAssertEqual(0, rect.maxY)
+        XCTAssertEqual(0, rect.width)
+        XCTAssertEqual(0, rect.height)
+    }
+    
+    func testMakeRectOnePoint() {
+        let rect = map.makeRect(points:[MKPlacemark(
+            coordinate:CLLocationCoordinate2D(latitude:51.487404, longitude:-0.127049), addressDictionary:nil)])
+        XCTAssertEqual(134122993.39930739, rect.minX)
+        XCTAssertEqual(89285590.33216065, rect.minY)
+        XCTAssertEqual(1, rect.width)
+        XCTAssertEqual(1, rect.height)
+    }
+    
+    func testMakeRectTwoPoints() {
+        let rect = map.makeRect(points:[
+        MKPlacemark(coordinate:CLLocationCoordinate2D(latitude:51.487404, longitude:-0.127049), addressDictionary:nil),
+        MKPlacemark(coordinate:CLLocationCoordinate2D(latitude:51.482393, longitude:-0.121620), addressDictionary:nil)])
+        
+        XCTAssertEqual(134122993.39930739, rect.minX)
+        XCTAssertEqual(89285590.33216065, rect.minY)
+        XCTAssertEqual(134127041.55511466, rect.maxX)
+        XCTAssertEqual(89291590.56837434, rect.maxY)
+        XCTAssertEqual(4048.1558072715998, rect.width)
+        XCTAssertEqual(6000.236213684082, rect.height)
+    }
+    
+    func testMakeRectTwoPointsInversed() {
+        let rect = map.makeRect(points:[
+        MKPlacemark(coordinate:CLLocationCoordinate2D(latitude:51.482393, longitude:-0.121620), addressDictionary:nil),
+        MKPlacemark(coordinate:CLLocationCoordinate2D(latitude:51.487404, longitude:-0.127049), addressDictionary:nil)])
+        
+        XCTAssertEqual(134122993.39930739, rect.minX)
+        XCTAssertEqual(89285590.33216065, rect.minY)
+        XCTAssertEqual(134127041.55511466, rect.maxX)
+        XCTAssertEqual(89291590.56837434, rect.maxY)
+        XCTAssertEqual(4048.1558072715998, rect.width)
+        XCTAssertEqual(6000.236213684082, rect.height)
+    }
+    
+    func testMakeRectCrossing() {
+        let rect = map.makeRect(points:[
+            MKPlacemark(coordinate:CLLocationCoordinate2D(latitude:0.001, longitude:-0.001), addressDictionary:nil),
+            MKPlacemark(coordinate:CLLocationCoordinate2D(latitude:-0.001, longitude:0.001), addressDictionary:nil)])
+        
+        XCTAssertEqual(134216982.34595555, rect.minX)
+        XCTAssertEqual(134216982.34595552, rect.minY)
+        XCTAssertEqual(134218473.65404445, rect.maxX)
+        XCTAssertEqual(134218473.65404448, rect.maxY)
+        XCTAssertEqual(1491.3080888986588, rect.width)
+        XCTAssertEqual(1491.3080889582634, rect.height)
     }
 }

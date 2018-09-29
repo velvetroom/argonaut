@@ -51,8 +51,27 @@ public class Map {
     }
     
     func makeRect(points:[MKAnnotation]) -> MKMapRect {
-        let rects = points.map { point in MKMapRect(origin:MKMapPoint(point.coordinate), size:MKMapSize()) }
-        return rects.reduce(MKMapRect()) { rect, item in rect.union(item) }
+        var rect = MKMapRect()
+        var points = points
+        if !points.isEmpty {
+            let first = points.removeFirst()
+            var top = first.coordinate.latitude
+            var bottom = first.coordinate.latitude
+            var left = first.coordinate.longitude
+            var right = first.coordinate.longitude
+            points.forEach { point in
+                top = max(top, point.coordinate.latitude)
+                bottom = min(bottom, point.coordinate.latitude)
+                left = min(left, point.coordinate.longitude)
+                right = max(right, point.coordinate.longitude)
+            }
+            let topLeft = MKMapPoint(CLLocationCoordinate2D(latitude:top, longitude:left))
+            let bottomRight = MKMapPoint(CLLocationCoordinate2D(latitude:bottom, longitude:right))
+            let width = bottomRight.x - topLeft.x
+            let height = bottomRight.y - topLeft.y
+            rect = MKMapRect(x:topLeft.x, y:topLeft.y, width:width > 0 ? width : 1, height:height > 0 ? height : 1)
+        }
+        return rect
     }
     
     private func safeMakeMap(points:[MKAnnotation]) {
