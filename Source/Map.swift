@@ -3,6 +3,7 @@ import MapKit
 public class Map {
     public var onSuccess:((URL) -> Void)?
     public var onFail:((Error) -> Void)?
+    public var onProgress:((Float) -> Void)?
     var shooterType:Shooter.Type = MapShooter.self
     var zooms = [Zoom(level:16), Zoom(level:18)]
     var path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
@@ -76,15 +77,19 @@ public class Map {
     
     private func safeMakeMap(points:[MKAnnotation]) {
         let rect = makeRect(points:points)
-        makeMap(url:makeUrl(), shots:zooms.flatMap { zoom in makeShots(rect:rect, zoom:zoom) })
+        makeMap(url:makeUrl(), shots:zooms.flatMap { zoom in makeShots(rect:rect, zoom:zoom) }, index:0)
     }
     
-    private func makeMap(url:URL, shots:[Shot]) {
-        guard let shot = shots.first else { return success(url:url) }
-        shooterType.init(shot:shot).make(queue:queue, success: { [weak self] image in
-            self?.makeTiles(url:url, shot:shot, image:image)
-            self?.makeMap(url:url, shots:Array(shots.suffix(from:1)))
-        }) { [weak self] error in self?.fails(error:error) }
+    private func makeMap(url:URL, shots:[Shot], index:Int) {
+        if index < shots.count {
+            shooterType.init(shot:shots.first!).make(queue:queue, success: { [weak self] image in
+                self?.progress(value:Float(index + 1) / Float(shots.count))
+                self?.makeTiles(url:url, shot:shots.first!, image:image)
+                self?.makeMap(url:url, shots:shots, index:index + 1)
+            }) { [weak self] error in self?.fails(error:error) }
+        } else {
+            success(url:url)
+        }
     }
     
     private func strideIn(start:Double, size:Double, tile:Double) -> StrideTo<Int> {
@@ -99,4 +104,5 @@ public class Map {
     
     private func success(url:URL) { DispatchQueue.main.async { [weak self] in self?.onSuccess?(url) } }
     private func fails(error:Error) { DispatchQueue.main.async { [weak self] in self?.onFail?(error) } }
+    private func progress(value:Float) { DispatchQueue.main.async { [weak self] in self?.onProgress?(value) } }
 }

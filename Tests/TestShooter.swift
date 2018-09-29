@@ -26,6 +26,21 @@ class TestShooter:XCTestCase {
         waitForExpectations(timeout:1)
     }
     
+    func testUpdateProgress() {
+        let expect = expectation(description:String())
+        MockShooter.image = makeImage(width:1, height:1)
+        map.onProgress = { progress in
+            XCTAssertEqual(Thread.main, Thread.current)
+            XCTAssertGreaterThanOrEqual(progress, 0)
+            XCTAssertLessThanOrEqual(progress, 1)
+            if progress == 1 {
+                expect.fulfill()
+            }
+        }
+        DispatchQueue.global(qos:.background).async { self.map.makeMap(points:[MKPointAnnotation()]) }
+        waitForExpectations(timeout:1)
+    }
+    
     private func makeImage(width:Double, height:Double) -> UIImage {
         UIGraphicsBeginImageContext(CGSize(width:width, height:height))
         let image = UIImage(cgImage:UIGraphicsGetCurrentContext()!.makeImage()!)

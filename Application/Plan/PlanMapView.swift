@@ -3,8 +3,8 @@ import MapKit
 class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
     weak var trip:UILabel!
     var type = MKDirectionsTransportType.walking
+    private(set) var plan = [MKAnnotation]()
     private var line:MKRoute?
-    private var plan = [MKAnnotation]()
     private let geocoder = CLGeocoder()
     private let location = CLLocationManager()
     private let formatter = DateComponentsFormatter()

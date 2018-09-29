@@ -2,8 +2,10 @@ import CleanArchitecture
 import MapKit
 
 class PlanPresenter:Presenter {
-    func make() {
-        Application.navigation.pushViewController(MakeView(), animated:true)
+    func make(plan:[MKAnnotation]) {
+        let view = MakeView()
+        view.presenter.plan = plan
+        Application.navigation.pushViewController(view, animated:true)
     }
     
     @available(iOS 9.3, *)

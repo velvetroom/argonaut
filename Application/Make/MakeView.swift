@@ -10,6 +10,7 @@ class MakeView:View<MakePresenter> {
         super.viewDidLoad()
         view.backgroundColor = .black
         makeOutlets()
+        configureViewModel()
     }
     
     private func makeOutlets() {
@@ -65,5 +66,11 @@ class MakeView:View<MakePresenter> {
             label.topAnchor.constraint(equalTo:view.topAnchor, constant:20).isActive = true
             cancel.bottomAnchor.constraint(equalTo:view.bottomAnchor, constant:-50).isActive = true
         }
-    } 
+    }
+    
+    private func configureViewModel() {
+        presenter.viewModel { [weak self] (progress:Float) in
+            self?.progress.setProgress(progress, animated:true)
+        }
+    }
 }

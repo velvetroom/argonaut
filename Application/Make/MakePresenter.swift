@@ -3,9 +3,10 @@ import Argonaut
 import MapKit
 
 class MakePresenter:Presenter {
+    var plan:[MKAnnotation]!
     private let map = Map()
     
-    func save(rect:MKMapRect) {
+    override func didLoad() {
         map.onSuccess = { url in
             let view = TestView()
             view.url = url
@@ -14,7 +15,11 @@ class MakePresenter:Presenter {
         map.onFail = { error in
             print(error)
         }
-//        map.makeMap(rect:rect)
+        map.onProgress = { [weak self] progress in
+            self?.update(viewModel:progress)
+        }
+        
+        map.makeMap(points:plan)
     }
     
     @objc func cancel() {
