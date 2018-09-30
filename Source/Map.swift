@@ -5,7 +5,8 @@ public class Map {
     public var onFail:((Error) -> Void)?
     public var onProgress:((Float) -> Void)?
     var shooterType:Shooter.Type = MapShooter.self
-    var zooms = [Zoom(level:15), Zoom(level:16), Zoom(level:17), Zoom(level:18)]
+    var zooms = [Zoom(level:10), Zoom(level:11), Zoom(level:12), Zoom(level:13), Zoom(level:14), Zoom(level:15),
+                 Zoom(level:16), Zoom(level:17), Zoom(level:18)]
     var path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
     private weak var shooter:Shooter?
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
