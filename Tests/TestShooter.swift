@@ -26,6 +26,19 @@ class TestShooter:XCTestCase {
         waitForExpectations(timeout:1)
     }
     
+    func testMultipleZoom() {
+        let expect = expectation(description:String())
+        map.zooms = [Zoom(level:2), Zoom(level:3)]
+        MockShooter.image = makeImage(width:256, height:256)
+        map.onSuccess = { url in
+            XCTAssertTrue(FileManager.default.fileExists(atPath:url.appendingPathComponent("2_0_0.png").path))
+            XCTAssertTrue(FileManager.default.fileExists(atPath:url.appendingPathComponent("3_0_0.png").path))
+            expect.fulfill()
+        }
+        map.makeMap(points:[MKPointAnnotation()])
+        waitForExpectations(timeout:1)
+    }
+    
     func testUpdateProgress() {
         let expect = expectation(description:String())
         MockShooter.image = makeImage(width:1, height:1)
@@ -38,7 +51,7 @@ class TestShooter:XCTestCase {
             }
         }
         DispatchQueue.global(qos:.background).async { self.map.makeMap(points:[MKPointAnnotation()]) }
-        waitForExpectations(timeout:1)
+        waitForExpectations(timeout:2)
     }
     
     private func makeImage(width:Double, height:Double) -> UIImage {

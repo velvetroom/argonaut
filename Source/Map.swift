@@ -5,7 +5,7 @@ public class Map {
     public var onFail:((Error) -> Void)?
     public var onProgress:((Float) -> Void)?
     var shooterType:Shooter.Type = MapShooter.self
-    var zooms = [Zoom(level:16), Zoom(level:18)]
+    var zooms = [Zoom(level:15), Zoom(level:16), Zoom(level:17), Zoom(level:18)]
     var path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
     private weak var shooter:Shooter?
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
@@ -34,7 +34,7 @@ public class Map {
             for x in 0 ..< Int(image.size.height / 256) {
                 let cropped = crop(image:image, rect:CGRect(x:x * 512, y:y * 512, width:512, height:512))
                 let location = "\(shot.zoom.level)_\(shot.tileX + x)_\(shot.tileY + y).png"
-                try! cropped.pngData()?.write(to:url.appendingPathComponent(location))
+                try! cropped.pngData()!.write(to:url.appendingPathComponent(location))
             }
         }
     }
@@ -82,9 +82,9 @@ public class Map {
     
     private func makeMap(url:URL, shots:[Shot], index:Int) {
         if index < shots.count {
-            shooterType.init(shot:shots.first!).make(queue:queue, success: { [weak self] image in
+            shooterType.init(shot:shots[index]).make(queue:queue, success: { [weak self] image in
                 self?.progress(value:Float(index + 1) / Float(shots.count))
-                self?.makeTiles(url:url, shot:shots.first!, image:image)
+                self?.makeTiles(url:url, shot:shots[index], image:image)
                 self?.makeMap(url:url, shots:shots, index:index + 1)
             }) { [weak self] error in self?.fails(error:error) }
         } else {
