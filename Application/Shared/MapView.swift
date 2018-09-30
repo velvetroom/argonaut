@@ -32,6 +32,12 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     required init?(coder:NSCoder) { return nil }
+    
+    deinit {
+        location.stopUpdatingHeading()
+        location.stopUpdatingLocation()
+    }
+    
     func start() { }
     
     func centre(coordinate:CLLocationCoordinate2D) {
@@ -89,7 +95,8 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     func mapView(_:MKMapView, didAdd views:[MKAnnotationView]) {
-        if let user = views.first(where: { view in view.annotation is MKUserLocation }) {
+        if  headingIndicator == nil,
+            let user = views.first(where: { view in view.annotation is MKUserLocation }) {
             let headingIndicator = UIImageView(frame:user.bounds)
             headingIndicator.image = #imageLiteral(resourceName: "iconHeading.pdf")
             headingIndicator.clipsToBounds = true

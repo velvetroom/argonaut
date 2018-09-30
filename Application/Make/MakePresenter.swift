@@ -10,7 +10,7 @@ class MakePresenter:Presenter {
         map.onSuccess = { url in
             let view = TravelView()
             view.tiler.url = url
-            Application.navigation.pushViewController(view, animated:true)
+            Application.navigation.setViewControllers([view], animated:true)
         }
         map.onFail = { error in
             print(error)
