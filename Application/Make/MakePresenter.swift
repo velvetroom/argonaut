@@ -8,8 +8,8 @@ class MakePresenter:Presenter {
     
     override func didLoad() {
         map.onSuccess = { url in
-            let view = TestView()
-            view.url = url
+            let view = TravelView()
+            view.tiler.url = url
             Application.navigation.pushViewController(view, animated:true)
         }
         map.onFail = { error in

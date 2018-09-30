@@ -1,7 +1,7 @@
 import MapKit
 
-class TestTiler:MKTileOverlay {
-    var url:URL?
+class TravelTiler:MKTileOverlay {
+    var url:URL!
     
     init() {
         super.init(urlTemplate:"{z}_{x}_{y}")
@@ -10,7 +10,6 @@ class TestTiler:MKTileOverlay {
     }
     
     override func loadTile(at path:MKTileOverlayPath, result:@escaping(Data?, Error?) -> Void) {
-        let location = url(forTilePath:path)
-        result(try? Data(contentsOf:url!.appendingPathComponent("\(location.path).png")), nil)
+        result(try? Data(contentsOf:url!.appendingPathComponent("\(url(forTilePath:path).path).png")), nil)
     }
 }

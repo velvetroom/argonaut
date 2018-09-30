@@ -78,7 +78,6 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
     
     private func makeOutlets() {
         let map = PlanMapView()
-        map.startLocation()
         view.addSubview(map)
         self.map = map
         
@@ -215,7 +214,6 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
             presenter.update(results:[])
         }
     }
-    
     
     @objc private func make() {
         presenter.make(plan:map.plan)

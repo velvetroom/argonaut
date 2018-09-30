@@ -1,26 +1,16 @@
 import MapKit
 
-class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
+class PlanMapView:MapView {
     weak var trip:UILabel!
     var type = MKDirectionsTransportType.walking
     private(set) var plan = [MKAnnotation]()
     private var line:MKRoute?
     private let geocoder = CLGeocoder()
-    private let location = CLLocationManager()
     private let formatter = DateComponentsFormatter()
     
-    func startLocation() {
-        delegate = self
+    override func start() {
         formatter.unitsStyle = .full
         formatter.allowedUnits = [.minute]
-        location.delegate = self
-        location.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        location.distanceFilter = 100
-        location.startUpdatingLocation()
-        var region = MKCoordinateRegion()
-        region.span.latitudeDelta = 0.01
-        region.span.longitudeDelta = 0.01
-        setRegion(region, animated:false)
     }
     
     func updateRoute() {
@@ -52,41 +42,10 @@ class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    func mapView(_:MKMapView, viewFor annotation:MKAnnotation) -> MKAnnotationView? {
-        guard let mark = annotation as? MKPointAnnotation else { return view(for:annotation) }
-        var point:MKAnnotationView!
-        if let reuse = dequeueReusableAnnotationView(withIdentifier:"mark") {
-            reuse.annotation = mark
-            point = reuse
-        } else {
-            if #available(iOS 11.0, *) {
-                let marker = MKMarkerAnnotationView(annotation:mark, reuseIdentifier:"mark")
-                marker.markerTintColor = .black
-                marker.animatesWhenAdded = true
-                point = marker
-            } else {
-                let marker = MKPinAnnotationView(annotation:mark, reuseIdentifier:"mark")
-                marker.pinTintColor = .black
-                marker.animatesDrop = true
-                point = marker
-            }
-            point.isDraggable = true
-        }
-        return point
-    }
-    
-    func mapView(_:MKMapView, rendererFor overlay:MKOverlay) -> MKOverlayRenderer {
-        if let tiler = overlay as? MKTileOverlay {
-            return MKTileOverlayRenderer(tileOverlay:tiler)
-        } else if let polyline = overlay as? MKPolyline {
-            let renderer = MKPolylineRenderer(polyline:polyline)
-            renderer.lineWidth = 3
-            renderer.strokeColor = .black
-            renderer.lineCap = .round
-            return renderer
-        } else {
-            return MKOverlayRenderer()
-        }
+    override func mapView(_ map:MKMapView, viewFor annotation:MKAnnotation) -> MKAnnotationView? {
+        let view = super.mapView(map, viewFor:annotation)
+        view?.isDraggable = true
+        return view
     }
     
     func mapView(_:MKMapView, annotationView view:MKAnnotationView, didChange state:MKAnnotationView.DragState,
@@ -96,8 +55,8 @@ class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(_:CLLocationManager, didUpdateLocations locations:[CLLocation]) {
-        centre(coordinate:locations.last!.coordinate)
+    override func locationManager(_ manager:CLLocationManager, didUpdateLocations locations:[CLLocation]) {
+        super.locationManager(manager, didUpdateLocations: locations)
         if plan.isEmpty { plan.append(userLocation) }
     }
     
@@ -113,13 +72,6 @@ class PlanMapView:MapView, MKMapViewDelegate, CLLocationManagerDelegate {
         }
         mark.coordinate = coordinate
         geocode(mark:mark)
-    }
-    
-    private func centre(coordinate:CLLocationCoordinate2D) {
-        var region = MKCoordinateRegion()
-        region.span = self.region.span
-        region.center = coordinate
-        setRegion(region, animated:true)
     }
     
     private func geocode(mark:MKPointAnnotation) {
