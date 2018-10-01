@@ -19,7 +19,7 @@ class PlanTypeView:UIView {
     
     private func makeOutlets() {
         let base = UIView()
-        base.backgroundColor = .midnightBlue
+        base.backgroundColor = .greekBlue
         base.isUserInteractionEnabled = false
         base.translatesAutoresizingMaskIntoConstraints = false
         base.clipsToBounds = true
