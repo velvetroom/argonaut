@@ -71,11 +71,6 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         }
     }
     
-    override func viewWillAppear(_ animated:Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated:true)
-    }
-    
     private func makeOutlets() {
         let map = PlanMapView()
         view.addSubview(map)

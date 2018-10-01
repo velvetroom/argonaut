@@ -3,6 +3,7 @@ import CoreLocation
 
 class PermissionView:View<PermissionPresenter>, CLLocationManagerDelegate {
     private var manager:CLLocationManager?
+    override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
     
     override func viewDidLoad() {
         super.viewDidLoad()
