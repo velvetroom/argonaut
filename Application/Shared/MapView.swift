@@ -31,14 +31,14 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         start()
     }
     
-    required init?(coder:NSCoder) { return nil }
-    
     deinit {
         location.stopUpdatingHeading()
         location.stopUpdatingLocation()
     }
     
+    required init?(coder:NSCoder) { return nil }
     func start() { }
+    @objc func centreUser() { centre(coordinate:userLocation.coordinate) }
     
     func centre(coordinate:CLLocationCoordinate2D) {
         var region = MKCoordinateRegion()
