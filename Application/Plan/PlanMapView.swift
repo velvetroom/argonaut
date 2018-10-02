@@ -10,7 +10,7 @@ class PlanMapView:MapView {
     
     override func start() {
         formatter.unitsStyle = .full
-        formatter.allowedUnits = [.minute]
+        formatter.allowedUnits = [.minute, .hour]
     }
     
     func updateRoute() {
@@ -90,7 +90,7 @@ class PlanMapView:MapView {
                 distance.unitStyle = .medium
                 distance.unitOptions = .naturalScale
                 distance.numberFormatter.maximumFractionDigits = 1
-                string += " - " + distance.string(from:Measurement(value:line.distance, unit:UnitLength.meters))
+                string += "\n" + distance.string(from:Measurement(value:line.distance, unit:UnitLength.meters))
             }
             trip.text = string
         } else {

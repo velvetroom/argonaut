@@ -7,7 +7,7 @@ class HomeView:View<HomePresenter> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .midnightBlue
+        view.backgroundColor = .black
         makeOutlets()
         configureViewModel()
     }
@@ -22,9 +22,13 @@ class HomeView:View<HomePresenter> {
         bar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bar)
         
+        let map = Button(image:#imageLiteral(resourceName: "iconMap.pdf"))
+        map.addTarget(presenter, action:#selector(presenter.map), for:.touchUpInside)
+        view.addSubview(map)
+        
         let border = UIView()
         border.translatesAutoresizingMaskIntoConstraints = false
-        border.backgroundColor = UIColor(white:1, alpha:0.1)
+        border.backgroundColor = UIColor(white:1, alpha:0.2)
         border.isUserInteractionEnabled = false
         bar.addSubview(border)
         
@@ -42,6 +46,9 @@ class HomeView:View<HomePresenter> {
         bar.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         bar.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         bar.heightAnchor.constraint(equalToConstant:60).isActive = true
+        
+        map.topAnchor.constraint(equalTo:bar.topAnchor).isActive = true
+        map.rightAnchor.constraint(equalTo:bar.rightAnchor).isActive = true
         
         border.bottomAnchor.constraint(equalTo:bar.bottomAnchor).isActive = true
         border.leftAnchor.constraint(equalTo:bar.leftAnchor).isActive = true

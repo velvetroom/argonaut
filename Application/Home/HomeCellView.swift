@@ -5,7 +5,7 @@ class HomeCellView:UIControl {
         super.init(frame:.zero)
         clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = UIColor.black
+        backgroundColor = .midnightBlue
         layer.cornerRadius = 6
     }
     

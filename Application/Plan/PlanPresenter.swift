@@ -8,6 +8,10 @@ class PlanPresenter:Presenter {
         Application.navigation.pushViewController(view, animated:true)
     }
     
+    @objc func cancel() {
+        Application.navigation.popViewController(animated:true)
+    }
+    
     @available(iOS 9.3, *)
     func update(results:[MKLocalSearchCompletion]) {
         DispatchQueue.global(qos:.background).async { [weak self] in self?.safeUpdate(results:results) }

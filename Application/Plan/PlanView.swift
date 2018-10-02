@@ -7,9 +7,6 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
     private weak var results:UIScrollView!
     private weak var search:UISearchBar!
     private weak var field:UITextField!
-    private weak var centre:UIButton!
-    private weak var add:UIButton!
-    private weak var save:UIButton!
     private weak var searchWidth:NSLayoutConstraint!
     private weak var resultsHeight:NSLayoutConstraint!
     private weak var typeCenter:NSLayoutConstraint!
@@ -82,32 +79,21 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         view.addSubview(type)
         self.type = type
         
-        let centre = UIButton()
-        centre.setImage(#imageLiteral(resourceName: "iconCentre.pdf"), for:[])
-        centre.translatesAutoresizingMaskIntoConstraints = false
-        centre.imageView!.clipsToBounds = true
-        centre.imageView!.contentMode = .center
+        let cancel = Button(image:#imageLiteral(resourceName: "iconCancel.pdf"))
+        cancel.addTarget(presenter, action:#selector(presenter.cancel), for:.touchUpInside)
+        view.addSubview(cancel)
+        
+        let centre = Button(image:#imageLiteral(resourceName: "iconCentre.pdf"))
         centre.addTarget(map, action:#selector(map.centreUser), for:.touchUpInside)
         view.addSubview(centre)
-        self.centre = centre
         
-        let add = UIButton()
-        add.setImage(#imageLiteral(resourceName: "iconAdd.pdf"), for:[])
-        add.translatesAutoresizingMaskIntoConstraints = false
-        add.imageView!.clipsToBounds = true
-        add.imageView!.contentMode = .center
+        let add = Button(image:#imageLiteral(resourceName: "iconAdd.pdf"))
         add.addTarget(map, action:#selector(map.addPoint), for:.touchUpInside)
         view.addSubview(add)
-        self.add = add
         
-        let save = UIButton()
-        save.setImage(#imageLiteral(resourceName: "iconSave"), for:[])
-        save.translatesAutoresizingMaskIntoConstraints = false
-        save.imageView!.clipsToBounds = true
-        save.imageView!.contentMode = .center
+        let save = Button(image:#imageLiteral(resourceName: "iconSave"))
         save.addTarget(self, action:#selector(make), for:.touchUpInside)
         view.addSubview(save)
-        self.save = save
         
         let search = UISearchBar()
         search.translatesAutoresizingMaskIntoConstraints = false
@@ -135,8 +121,9 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         let trip = UILabel()
         trip.translatesAutoresizingMaskIntoConstraints = false
         trip.isUserInteractionEnabled = false
-        trip.font = .systemFont(ofSize:14, weight:.light)
+        trip.font = .systemFont(ofSize:13, weight:.light)
         trip.textColor = .white
+        trip.numberOfLines = 2
         view.addSubview(trip)
         map.trip = trip
         
@@ -156,23 +143,20 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         map.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
         map.topAnchor.constraint(equalTo:results.bottomAnchor, constant:10).isActive = true
         
-        type.topAnchor.constraint(equalTo:add.bottomAnchor, constant:10).isActive = true
+        type.topAnchor.constraint(equalTo:save.bottomAnchor, constant:10).isActive = true
         typeCenter = type.centerXAnchor.constraint(equalTo:view.centerXAnchor)
         typeCenter.isActive = true
         
         centre.centerYAnchor.constraint(equalTo:save.centerYAnchor).isActive = true
         centre.rightAnchor.constraint(equalTo:add.leftAnchor).isActive = true
-        centre.heightAnchor.constraint(equalToConstant:46).isActive = true
-        centre.widthAnchor.constraint(equalToConstant:52).isActive = true
         
         add.centerYAnchor.constraint(equalTo:save.centerYAnchor).isActive = true
         add.rightAnchor.constraint(equalTo:save.leftAnchor).isActive = true
-        add.heightAnchor.constraint(equalToConstant:46).isActive = true
-        add.widthAnchor.constraint(equalToConstant:52).isActive = true
         
-        save.rightAnchor.constraint(equalTo:view.rightAnchor, constant:-5).isActive = true
-        save.heightAnchor.constraint(equalToConstant:46).isActive = true
-        save.widthAnchor.constraint(equalToConstant:52).isActive = true
+        save.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
+        
+        cancel.centerYAnchor.constraint(equalTo:save.centerYAnchor).isActive = true
+        cancel.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         
         search.centerYAnchor.constraint(equalTo:type.centerYAnchor).isActive = true
         search.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
@@ -181,7 +165,8 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         searchWidth.isActive = true
         
         trip.centerYAnchor.constraint(equalTo:save.centerYAnchor).isActive = true
-        trip.leftAnchor.constraint(equalTo:view.leftAnchor, constant:16).isActive = true
+        trip.leftAnchor.constraint(equalTo:cancel.rightAnchor).isActive = true
+        trip.rightAnchor.constraint(equalTo:centre.leftAnchor).isActive = true
         
         results.topAnchor.constraint(equalTo:type.bottomAnchor, constant:10).isActive = true
         results.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
