@@ -6,7 +6,7 @@ class HomePresenter:Presenter {
     }
     
     @objc func settings() {
-        Application.navigation.pushViewController(SettingsView(), animated:true)
+        Application.navigation.setViewControllers([SettingsView()], animated:true)
     }
     
     override func didAppear() {

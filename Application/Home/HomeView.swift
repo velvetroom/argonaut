@@ -18,16 +18,12 @@ class HomeView:View<HomePresenter> {
     }
     
     private func makeOutlets() {
-        let bar = Bar(title:.localized("HomeView.title"))
-        view.addSubview(bar)
-        
         let map = Button(image:#imageLiteral(resourceName: "iconMap.pdf"))
         map.addTarget(presenter, action:#selector(presenter.map), for:.touchUpInside)
-        view.addSubview(map)
-        
         let settings = Button(image:#imageLiteral(resourceName: "iconSettings.pdf"))
         settings.addTarget(presenter, action:#selector(presenter.settings), for:.touchUpInside)
-        view.addSubview(settings)
+        let bar = Bar(.localized("HomeView.title"), left:[settings], right:[map])
+        view.addSubview(bar)
         
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
@@ -42,12 +38,6 @@ class HomeView:View<HomePresenter> {
         
         bar.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         bar.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
-        
-        map.topAnchor.constraint(equalTo:bar.topAnchor).isActive = true
-        map.rightAnchor.constraint(equalTo:bar.rightAnchor).isActive = true
-        
-        settings.topAnchor.constraint(equalTo:bar.topAnchor).isActive = true
-        settings.leftAnchor.constraint(equalTo:bar.leftAnchor).isActive = true
         
         scroll.topAnchor.constraint(equalTo:bar.bottomAnchor).isActive = true
         scroll.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true

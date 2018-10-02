@@ -1,7 +1,9 @@
 import UIKit
 
 class Bar:UIView {
-    init(title:String) {
+    private(set) weak var border:UIView!
+    
+    init(_ title:String, left:[Button] = [], right:[Button] = []) {
         super.init(frame:.zero)
         translatesAutoresizingMaskIntoConstraints = false
         
@@ -10,6 +12,7 @@ class Bar:UIView {
         border.backgroundColor = .midnightBlue
         border.isUserInteractionEnabled = false
         addSubview(border)
+        self.border = border
         
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -27,6 +30,21 @@ class Bar:UIView {
         
         label.centerXAnchor.constraint(equalTo:centerXAnchor).isActive = true
         label.centerYAnchor.constraint(equalTo:centerYAnchor).isActive = true
+        
+        var anchor = rightAnchor
+        right.forEach { button in
+            addSubview(button)
+            button.topAnchor.constraint(equalTo:topAnchor).isActive = true
+            button.rightAnchor.constraint(equalTo:anchor).isActive = true
+            anchor = button.leftAnchor
+        }
+        anchor = leftAnchor
+        left.forEach { button in
+            addSubview(button)
+            button.topAnchor.constraint(equalTo:topAnchor).isActive = true
+            button.leftAnchor.constraint(equalTo:anchor).isActive = true
+            anchor = button.rightAnchor
+        }
     }
     
     required init?(coder:NSCoder) { return nil }
