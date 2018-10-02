@@ -1,2 +1,3 @@
+HomeView.title="Maps";
 MakeView.label="## Generating map\nPlease wait\nCould take a while";
 MakeView.cancel="Cancel";
