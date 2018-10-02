@@ -18,18 +18,8 @@ class HomeView:View<HomePresenter> {
     }
     
     private func makeOutlets() {
-        let bar = UIView()
-        bar.translatesAutoresizingMaskIntoConstraints = false
+        let bar = Bar(title:.localized("HomeView.title"))
         view.addSubview(bar)
-        
-        let title = UILabel()
-        title.translatesAutoresizingMaskIntoConstraints = false
-        title.isUserInteractionEnabled = false
-        title.textColor = .white
-        title.font = .systemFont(ofSize:14, weight:.bold)
-        title.text = .localized("HomeView.title")
-        title.textAlignment = .center
-        bar.addSubview(title)
         
         let map = Button(image:#imageLiteral(resourceName: "iconMap.pdf"))
         map.addTarget(presenter, action:#selector(presenter.map), for:.touchUpInside)
@@ -38,12 +28,6 @@ class HomeView:View<HomePresenter> {
         let settings = Button(image:#imageLiteral(resourceName: "iconSettings.pdf"))
         settings.addTarget(presenter, action:#selector(presenter.settings), for:.touchUpInside)
         view.addSubview(settings)
-        
-        let border = UIView()
-        border.translatesAutoresizingMaskIntoConstraints = false
-        border.backgroundColor = .midnightBlue
-        border.isUserInteractionEnabled = false
-        bar.addSubview(border)
         
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
@@ -58,21 +42,12 @@ class HomeView:View<HomePresenter> {
         
         bar.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         bar.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
-        bar.heightAnchor.constraint(equalToConstant:60).isActive = true
-
-        title.centerXAnchor.constraint(equalTo:bar.centerXAnchor).isActive = true
-        title.centerYAnchor.constraint(equalTo:bar.centerYAnchor).isActive = true
         
         map.topAnchor.constraint(equalTo:bar.topAnchor).isActive = true
         map.rightAnchor.constraint(equalTo:bar.rightAnchor).isActive = true
         
         settings.topAnchor.constraint(equalTo:bar.topAnchor).isActive = true
         settings.leftAnchor.constraint(equalTo:bar.leftAnchor).isActive = true
-        
-        border.bottomAnchor.constraint(equalTo:bar.bottomAnchor).isActive = true
-        border.leftAnchor.constraint(equalTo:bar.leftAnchor).isActive = true
-        border.rightAnchor.constraint(equalTo:bar.rightAnchor).isActive = true
-        border.heightAnchor.constraint(equalToConstant:1).isActive = true
         
         scroll.topAnchor.constraint(equalTo:bar.bottomAnchor).isActive = true
         scroll.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
