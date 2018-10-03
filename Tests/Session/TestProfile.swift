@@ -1,0 +1,37 @@
+import XCTest
+@testable import Argonaut
+
+class TestProfile:XCTestCase {
+    private var session:Session!
+    
+    override func setUp() {
+        Factory.storage = MockStorage.self
+        session = Session()
+    }
+    
+    func testLoadProfile() {
+        let expect = expectation(description:String())
+        DispatchQueue.global(qos:.background).async {
+            self.session.loadProfile { _ in
+                XCTAssertEqual(Thread.main, Thread.current)
+                expect.fulfill()
+            }
+        }
+        waitForExpectations(timeout:1)
+    }
+    
+    func testCacheProfile() {
+        let profile = Profile()
+        session.profile = profile
+        XCTAssertTrue(profile === session.getProfile())
+    }
+    
+    func testCreateOnFirstTime() {
+        let expect = expectation(description:String())
+        let storage = session.storage as! MockStorage
+        storage.error = NSError()
+        storage.onSaveProfile = { expect.fulfill() }
+        let _ = session.getProfile()
+        waitForExpectations(timeout:1)
+    }
+}
