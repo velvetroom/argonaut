@@ -39,6 +39,8 @@
 		DAA79C7C2164C0D0008378F3 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA79C7B2164C0D0008378F3 /* Session.swift */; };
 		DAA79C7F2164C11F008378F3 /* TestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA79C7E2164C11F008378F3 /* TestFactory.swift */; };
 		DAA79C812164C147008378F3 /* MockStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA79C802164C147008378F3 /* MockStorage.swift */; };
+		DAA79C832164CCA8008378F3 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA79C822164CCA8008378F3 /* Project.swift */; };
+		DAA79C852164CD76008378F3 /* TestProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA79C842164CD76008378F3 /* TestProject.swift */; };
 		DAA83B05214FD7A500CD66B6 /* TestImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA83B04214FD7A500CD66B6 /* TestImages.swift */; };
 		DAAB79F92159076D00A9F09E /* PlanMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAB79F82159076D00A9F09E /* PlanMapView.swift */; };
 		DAB8F5B62163865700397CC0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB8F5B52163865700397CC0 /* SettingsView.swift */; };
@@ -111,6 +113,8 @@
 		DAA79C7B2164C0D0008378F3 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		DAA79C7E2164C11F008378F3 /* TestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFactory.swift; sourceTree = "<group>"; };
 		DAA79C802164C147008378F3 /* MockStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStorage.swift; sourceTree = "<group>"; };
+		DAA79C822164CCA8008378F3 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		DAA79C842164CD76008378F3 /* TestProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProject.swift; sourceTree = "<group>"; };
 		DAA83B04214FD7A500CD66B6 /* TestImages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestImages.swift; sourceTree = "<group>"; };
 		DAAB79F82159076D00A9F09E /* PlanMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanMapView.swift; sourceTree = "<group>"; };
 		DAB8F5B52163865700397CC0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -272,6 +276,7 @@
 			children = (
 				DAA79C7B2164C0D0008378F3 /* Session.swift */,
 				DAA79C792164C07C008378F3 /* Profile.swift */,
+				DAA79C822164CCA8008378F3 /* Project.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -280,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				DAA79C722164BF07008378F3 /* TestProfile.swift */,
+				DAA79C842164CD76008378F3 /* TestProject.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -541,6 +547,7 @@
 				DA4E02D321523A3100FFE200 /* MapShooter.swift in Sources */,
 				DA0FA4F02150EB350087ECFF /* Zoom.swift in Sources */,
 				DAA79C782164C03E008378F3 /* StorageService.swift in Sources */,
+				DAA79C832164CCA8008378F3 /* Project.swift in Sources */,
 				DA9A570A214E73410042558D /* Exception.swift in Sources */,
 				DAA79C7A2164C07C008378F3 /* Profile.swift in Sources */,
 				DAA79C762164BFCC008378F3 /* Factory.swift in Sources */,
@@ -559,6 +566,7 @@
 				DAA83B05214FD7A500CD66B6 /* TestImages.swift in Sources */,
 				DA4E02D521523CD800FFE200 /* MockShooter.swift in Sources */,
 				DA9A5711214E9E1A0042558D /* TestShots.swift in Sources */,
+				DAA79C852164CD76008378F3 /* TestProject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

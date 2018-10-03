@@ -1,7 +1,8 @@
 import Foundation
 
 public protocol StorageService {
-    func loadProfile() throws -> Profile
+    func load() throws -> Profile
+    func load(project:String) throws -> Project
     func save(profile:Profile)
     init()
 }
