@@ -194,12 +194,7 @@
 		DA46C8BE214D33D3002E882A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				DA46C8BF214D33D3002E882A /* Map.swift */,
-				DA9A5709214E73410042558D /* Exception.swift */,
-				DA9A570D214E98E60042558D /* Shot.swift */,
-				DA0FA4EF2150EB350087ECFF /* Zoom.swift */,
-				DA4E02D0215239B300FFE200 /* Shooter.swift */,
-				DA4E02D221523A3100FFE200 /* MapShooter.swift */,
+				DAA79C6E2164BDEC008378F3 /* Map */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -207,11 +202,7 @@
 		DA46C8C1214D33DD002E882A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				DA46C8C2214D33DD002E882A /* TestMap.swift */,
-				DA4E02D621523D8500FFE200 /* TestShooter.swift */,
-				DAA83B04214FD7A500CD66B6 /* TestImages.swift */,
-				DA9A5710214E9E1A0042558D /* TestShots.swift */,
-				DA4E02D421523CD800FFE200 /* MockShooter.swift */,
+				DAA79C6F2164BE4C008378F3 /* Map */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -231,6 +222,31 @@
 				DA6EC957215389F9005D5795 /* PermissionView.swift */,
 			);
 			path = Permission;
+			sourceTree = "<group>";
+		};
+		DAA79C6E2164BDEC008378F3 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				DA46C8BF214D33D3002E882A /* Map.swift */,
+				DA9A5709214E73410042558D /* Exception.swift */,
+				DA9A570D214E98E60042558D /* Shot.swift */,
+				DA0FA4EF2150EB350087ECFF /* Zoom.swift */,
+				DA4E02D0215239B300FFE200 /* Shooter.swift */,
+				DA4E02D221523A3100FFE200 /* MapShooter.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		DAA79C6F2164BE4C008378F3 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				DA46C8C2214D33DD002E882A /* TestMap.swift */,
+				DA4E02D621523D8500FFE200 /* TestShooter.swift */,
+				DAA83B04214FD7A500CD66B6 /* TestImages.swift */,
+				DA9A5710214E9E1A0042558D /* TestShots.swift */,
+				DA4E02D421523CD800FFE200 /* MockShooter.swift */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 		DAB8F5B42163863D00397CC0 /* Settings */ = {

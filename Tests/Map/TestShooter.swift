@@ -36,7 +36,7 @@ class TestShooter:XCTestCase {
             expect.fulfill()
         }
         map.makeMap(points:[MKPointAnnotation()])
-        waitForExpectations(timeout:1)
+        waitForExpectations(timeout:2)
     }
     
     func testUpdateProgress() {
