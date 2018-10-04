@@ -7,20 +7,8 @@ class TestProject:XCTestCase {
     override func setUp() {
         Factory.storage = MockStorage.self
         session = Session()
-        let _ = session.getProfile()
         (session.storage as! MockStorage).onSaveProfile = nil
         (session.storage as! MockStorage).onSaveProject = nil
-    }
-    
-    func testLoadProject() {
-        let expect = expectation(description:String())
-        DispatchQueue.global(qos:.background).async {
-            self.session.load(project:String()) { _ in
-                XCTAssertEqual(Thread.main, Thread.current)
-                expect.fulfill()
-            }
-        }
-        waitForExpectations(timeout:1)
     }
     
     func testAddProject() {
@@ -31,6 +19,17 @@ class TestProject:XCTestCase {
         let project = Project()
         session.add(project:project)
         XCTAssertEqual(project.id, session.profile.projects[0])
+        waitForExpectations(timeout:1)
+    }
+    
+    func testGetProjects() {
+        let expect = expectation(description:String())
+        DispatchQueue.global(qos:.background).async {
+            self.session.load { (projects:[Project]) in
+                XCTAssertEqual(Thread.main, Thread.current)
+                expect.fulfill()
+            }
+        }
         waitForExpectations(timeout:1)
     }
 }

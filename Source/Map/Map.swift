@@ -5,8 +5,7 @@ public class Map {
     public var onFail:((Error) -> Void)?
     public var onProgress:((Float) -> Void)?
     var shooterType:Shooter.Type = MapShooter.self
-    var zooms = [Zoom(level:8), Zoom(level:10), Zoom(level:12), Zoom(level:14), Zoom(level:16), Zoom(level:18),
-                 Zoom(level:20)]
+    var zooms = [Zoom(level:10), Zoom(level:14), Zoom(level:17), Zoom(level:20)]
     var path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
     let session = Factory.makeSession()
     private weak var shooter:Shooter?
@@ -24,6 +23,7 @@ public class Map {
     
     func makeProject(points:[MKAnnotation], route:MKRoute?) -> Project {
         let project = Project()
+        project.id = UUID().uuidString
         if let origin = points.first {
             if let title = origin.title as? String { project.origin.title = title }
             project.origin.point.latitude = origin.coordinate.latitude

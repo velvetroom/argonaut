@@ -27,7 +27,7 @@ class TestShooter:XCTestCase {
         MockShooter.image = makeImage(width:1, height:1)
         map.onSuccess = { url in expect.fulfill() }
         map.makeMap(points:[MKPointAnnotation()], route:nil)
-        waitForExpectations(timeout:1)
+        waitForExpectations(timeout:2)
     }
     
     func testMultipleZoom() {
@@ -56,7 +56,7 @@ class TestShooter:XCTestCase {
             }
         }
         DispatchQueue.global(qos:.background).async { self.map.makeMap(points:[MKPointAnnotation()], route:nil) }
-        waitForExpectations(timeout:2)
+        waitForExpectations(timeout:3)
     }
     
     private func makeImage(width:Double, height:Double) -> UIImage {

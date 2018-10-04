@@ -51,6 +51,7 @@ class TestMap:XCTestCase {
     
     func testCreateUrl() {
         let project = Project()
+        project.id = "hello world"
         let url = map.makeUrl(project:project)
         XCTAssertTrue(FileManager.default.fileExists(atPath:url.path))
         XCTAssertTrue(url.path.contains(map.path.path))
@@ -121,6 +122,7 @@ class TestMap:XCTestCase {
         let route = MKRoute()
         let project = map.makeProject(points:[MKPlacemark(coordinate:origin, addressDictionary:nil),
                                               MKPlacemark(coordinate:destination, addressDictionary:nil)], route:route)
+        XCTAssertFalse(project.id.isEmpty)
         XCTAssertEqual(51.482393, project.origin.point.latitude)
         XCTAssertEqual(-0.121620, project.origin.point.longitude)
         XCTAssertEqual(51.487404, project.destination.point.latitude)

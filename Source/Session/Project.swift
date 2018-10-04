@@ -1,7 +1,7 @@
 import Foundation
 
 public class Project:Codable {
-    public let id = UUID().uuidString
+    public var id = String()
     public var route = [Point]()
     public var origin = Mark()
     public var destination = Mark()

@@ -12,10 +12,11 @@ public class Session {
         }
     }
     
-    public func load(project:String, completion:@escaping((Project) -> Void)) {
+    public func load(completion:@escaping(([Project]) -> Void)) {
         queue.async { [weak self] in
-            guard let item = try! self?.storage.load(project:project) else { return }
-            DispatchQueue.main.async { completion(item) }
+            guard let items = self?.getProfile().projects.compactMap({ try? self?.storage.load(project:$0) })
+                as? [Project] else { return }
+            DispatchQueue.main.async { completion(items) }
         }
     }
     
@@ -36,7 +37,7 @@ public class Session {
     }
     
     func add(project:Project) {
-        profile.projects.append(project.id)
+        getProfile().projects.append(project.id)
         save()
         storage.save(project:project)
     }

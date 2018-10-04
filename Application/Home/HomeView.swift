@@ -59,6 +59,8 @@ class HomeView:View<HomePresenter> {
         var top = self.items.topAnchor
         items.forEach { item in
             let cell = HomeCellView()
+            cell.viewModel = item
+            cell.addTarget(presenter, action:#selector(presenter.open(cell:)), for:.touchUpInside)
             self.items.addSubview(cell)
             
             cell.topAnchor.constraint(equalTo:top, constant:20).isActive = true

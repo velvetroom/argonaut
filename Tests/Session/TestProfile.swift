@@ -14,7 +14,7 @@ class TestProfile:XCTestCase {
     func testLoadProfile() {
         let expect = expectation(description:String())
         DispatchQueue.global(qos:.background).async {
-            self.session.load { _ in
+            self.session.load { (_:Profile) in
                 XCTAssertEqual(Thread.main, Thread.current)
                 expect.fulfill()
             }

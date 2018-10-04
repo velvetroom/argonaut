@@ -5,6 +5,10 @@ import MapKit
 class TravelPresenter:Presenter {
     var project:Project!
     
+    @objc func close() {
+        Application.navigation.setViewControllers([HomeView()], animated:true)
+    }
+    
     override func didLoad() {
         update(viewModel:[makeAnnotation(mark:project.origin), makeAnnotation(mark:project.destination)])
         update(viewModel:makePolyline(points:project.route))
