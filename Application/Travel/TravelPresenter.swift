@@ -6,14 +6,15 @@ class TravelPresenter:Presenter {
     var project:Project!
     
     override func didLoad() {
-        update(viewModel:[makeAnnotation(point:project.origin), makeAnnotation(point:project.destination)])
+        update(viewModel:[makeAnnotation(mark:project.origin), makeAnnotation(mark:project.destination)])
         update(viewModel:makePolyline(points:project.route))
     }
     
-    private func makeAnnotation(point:Point) -> MKAnnotation {
+    private func makeAnnotation(mark:Mark) -> MKAnnotation {
         let annotation = MKPointAnnotation()
-        annotation.coordinate.latitude = point.latitude
-        annotation.coordinate.longitude = point.longitude
+        annotation.title = mark.title
+        annotation.coordinate.latitude = mark.point.latitude
+        annotation.coordinate.longitude = mark.point.longitude
         return annotation
     }
     

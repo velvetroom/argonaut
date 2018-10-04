@@ -24,12 +24,14 @@ public class Map {
     func makeProject(points:[MKAnnotation], route:MKRoute?) -> Project {
         let project = Project()
         if let origin = points.first {
-            project.origin.latitude = origin.coordinate.latitude
-            project.origin.longitude = origin.coordinate.longitude
+            if let title = origin.title as? String { project.origin.title = title }
+            project.origin.point.latitude = origin.coordinate.latitude
+            project.origin.point.longitude = origin.coordinate.longitude
         }
         if points.count > 1 {
-            project.destination.latitude = points[1].coordinate.latitude
-            project.destination.longitude = points[1].coordinate.longitude
+            if let title = points[1].title as? String { project.destination.title = title }
+            project.destination.point.latitude = points[1].coordinate.latitude
+            project.destination.point.longitude = points[1].coordinate.longitude
         }
         if let route = route {
             let points = route.polyline.points()
