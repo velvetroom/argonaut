@@ -32,6 +32,7 @@
 		DA9A570A214E73410042558D /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A5709214E73410042558D /* Exception.swift */; };
 		DA9A570F214E9C430042558D /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A570D214E98E60042558D /* Shot.swift */; };
 		DA9A5711214E9E1A0042558D /* TestShots.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A5710214E9E1A0042558D /* TestShots.swift */; };
+		DA9D3CBC216618C60006DEE3 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9D3CBB216618C60006DEE3 /* Storage.swift */; };
 		DAA79C732164BF07008378F3 /* TestProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA79C722164BF07008378F3 /* TestProfile.swift */; };
 		DAA79C762164BFCC008378F3 /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA79C752164BFCC008378F3 /* Factory.swift */; };
 		DAA79C782164C03E008378F3 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA79C772164C03E008378F3 /* StorageService.swift */; };
@@ -108,6 +109,7 @@
 		DA9A5709214E73410042558D /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		DA9A570D214E98E60042558D /* Shot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
 		DA9A5710214E9E1A0042558D /* TestShots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestShots.swift; sourceTree = "<group>"; };
+		DA9D3CBB216618C60006DEE3 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		DAA79C722164BF07008378F3 /* TestProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestProfile.swift; sourceTree = "<group>"; };
 		DAA79C752164BFCC008378F3 /* Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
 		DAA79C772164C03E008378F3 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
@@ -385,6 +387,7 @@
 				DABF545E215E2FB00035E84F /* LoadingView.swift */,
 				DAFF03CB2163474D00F964A2 /* Button.swift */,
 				DAB8F5B921638C3E00397CC0 /* Bar.swift */,
+				DA9D3CBB216618C60006DEE3 /* Storage.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -596,6 +599,7 @@
 				DAAB79F92159076D00A9F09E /* PlanMapView.swift in Sources */,
 				DABF545D215E2D910035E84F /* String.swift in Sources */,
 				DA6EC95A21538A17005D5795 /* PermissionPresenter.swift in Sources */,
+				DA9D3CBC216618C60006DEE3 /* Storage.swift in Sources */,
 				DA0000BC214D503C00AD02D2 /* Navigation.swift in Sources */,
 				DA6EC958215389F9005D5795 /* PermissionView.swift in Sources */,
 				DABF545F215E2FB00035E84F /* LoadingView.swift in Sources */,
