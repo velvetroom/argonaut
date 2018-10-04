@@ -4,6 +4,7 @@ import Foundation
 class MockStorage:StorageService {
     var error:Error?
     var onSaveProfile:(() -> Void)?
+    var onSaveProject:(() -> Void)?
     var profile = Profile()
     var project = Project()
     required init() { }
@@ -24,5 +25,9 @@ class MockStorage:StorageService {
     
     func save(profile:Profile) {
         onSaveProfile?()
+    }
+    
+    func save(project:Project) {
+        onSaveProject?()
     }
 }

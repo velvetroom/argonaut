@@ -6,6 +6,7 @@ class TestShots:XCTestCase {
     private var map:Map!
     
     override func setUp() {
+        Factory.storage = MockStorage.self
         map = Map()
     }
     

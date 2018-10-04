@@ -8,7 +8,7 @@ class TravelView:View<TravelPresenter> {
     
     override func viewDidLoad() {
         view.backgroundColor = .black
-        tiler.url.appendPathComponent(presenter.project.id.uuidString)
+        tiler.url.appendPathComponent(presenter.project.id)
         makeOutlets()
         configureViewModel()
         super.viewDidLoad()

@@ -5,9 +5,12 @@ class TestImages:XCTestCase {
     private var map:Map!
     
     override func setUp() {
+        Factory.storage = MockStorage.self
         map = Map()
         map.path = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("test")
         map.zooms = [Zoom(level:2)]
+        (map.session.storage as! MockStorage).onSaveProfile = nil
+        (map.session.storage as! MockStorage).onSaveProject = nil
     }
     
     override func tearDown() {

@@ -8,6 +8,7 @@ public class Map {
     var zooms = [Zoom(level:8), Zoom(level:10), Zoom(level:12), Zoom(level:14), Zoom(level:16), Zoom(level:18),
                  Zoom(level:20)]
     var path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
+    let session = Factory.makeSession()
     private weak var shooter:Shooter?
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
     public init() { }
@@ -48,7 +49,7 @@ public class Map {
     }
     
     func makeUrl(project:Project) -> URL {
-        let url = path.appendingPathComponent(project.id.uuidString)
+        let url = path.appendingPathComponent(project.id)
         try! FileManager.default.createDirectory(at:url, withIntermediateDirectories:true)
         return url
     }
@@ -117,7 +118,7 @@ public class Map {
                 self?.makeMap(project:project, url:url, shots:shots, index:index + 1)
             }) { [weak self] error in self?.fails(error:error) }
         } else {
-            success(project:project)
+            save(project:project)
         }
     }
     
@@ -129,6 +130,11 @@ public class Map {
             start = max(0, start - delta)
         }
         return stride(from:start, to:start + size, by:10)
+    }
+    
+    private func save(project:Project) {
+        session.add(project:project)
+        success(project:project)
     }
     
     private func success(project:Project) { DispatchQueue.main.async { [weak self] in self?.onSuccess?(project) } }

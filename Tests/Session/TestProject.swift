@@ -7,6 +7,9 @@ class TestProject:XCTestCase {
     override func setUp() {
         Factory.storage = MockStorage.self
         session = Session()
+        let _ = session.getProfile()
+        (session.storage as! MockStorage).onSaveProfile = nil
+        (session.storage as! MockStorage).onSaveProject = nil
     }
     
     func testLoadProject() {
@@ -17,6 +20,17 @@ class TestProject:XCTestCase {
                 expect.fulfill()
             }
         }
+        waitForExpectations(timeout:1)
+    }
+    
+    func testAddProject() {
+        let expectProfile = expectation(description:String())
+        let expectProject = expectation(description:String())
+        (session.storage as! MockStorage).onSaveProfile = { expectProfile.fulfill() }
+        (session.storage as! MockStorage).onSaveProject = { expectProject.fulfill() }
+        let project = Project()
+        session.add(project:project)
+        XCTAssertEqual(project.id, session.profile.projects[0])
         waitForExpectations(timeout:1)
     }
 }

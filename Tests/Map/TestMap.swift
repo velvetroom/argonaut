@@ -6,10 +6,14 @@ class TestMap:XCTestCase {
     private var map:Map!
     
     override func setUp() {
+        Factory.storage = MockStorage.self
         map = Map()
         map.path = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("test")
         map.shooterType = MockShooter.self
         map.zooms = [Zoom(level:2)]
+        let _ = map.session.getProfile()
+        (map.session.storage as! MockStorage).onSaveProfile = nil
+        (map.session.storage as! MockStorage).onSaveProject = nil
     }
     
     override func tearDown() {
@@ -18,10 +22,14 @@ class TestMap:XCTestCase {
         try? FileManager.default.removeItem(at:map.path)
     }
     
+    func testSessionIsMonostate() {
+        XCTAssertTrue(map.session === Factory.makeSession())
+    }
+    
     func testCreateMap() {
         let expect = expectation(description:String())
         map.onSuccess = { project in
-            let url = self.map.path.appendingPathComponent(project.id.uuidString)
+            let url = self.map.path.appendingPathComponent(project.id)
             XCTAssertEqual(Thread.main, Thread.current)
             XCTAssertTrue(FileManager.default.fileExists(atPath:url.path))
             expect.fulfill()
@@ -46,7 +54,7 @@ class TestMap:XCTestCase {
         let url = map.makeUrl(project:project)
         XCTAssertTrue(FileManager.default.fileExists(atPath:url.path))
         XCTAssertTrue(url.path.contains(map.path.path))
-        XCTAssertTrue(url.path.contains(project.id.uuidString))
+        XCTAssertTrue(url.path.contains(project.id))
     }
     
     func testMakeZeroRect() {
@@ -113,9 +121,17 @@ class TestMap:XCTestCase {
         let route = MKRoute()
         let project = map.makeProject(points:[MKPlacemark(coordinate:origin, addressDictionary:nil),
                                               MKPlacemark(coordinate:destination, addressDictionary:nil)], route:route)
-        XCTAssertEqual(51.482393, project.origin.latitude)
-        XCTAssertEqual(-0.121620, project.origin.longitude)
-        XCTAssertEqual(51.487404, project.destination.latitude)
-        XCTAssertEqual(-0.127049, project.destination.longitude)
+        XCTAssertEqual(51.482393, project.origin.point.latitude)
+        XCTAssertEqual(-0.121620, project.origin.point.longitude)
+        XCTAssertEqual(51.487404, project.destination.point.latitude)
+        XCTAssertEqual(-0.127049, project.destination.point.longitude)
+    }
+    
+    func testUpdatesProfile() {
+        let expect = expectation(description:String())
+        let storage = Factory.makeSession().storage as! MockStorage
+        storage.onSaveProfile = { expect.fulfill() }
+        map.makeMap(points:[], route:nil)
+        waitForExpectations(timeout:1)
     }
 }

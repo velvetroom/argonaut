@@ -7,6 +7,8 @@ class TestProfile:XCTestCase {
     override func setUp() {
         Factory.storage = MockStorage.self
         session = Session()
+        (session.storage as! MockStorage).onSaveProfile = nil
+        (session.storage as! MockStorage).onSaveProject = nil
     }
     
     func testLoadProfile() {
@@ -32,6 +34,15 @@ class TestProfile:XCTestCase {
         storage.error = NSError()
         storage.onSaveProfile = { expect.fulfill() }
         let _ = session.getProfile()
+        waitForExpectations(timeout:1)
+    }
+    
+    func testSaveProfile() {
+        let expect = expectation(description:String())
+        let storage = session.storage as! MockStorage
+        let _ = session.getProfile()
+        storage.onSaveProfile = { expect.fulfill() }
+        session.save()
         waitForExpectations(timeout:1)
     }
 }

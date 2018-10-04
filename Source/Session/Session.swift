@@ -30,4 +30,14 @@ public class Session {
         }
         return profile
     }
+    
+    func save() {
+        storage.save(profile:profile)
+    }
+    
+    func add(project:Project) {
+        profile.projects.append(project.id)
+        save()
+        storage.save(project:project)
+    }
 }
