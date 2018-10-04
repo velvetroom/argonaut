@@ -22,7 +22,7 @@ class TestShooter:XCTestCase {
         let expect = expectation(description:String())
         MockShooter.image = makeImage(width:1, height:1)
         map.onSuccess = { url in expect.fulfill() }
-        map.makeMap(points:[MKPointAnnotation()])
+        map.makeMap(points:[MKPointAnnotation()], route:nil)
         waitForExpectations(timeout:1)
     }
     
@@ -30,12 +30,13 @@ class TestShooter:XCTestCase {
         let expect = expectation(description:String())
         map.zooms = [Zoom(level:2), Zoom(level:3)]
         MockShooter.image = makeImage(width:256, height:256)
-        map.onSuccess = { url in
+        map.onSuccess = { project in
+            let url = self.map.path.appendingPathComponent(project.id.uuidString)
             XCTAssertTrue(FileManager.default.fileExists(atPath:url.appendingPathComponent("2_0_0.png").path))
             XCTAssertTrue(FileManager.default.fileExists(atPath:url.appendingPathComponent("3_0_0.png").path))
             expect.fulfill()
         }
-        map.makeMap(points:[MKPointAnnotation()])
+        map.makeMap(points:[MKPointAnnotation()], route:nil)
         waitForExpectations(timeout:2)
     }
     
@@ -50,7 +51,7 @@ class TestShooter:XCTestCase {
                 expect.fulfill()
             }
         }
-        DispatchQueue.global(qos:.background).async { self.map.makeMap(points:[MKPointAnnotation()]) }
+        DispatchQueue.global(qos:.background).async { self.map.makeMap(points:[MKPointAnnotation()], route:nil) }
         waitForExpectations(timeout:2)
     }
     

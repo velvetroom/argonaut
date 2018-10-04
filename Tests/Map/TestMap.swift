@@ -20,12 +20,13 @@ class TestMap:XCTestCase {
     
     func testCreateMap() {
         let expect = expectation(description:String())
-        map.onSuccess = { url in
+        map.onSuccess = { project in
+            let url = self.map.path.appendingPathComponent(project.id.uuidString)
             XCTAssertEqual(Thread.main, Thread.current)
             XCTAssertTrue(FileManager.default.fileExists(atPath:url.path))
             expect.fulfill()
         }
-        DispatchQueue.global(qos:.background).async { self.map.makeMap(points:[]) }
+        DispatchQueue.global(qos:.background).async { self.map.makeMap(points:[], route:nil) }
         waitForExpectations(timeout:1)
     }
     
@@ -36,14 +37,16 @@ class TestMap:XCTestCase {
             XCTAssertEqual(Thread.main, Thread.current)
             expect.fulfill()
         }
-        DispatchQueue.global(qos:.background).async { self.map.makeMap(points:[MKPointAnnotation()]) }
+        DispatchQueue.global(qos:.background).async { self.map.makeMap(points:[MKPointAnnotation()], route:nil) }
         waitForExpectations(timeout:1)
     }
     
     func testCreateUrl() {
-        let url = map.makeUrl()
+        let project = Project()
+        let url = map.makeUrl(project:project)
         XCTAssertTrue(FileManager.default.fileExists(atPath:url.path))
         XCTAssertTrue(url.path.contains(map.path.path))
+        XCTAssertTrue(url.path.contains(project.id.uuidString))
     }
     
     func testMakeZeroRect() {
@@ -102,5 +105,17 @@ class TestMap:XCTestCase {
         XCTAssertEqual(134218473.65404448, rect.maxY)
         XCTAssertEqual(1491.3080888986588, rect.width)
         XCTAssertEqual(1491.3080889582634, rect.height)
+    }
+    
+    func testCreateProject() {
+        let origin = CLLocationCoordinate2D(latitude:51.482393, longitude:-0.121620)
+        let destination = CLLocationCoordinate2D(latitude:51.487404, longitude:-0.127049)
+        let route = MKRoute()
+        let project = map.makeProject(points:[MKPlacemark(coordinate:origin, addressDictionary:nil),
+                                              MKPlacemark(coordinate:destination, addressDictionary:nil)], route:route)
+        XCTAssertEqual(51.482393, project.origin.latitude)
+        XCTAssertEqual(-0.121620, project.origin.longitude)
+        XCTAssertEqual(51.487404, project.destination.latitude)
+        XCTAssertEqual(-0.127049, project.destination.longitude)
     }
 }

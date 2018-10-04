@@ -2,9 +2,10 @@ import CleanArchitecture
 import MapKit
 
 class PlanPresenter:Presenter {
-    func make(plan:[MKAnnotation]) {
+    func make(plan:[MKAnnotation], route:MKRoute?) {
         let view = MakeView()
         view.presenter.plan = plan
+        view.presenter.route = route
         Application.navigation.pushViewController(view, animated:true)
     }
     

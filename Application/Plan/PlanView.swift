@@ -199,6 +199,6 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
     }
     
     @objc private func make() {
-        presenter.make(plan:map.plan)
+        presenter.make(plan:map.plan, route:map.line)
     }
 }

@@ -4,7 +4,7 @@ class PlanMapView:MapView {
     weak var trip:UILabel!
     var type = MKDirectionsTransportType.walking
     private(set) var plan = [MKAnnotation]()
-    private var line:MKRoute?
+    private(set) var line:MKRoute?
     private let geocoder = CLGeocoder()
     private let formatter = DateComponentsFormatter()
     

@@ -55,6 +55,7 @@
 		DAE35794216234130006611B /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE35793216234130006611B /* HomePresenter.swift */; };
 		DAE35796216234230006611B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE35795216234230006611B /* HomeView.swift */; };
 		DAED25F7215CD8EE00FAC1AF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAED25F6215CD8EE00FAC1AF /* UIColor.swift */; };
+		DAF32D582165FA8700BDFF57 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF32D572165FA8700BDFF57 /* Point.swift */; };
 		DAF48450214D4D61000CD005 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF4844F214D4D61000CD005 /* Application.swift */; };
 		DAF48453214D4E84000CD005 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAF48452214D4E84000CD005 /* LaunchScreen.storyboard */; };
 		DAFF03C821633EAB00F964A2 /* HomeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFF03C721633EAB00F964A2 /* HomeCellView.swift */; };
@@ -129,6 +130,7 @@
 		DAE35793216234130006611B /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		DAE35795216234230006611B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DAED25F6215CD8EE00FAC1AF /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		DAF32D572165FA8700BDFF57 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		DAF4843C214D4CD0000CD005 /* Application.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Application.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAF4844F214D4D61000CD005 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		DAF48451214D4E03000CD005 /* application.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = application.plist; sourceTree = "<group>"; };
@@ -250,7 +252,6 @@
 			isa = PBXGroup;
 			children = (
 				DA46C8BF214D33D3002E882A /* Map.swift */,
-				DA9A5709214E73410042558D /* Exception.swift */,
 				DA9A570D214E98E60042558D /* Shot.swift */,
 				DA0FA4EF2150EB350087ECFF /* Zoom.swift */,
 				DA4E02D0215239B300FFE200 /* Shooter.swift */,
@@ -277,6 +278,7 @@
 				DAA79C7B2164C0D0008378F3 /* Session.swift */,
 				DAA79C792164C07C008378F3 /* Profile.swift */,
 				DAA79C822164CCA8008378F3 /* Project.swift */,
+				DAF32D572165FA8700BDFF57 /* Point.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -295,6 +297,7 @@
 			children = (
 				DAA79C752164BFCC008378F3 /* Factory.swift */,
 				DAA79C772164C03E008378F3 /* StorageService.swift */,
+				DA9A5709214E73410042558D /* Exception.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -548,6 +551,7 @@
 				DA0FA4F02150EB350087ECFF /* Zoom.swift in Sources */,
 				DAA79C782164C03E008378F3 /* StorageService.swift in Sources */,
 				DAA79C832164CCA8008378F3 /* Project.swift in Sources */,
+				DAF32D582165FA8700BDFF57 /* Point.swift in Sources */,
 				DA9A570A214E73410042558D /* Exception.swift in Sources */,
 				DAA79C7A2164C07C008378F3 /* Profile.swift in Sources */,
 				DAA79C762164BFCC008378F3 /* Factory.swift in Sources */,

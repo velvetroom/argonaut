@@ -1,21 +1,52 @@
 import MapKit
 
 public class Map {
-    public var onSuccess:((URL) -> Void)?
+    public var onSuccess:((Project) -> Void)?
     public var onFail:((Error) -> Void)?
     public var onProgress:((Float) -> Void)?
     var shooterType:Shooter.Type = MapShooter.self
-    var zooms = [Zoom(level:10), Zoom(level:11), Zoom(level:12), Zoom(level:13), Zoom(level:14), Zoom(level:15),
-                 Zoom(level:16), Zoom(level:17), Zoom(level:18)]
+    var zooms = [Zoom(level:8), Zoom(level:10), Zoom(level:12), Zoom(level:14), Zoom(level:16), Zoom(level:18),
+                 Zoom(level:20)]
     var path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
     private weak var shooter:Shooter?
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
     public init() { }
     
-    public func makeMap(points:[MKAnnotation]) { queue.async { [weak self] in self?.safeMakeMap(points:points)  } }
+    public func makeMap(points:[MKAnnotation], route:MKRoute?) {
+        queue.async {
+            let project = self.makeProject(points:points, route:route)
+            let rect = self.makeRect(points:points)
+            let shots = self.zooms.flatMap { zoom in self.makeShots(rect:rect, zoom:zoom) }
+            self.makeMap(project:project, url:self.makeUrl(project:project), shots:shots, index:0)
+        }
+    }
     
-    func makeUrl() -> URL {
-        let url = path.appendingPathComponent(UUID().uuidString)
+    func makeProject(points:[MKAnnotation], route:MKRoute?) -> Project {
+        let project = Project()
+        if let origin = points.first {
+            project.origin.latitude = origin.coordinate.latitude
+            project.origin.longitude = origin.coordinate.longitude
+        }
+        if points.count > 1 {
+            project.destination.latitude = points[1].coordinate.latitude
+            project.destination.longitude = points[1].coordinate.longitude
+        }
+        if let route = route {
+            let points = route.polyline.points()
+            for index in 0 ..< route.polyline.pointCount {
+                var point = Point()
+                point.latitude = points[index].coordinate.latitude
+                point.longitude = points[index].coordinate.longitude
+                project.route.append(point)
+            }
+            project.distance = route.distance
+            project.duration = route.expectedTravelTime
+        }
+        return project
+    }
+    
+    func makeUrl(project:Project) -> URL {
+        let url = path.appendingPathComponent(project.id.uuidString)
         try! FileManager.default.createDirectory(at:url, withIntermediateDirectories:true)
         return url
     }
@@ -76,20 +107,15 @@ public class Map {
         return rect
     }
     
-    private func safeMakeMap(points:[MKAnnotation]) {
-        let rect = makeRect(points:points)
-        makeMap(url:makeUrl(), shots:zooms.flatMap { zoom in makeShots(rect:rect, zoom:zoom) }, index:0)
-    }
-    
-    private func makeMap(url:URL, shots:[Shot], index:Int) {
+    private func makeMap(project:Project, url:URL, shots:[Shot], index:Int) {
         if index < shots.count {
             shooterType.init(shot:shots[index]).make(queue:queue, success: { [weak self] image in
                 self?.progress(value:Float(index + 1) / Float(shots.count))
                 self?.makeTiles(url:url, shot:shots[index], image:image)
-                self?.makeMap(url:url, shots:shots, index:index + 1)
+                self?.makeMap(project:project, url:url, shots:shots, index:index + 1)
             }) { [weak self] error in self?.fails(error:error) }
         } else {
-            success(url:url)
+            success(project:project)
         }
     }
     
@@ -103,7 +129,7 @@ public class Map {
         return stride(from:start, to:start + size, by:10)
     }
     
-    private func success(url:URL) { DispatchQueue.main.async { [weak self] in self?.onSuccess?(url) } }
+    private func success(project:Project) { DispatchQueue.main.async { [weak self] in self?.onSuccess?(project) } }
     private func fails(error:Error) { DispatchQueue.main.async { [weak self] in self?.onFail?(error) } }
     private func progress(value:Float) { DispatchQueue.main.async { [weak self] in self?.onProgress?(value) } }
 }

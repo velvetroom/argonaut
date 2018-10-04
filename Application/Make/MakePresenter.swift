@@ -4,12 +4,13 @@ import MapKit
 
 class MakePresenter:Presenter {
     var plan:[MKAnnotation]!
+    var route:MKRoute?
     private let map = Map()
     
     override func didLoad() {
-        map.onSuccess = { url in
+        map.onSuccess = { project in
             let view = TravelView()
-            view.tiler.url = url
+            view.presenter.project = project
             Application.navigation.setViewControllers([view], animated:true)
         }
         map.onFail = { error in
@@ -19,7 +20,7 @@ class MakePresenter:Presenter {
             self?.update(viewModel:progress)
         }
         
-        map.makeMap(points:plan)
+        map.makeMap(points:plan, route:route)
     }
     
     @objc func cancel() {

@@ -1,7 +1,7 @@
 import MapKit
 
 class TravelTiler:MKTileOverlay {
-    var url:URL!
+    var url = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
     
     init() {
         super.init(urlTemplate:"{z}_{x}_{y}")
@@ -10,6 +10,6 @@ class TravelTiler:MKTileOverlay {
     }
     
     override func loadTile(at path:MKTileOverlayPath, result:@escaping(Data?, Error?) -> Void) {
-        result(try? Data(contentsOf:url!.appendingPathComponent("\(url(forTilePath:path).path).png")), nil)
+        result(try? Data(contentsOf:url.appendingPathComponent("\(url(forTilePath:path).path).png")), nil)
     }
 }
