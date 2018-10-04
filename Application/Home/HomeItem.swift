@@ -2,6 +2,6 @@ import Foundation
 import Argonaut
 
 struct HomeItem {
-    var title = String()
+    var title = NSAttributedString()
     var project:Project!
 }

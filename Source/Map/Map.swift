@@ -24,6 +24,7 @@ public class Map {
     func makeProject(points:[MKAnnotation], route:MKRoute?) -> Project {
         let project = Project()
         project.id = UUID().uuidString
+        if let name = route?.name { project.name = name }
         if let origin = points.first {
             if let title = origin.title as? String { project.origin.title = title }
             project.origin.point.latitude = origin.coordinate.latitude
