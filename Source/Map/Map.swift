@@ -10,8 +10,8 @@ public class Map {
     var path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
     private weak var shooter:Shooter?
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
-    
     public init() { }
+    
     public func makeMap(points:[MKAnnotation]) { queue.async { [weak self] in self?.safeMakeMap(points:points)  } }
     
     func makeUrl() -> URL {
