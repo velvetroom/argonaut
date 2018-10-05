@@ -7,14 +7,15 @@ class TestProfile:XCTestCase {
     override func setUp() {
         Factory.storage = MockStorage.self
         session = Session()
+    }
+    
+    override func tearDown() {
         (session.storage as! MockStorage).onSaveProfile = nil
         (session.storage as! MockStorage).onSaveProject = nil
     }
     
     func testCacheProfile() {
-        let profile = Profile()
-        session.profile = profile
-        XCTAssertTrue(profile === session.getProfile())
+        XCTAssertTrue(session.profile() === session.profile())
     }
     
     func testCreateOnFirstTime() {
@@ -22,14 +23,14 @@ class TestProfile:XCTestCase {
         let storage = session.storage as! MockStorage
         storage.error = NSError()
         storage.onSaveProfile = { expect.fulfill() }
-        let _ = session.getProfile()
+        let _ = session.profile()
         waitForExpectations(timeout:1)
     }
     
     func testSaveProfile() {
         let expect = expectation(description:String())
         let storage = session.storage as! MockStorage
-        let _ = session.getProfile()
+        let _ = session.profile()
         storage.onSaveProfile = { expect.fulfill() }
         session.save()
         waitForExpectations(timeout:1)

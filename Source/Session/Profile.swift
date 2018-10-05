@@ -1,5 +1,6 @@
 import Foundation
 
 public class Profile:Codable {
-    public internal(set) var projects = [String]()
+    var projects = [String]()
+    var created = 0
 }

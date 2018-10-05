@@ -3,11 +3,12 @@ import Argonaut
 import MarkdownHero
 
 class HomePresenter:Presenter {
+    private let map = Map()
     private let session = Factory.makeSession()
     private let parser = Parser()
     private let formatter = DateComponentsFormatter()
     
-    @objc func map() {
+    @objc func planMap() {
         Application.navigation.pushViewController(PlanView(), animated:true)
     }
     
@@ -26,17 +27,7 @@ class HomePresenter:Presenter {
         formatter.allowedUnits = [.minute, .hour]
     }
     
-    override func didAppear() {
-        session.load { [weak self] (projects:[Project]) in
-            let items = projects.map { project -> HomeItem in
-                var item = HomeItem()
-                if let title = self?.makeTitle(project:project) { item.title = title }
-                item.project = project
-                return item
-            }
-            self?.update(viewModel:items)
-        }
-    }
+    override func didAppear() { session.load { [weak self] (projects:[Project]) in self?.loaded(projects:projects) } }
     
     private func makeTitle(project:Project) -> NSAttributedString {
         var string = "**\(project.name)**\n"
@@ -49,5 +40,16 @@ class HomePresenter:Presenter {
             string += " - " + distance.string(from:Measurement(value:project.distance, unit:UnitLength.meters))
         }
         return parser.parse(string:string)
+    }
+    
+    private func loaded(projects:[Project]) {
+        let items = projects.map { project -> HomeItem in
+            var item = HomeItem()
+            item.title = makeTitle(project:project)
+            item.project = project
+            return item
+        }
+        update(viewModel:items)
+        DispatchQueue.global(qos:.background).async { [weak self] in self?.map.cleanDisk() }
     }
 }

@@ -9,11 +9,11 @@ class TestImages:XCTestCase {
         map = Map()
         map.path = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("test")
         map.zooms = [Zoom(level:2)]
-        (map.session.storage as! MockStorage).onSaveProfile = nil
-        (map.session.storage as! MockStorage).onSaveProject = nil
     }
     
     override func tearDown() {
+        (map.session.storage as! MockStorage).onSaveProfile = nil
+        (map.session.storage as! MockStorage).onSaveProject = nil
         try? FileManager.default.removeItem(at:map.path)
     }
     

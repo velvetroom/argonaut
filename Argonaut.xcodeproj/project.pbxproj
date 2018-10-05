@@ -21,6 +21,7 @@
 		DA46C8C0214D33D3002E882A /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46C8BF214D33D3002E882A /* Map.swift */; };
 		DA46C8C3214D33DD002E882A /* TestMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46C8C2214D33DD002E882A /* TestMap.swift */; };
 		DA46C8C5214D348E002E882A /* libArgonaut.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA46C8B8214D3362002E882A /* libArgonaut.a */; };
+		DA4C5DE62167317500A1DFBC /* TestClean.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4C5DE52167317500A1DFBC /* TestClean.swift */; };
 		DA4E02D1215239B300FFE200 /* Shooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4E02D0215239B300FFE200 /* Shooter.swift */; };
 		DA4E02D321523A3100FFE200 /* MapShooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4E02D221523A3100FFE200 /* MapShooter.swift */; };
 		DA4E02D521523CD800FFE200 /* MockShooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4E02D421523CD800FFE200 /* MockShooter.swift */; };
@@ -97,6 +98,7 @@
 		DA46C8BC214D33C2002E882A /* tests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = tests.plist; sourceTree = "<group>"; };
 		DA46C8BF214D33D3002E882A /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		DA46C8C2214D33DD002E882A /* TestMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestMap.swift; sourceTree = "<group>"; };
+		DA4C5DE52167317500A1DFBC /* TestClean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestClean.swift; sourceTree = "<group>"; };
 		DA4E02D0215239B300FFE200 /* Shooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shooter.swift; sourceTree = "<group>"; };
 		DA4E02D221523A3100FFE200 /* MapShooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapShooter.swift; sourceTree = "<group>"; };
 		DA4E02D421523CD800FFE200 /* MockShooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockShooter.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				DA46C8C2214D33DD002E882A /* TestMap.swift */,
+				DA4C5DE52167317500A1DFBC /* TestClean.swift */,
 				DA4E02D621523D8500FFE200 /* TestShooter.swift */,
 				DAA83B04214FD7A500CD66B6 /* TestImages.swift */,
 				DA9A5710214E9E1A0042558D /* TestShots.swift */,
@@ -574,6 +577,7 @@
 				DAA79C812164C147008378F3 /* MockStorage.swift in Sources */,
 				DAA79C732164BF07008378F3 /* TestProfile.swift in Sources */,
 				DA46C8C3214D33DD002E882A /* TestMap.swift in Sources */,
+				DA4C5DE62167317500A1DFBC /* TestClean.swift in Sources */,
 				DAA83B05214FD7A500CD66B6 /* TestImages.swift in Sources */,
 				DA4E02D521523CD800FFE200 /* MockShooter.swift in Sources */,
 				DA9A5711214E9E1A0042558D /* TestShots.swift in Sources */,

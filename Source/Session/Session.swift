@@ -1,36 +1,37 @@
 import Foundation
 
 public class Session {
-    var profile:Profile!
     let storage = Factory.makeStorage()
+    private var cachedProfile:Profile!
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
     
     public func load(completion:@escaping(([Project]) -> Void)) {
         queue.async { [weak self] in
-            guard let items = self?.getProfile().projects.compactMap({ try? self?.storage.load(project:$0) })
+            guard let items = self?.profile().projects.compactMap({ try? self?.storage.load(project:$0) })
                 as? [Project] else { return }
             DispatchQueue.main.async { completion(items) }
         }
     }
     
-    func getProfile() -> Profile {
-        if profile == nil {
+    func profile() -> Profile {
+        if cachedProfile == nil {
             if let loaded = try? storage.load() {
-                profile = loaded
+                cachedProfile = loaded
             } else {
-                profile = Profile()
-                storage.save(profile:profile)
+                cachedProfile = Profile()
+                storage.save(profile:cachedProfile)
             }
         }
-        return profile
+        return cachedProfile
     }
     
     func save() {
-        storage.save(profile:profile)
+        storage.save(profile:cachedProfile)
     }
     
     func add(project:Project) {
-        getProfile().projects.append(project.id)
+        profile().projects.append(project.id)
+        profile().created += 1
         save()
         storage.save(project:project)
     }

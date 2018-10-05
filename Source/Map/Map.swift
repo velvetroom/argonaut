@@ -4,6 +4,7 @@ public class Map {
     public var onSuccess:((Project) -> Void)?
     public var onFail:((Error) -> Void)?
     public var onProgress:((Float) -> Void)?
+    public var onClean:(() -> Void)?
     var shooterType:Shooter.Type = MapShooter.self
     var zooms = [Zoom(level:10), Zoom(level:14), Zoom(level:17), Zoom(level:20)]
     var path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
@@ -18,6 +19,13 @@ public class Map {
             let rect = self.makeRect(points:points)
             let shots = self.zooms.flatMap { zoom in self.makeShots(rect:rect, zoom:zoom) }
             self.makeMap(project:project, url:self.makeUrl(project:project), shots:shots, index:0)
+        }
+    }
+    
+    public func cleanDisk() {
+        queue.async { [weak self] in
+            guard let projects = self?.session.profile().projects else { return }
+            self?.clean(projects:projects)
         }
     }
     
@@ -138,7 +146,16 @@ public class Map {
         success(project:project)
     }
     
+    private func clean(projects:[String]) {
+        guard let folders = try? FileManager.default.contentsOfDirectory(atPath:path.path) else { return }
+        folders.filter { !projects.contains($0) }.forEach { folder in
+            try? FileManager.default.removeItem(at:path.appendingPathComponent(folder))
+        }
+        clean()
+    }
+    
     private func success(project:Project) { DispatchQueue.main.async { [weak self] in self?.onSuccess?(project) } }
     private func fails(error:Error) { DispatchQueue.main.async { [weak self] in self?.onFail?(error) } }
     private func progress(value:Float) { DispatchQueue.main.async { [weak self] in self?.onProgress?(value) } }
+    private func clean() { DispatchQueue.main.async { [weak self] in self?.onClean?() } }
 }

@@ -19,7 +19,7 @@ class HomeView:View<HomePresenter> {
     
     private func makeOutlets() {
         let map = Button(image:#imageLiteral(resourceName: "iconMap.pdf"))
-        map.addTarget(presenter, action:#selector(presenter.map), for:.touchUpInside)
+        map.addTarget(presenter, action:#selector(presenter.planMap), for:.touchUpInside)
         let settings = Button(image:#imageLiteral(resourceName: "iconSettings.pdf"))
         settings.addTarget(presenter, action:#selector(presenter.settings), for:.touchUpInside)
         let bar = Bar(.localized("HomeView.title"), left:[settings], right:[map])

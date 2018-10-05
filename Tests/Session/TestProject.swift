@@ -7,6 +7,9 @@ class TestProject:XCTestCase {
     override func setUp() {
         Factory.storage = MockStorage.self
         session = Session()
+    }
+    
+    override func tearDown() {
         (session.storage as! MockStorage).onSaveProfile = nil
         (session.storage as! MockStorage).onSaveProject = nil
     }
@@ -18,7 +21,8 @@ class TestProject:XCTestCase {
         (session.storage as! MockStorage).onSaveProject = { expectProject.fulfill() }
         let project = Project()
         session.add(project:project)
-        XCTAssertEqual(project.id, session.profile.projects[0])
+        XCTAssertEqual(project.id, session.profile().projects[0])
+        XCTAssertEqual(1, session.profile().created)
         waitForExpectations(timeout:1)
     }
     
