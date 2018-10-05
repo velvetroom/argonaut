@@ -1,0 +1,9 @@
+PermissionPresenter.notDetermined="### Allow access to your location?\n\nIn order to provide you with navigation help and maps we need to know where you are.";
+PermissionPresenter.denied="### Location access denied\n\nArgonaut is unable to access your location and can't provide you with navigation or maps.";
+PermissionView.requestButton="Allow location";
+HomeView.title="Maps";
+HomeView.button="Make a map";
+SettingsView.title="Settings";
+SettingsView.clean="Clean";
+MakeView.label="## Generating map\nPlease wait\nCould take a while";
+MakeView.cancel="Cancel";
