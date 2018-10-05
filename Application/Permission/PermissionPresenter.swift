@@ -6,13 +6,13 @@ class PermissionPresenter:Presenter {
     
     func denied() {
         var viewModel = Permission()
-        viewModel.message = parser.parse(string:.localized("PermissionPresenter.denied"))
+        viewModel.message = parser.parse(string:.local("PermissionPresenter.denied"))
         update(viewModel:viewModel)
     }
     
     func notDetermined() {
         var viewModel = Permission()
-        viewModel.message = parser.parse(string:.localized("PermissionPresenter.notDetermined"))
+        viewModel.message = parser.parse(string:.local("PermissionPresenter.notDetermined"))
         viewModel.requestButtonHidden = false
         update(viewModel:viewModel)
     }

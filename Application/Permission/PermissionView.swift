@@ -44,7 +44,7 @@ class PermissionView:View<PermissionPresenter>, CLLocationManagerDelegate {
         requestButton.backgroundColor = .greekBlue
         requestButton.setTitleColor(.black, for:.normal)
         requestButton.setTitleColor(UIColor(white:0, alpha:0.2), for:.highlighted)
-        requestButton.setTitle(.localized("PermissionView.requestButton"), for:[])
+        requestButton.setTitle(.local("PermissionView.requestButton"), for:[])
         requestButton.titleLabel!.font = .systemFont(ofSize:14, weight:.light)
         requestButton.addTarget(self, action:#selector(request), for:.touchUpInside)
         requestButton.isHidden = true

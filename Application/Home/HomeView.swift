@@ -24,7 +24,7 @@ class HomeView:View<HomePresenter> {
         map.addTarget(presenter, action:#selector(presenter.planMap), for:.touchUpInside)
         let settings = Button(image:#imageLiteral(resourceName: "iconSettings.pdf"))
         settings.addTarget(presenter, action:#selector(presenter.settings), for:.touchUpInside)
-        let bar = Bar(.localized("HomeView.title"), right:[map])
+        let bar = Bar(.local("HomeView.title"), right:[map])
         view.addSubview(bar)
         
         let scroll = UIScrollView()
@@ -54,7 +54,7 @@ class HomeView:View<HomePresenter> {
         button.backgroundColor = .greekBlue
         button.setTitleColor(.black, for:.normal)
         button.setTitleColor(UIColor(white:0, alpha:0.2), for:.highlighted)
-        button.setTitle(.localized("HomeView.button"), for:[])
+        button.setTitle(.local("HomeView.button"), for:[])
         button.titleLabel!.font = .systemFont(ofSize:14, weight:.light)
         button.addTarget(presenter, action:#selector(presenter.planMap), for:.touchUpInside)
         button.isHidden = true

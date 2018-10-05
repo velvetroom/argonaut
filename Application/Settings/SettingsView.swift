@@ -14,7 +14,7 @@ class SettingsView:View<SettingsPresenter> {
     private func makeOutlets() {
         let close = Button(image:#imageLiteral(resourceName: "iconCancel.pdf"))
         close.addTarget(presenter, action:#selector(presenter.close), for:.touchUpInside)
-        let bar = Bar(.localized("SettingsView.title"), left:[close])
+        let bar = Bar(.local("SettingsView.title"), left:[close])
         view.addSubview(bar)
         
         let clean = UIView()
@@ -48,7 +48,7 @@ class SettingsView:View<SettingsPresenter> {
             bar.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
         }
         
-        parser.parse(string:.localized("SettingsView.clean")) { [weak cleanMessage] string in
+        parser.parse(string:.local("SettingsView.clean")) { [weak cleanMessage] string in
             cleanMessage?.attributedText = string
         }
     }

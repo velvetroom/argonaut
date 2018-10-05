@@ -26,11 +26,11 @@ class MakeView:View<MakePresenter> {
         label.textColor = .white
         label.numberOfLines = 0
         view.addSubview(label)
-        parser.parse(string:.localized("MakeView.label")) { [weak label] string in label?.attributedText = string }
+        parser.parse(string:.local("MakeView.label")) { [weak label] string in label?.attributedText = string }
         
         let cancel = UIButton()
         cancel.translatesAutoresizingMaskIntoConstraints = false
-        cancel.setTitle(.localized("MakeView.cancel"), for:[])
+        cancel.setTitle(.local("MakeView.cancel"), for:[])
         cancel.setTitleColor(UIColor(white:1, alpha:0.6), for:.normal)
         cancel.setTitleColor(UIColor(white:1, alpha:0.2), for:.highlighted)
         cancel.titleLabel!.font = .systemFont(ofSize:16, weight:.regular)
