@@ -2,5 +2,6 @@ import Foundation
 
 public class Profile:Codable {
     var projects = [String]()
-    var created = 0
+    var rates = [Date]()
+    var planed = 0
 }

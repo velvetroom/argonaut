@@ -24,7 +24,7 @@ class TravelView:View<TravelPresenter> {
         close.addTarget(presenter, action:#selector(presenter.close), for:.touchUpInside)
         let centre = Button(image:#imageLiteral(resourceName: "iconCentre.pdf"))
         centre.addTarget(map, action:#selector(map.centreUser), for:.touchUpInside)
-        let bar = Bar(String(), left:[close], right:[centre])
+        let bar = Bar(presenter.project.name, left:[close], right:[centre])
         bar.border.isHidden = true
         view.addSubview(bar)
         

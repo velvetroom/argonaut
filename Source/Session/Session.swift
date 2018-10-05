@@ -13,6 +13,22 @@ public class Session {
         }
     }
     
+    public func rate() -> Bool {
+        var rating = false
+        if profile().planed > 1 {
+            if let last = profile().rates.last,
+                let months = Calendar.current.dateComponents([.month], from:last, to:Date()).month {
+                rating = months < -2
+            } else {
+                rating = true
+            }
+        }
+        if rating {
+            profile().rates.append(Date())
+        }
+        return rating
+    }
+    
     func profile() -> Profile {
         if cachedProfile == nil {
             if let loaded = try? storage.load() {
@@ -31,7 +47,7 @@ public class Session {
     
     func add(project:Project) {
         profile().projects.append(project.id)
-        profile().created += 1
+        profile().planed += 1
         save()
         storage.save(project:project)
     }

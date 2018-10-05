@@ -3,6 +3,8 @@ import CleanArchitecture
 class HomeView:View<HomePresenter> {
     private weak var scroll:UIScrollView!
     private weak var items:UIView!
+    private weak var icon:UIImageView!
+    private weak var button:UIButton!
     override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
     
     override func viewDidLoad() {
@@ -36,6 +38,29 @@ class HomeView:View<HomePresenter> {
         scroll.addSubview(items)
         self.items = items
         
+        let icon = UIImageView()
+        icon.isUserInteractionEnabled = false
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.clipsToBounds = true
+        icon.contentMode = .center
+        icon.image = #imageLiteral(resourceName: "iconLogo.pdf")
+        view.addSubview(icon)
+        self.icon = icon
+        
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 6
+        button.backgroundColor = .greekBlue
+        button.setTitleColor(.black, for:.normal)
+        button.setTitleColor(UIColor(white:0, alpha:0.2), for:.highlighted)
+        button.setTitle(.localized("HomeView.button"), for:[])
+        button.titleLabel!.font = .systemFont(ofSize:14, weight:.light)
+        button.addTarget(presenter, action:#selector(presenter.planMap), for:.touchUpInside)
+        button.isHidden = true
+        view.addSubview(button)
+        self.button = button
+        
         bar.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         bar.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         
@@ -43,6 +68,16 @@ class HomeView:View<HomePresenter> {
         scroll.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
         scroll.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         scroll.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
+        
+        icon.widthAnchor.constraint(equalToConstant:75).isActive = true
+        icon.heightAnchor.constraint(equalToConstant:75).isActive = true
+        icon.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
+        icon.centerYAnchor.constraint(equalTo:view.centerYAnchor).isActive = true
+        
+        button.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
+        button.topAnchor.constraint(equalTo:icon.bottomAnchor, constant:20).isActive = true
+        button.widthAnchor.constraint(equalToConstant:120).isActive = true
+        button.heightAnchor.constraint(equalToConstant:32).isActive = true
         
         if #available(iOS 11.0, *) {
             bar.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -52,16 +87,16 @@ class HomeView:View<HomePresenter> {
     }
     
     private func configureViewModel() {
-        presenter.viewModel { [weak self] (items:[HomeItem]) in self?.update(items:items) }
+        presenter.viewModel { [weak self] (viewModel:Home) in self?.update(viewModel:viewModel) }
     }
     
-    private func update(items:[HomeItem]) {
-        var top = self.items.topAnchor
-        items.forEach { item in
+    private func update(viewModel:Home) {
+        var top = items.topAnchor
+        viewModel.items.forEach { item in
             let cell = HomeCellView()
             cell.viewModel = item
             cell.addTarget(presenter, action:#selector(presenter.open(cell:)), for:.touchUpInside)
-            self.items.addSubview(cell)
+            items.addSubview(cell)
             
             cell.topAnchor.constraint(equalTo:top, constant:20).isActive = true
             cell.leftAnchor.constraint(equalTo:self.items.leftAnchor, constant:20).isActive = true
@@ -70,10 +105,12 @@ class HomeView:View<HomePresenter> {
             top = cell.bottomAnchor
         }
         layoutItems(size:view.bounds.size)
+        icon.isHidden = viewModel.iconHidden
+        button.isHidden = viewModel.buttonHidden
     }
     
     private func layoutItems(size:CGSize) {
-        items.frame = CGRect(x:0, y:0, width:size.width, height:CGFloat(items.subviews.count) * 100)
+        items.frame = CGRect(x:0, y:0, width:size.width, height:(CGFloat(items.subviews.count) * 80) + 20)
         scroll.contentSize = items.bounds.size
     }
 }

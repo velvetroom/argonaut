@@ -22,7 +22,7 @@ class TestProject:XCTestCase {
         let project = Project()
         session.add(project:project)
         XCTAssertEqual(project.id, session.profile().projects[0])
-        XCTAssertEqual(1, session.profile().created)
+        XCTAssertEqual(1, session.profile().planed)
         waitForExpectations(timeout:1)
     }
     

@@ -43,13 +43,23 @@ class HomePresenter:Presenter {
     }
     
     private func loaded(projects:[Project]) {
-        let items = projects.map { project -> HomeItem in
+        var viewModel = Home()
+        if projects.isEmpty {
+            viewModel.buttonHidden = false
+            viewModel.iconHidden = false
+        } else {
+            viewModel.items = makeItems(projects:projects)
+        }
+        update(viewModel:viewModel)
+        DispatchQueue.global(qos:.background).async { [weak self] in self?.map.cleanDisk() }
+    }
+    
+    private func makeItems(projects:[Project]) -> [HomeItem] {
+        return projects.sorted { $0.name.caseInsensitiveCompare($1.name) == .orderedAscending }.map { project in
             var item = HomeItem()
             item.title = makeTitle(project:project)
             item.project = project
             return item
         }
-        update(viewModel:items)
-        DispatchQueue.global(qos:.background).async { [weak self] in self?.map.cleanDisk() }
     }
 }
