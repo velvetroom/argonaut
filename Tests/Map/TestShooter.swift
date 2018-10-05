@@ -10,7 +10,7 @@ class TestShooter:XCTestCase {
         map = Map()
         map.shooterType = MockShooter.self
         map.path = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("test")
-        map.zooms = [Zoom(level:2)]
+        map.zooms = [Zoom(2)]
     }
     
     override func tearDown() {
@@ -31,7 +31,7 @@ class TestShooter:XCTestCase {
     
     func testMultipleZoom() {
         let expect = expectation(description:String())
-        map.zooms = [Zoom(level:2), Zoom(level:3)]
+        map.zooms = [Zoom(2), Zoom(3)]
         MockShooter.image = makeImage(width:256, height:256)
         map.onSuccess = { project in
             let url = self.map.path.appendingPathComponent(project.id)

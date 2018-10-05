@@ -24,7 +24,7 @@ class HomeView:View<HomePresenter> {
         map.addTarget(presenter, action:#selector(presenter.planMap), for:.touchUpInside)
         let settings = Button(image:#imageLiteral(resourceName: "iconSettings.pdf"))
         settings.addTarget(presenter, action:#selector(presenter.settings), for:.touchUpInside)
-        let bar = Bar(.localized("HomeView.title"), left:[settings], right:[map])
+        let bar = Bar(.localized("HomeView.title"), right:[map])
         view.addSubview(bar)
         
         let scroll = UIScrollView()

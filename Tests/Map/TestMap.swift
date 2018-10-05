@@ -10,7 +10,7 @@ class TestMap:XCTestCase {
         map = Map()
         map.path = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("test")
         map.shooterType = MockShooter.self
-        map.zooms = [Zoom(level:2)]
+        map.zooms = [Zoom(2)]
     }
     
     override func tearDown() {

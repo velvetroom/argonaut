@@ -6,7 +6,7 @@ public class Map {
     public var onProgress:((Float) -> Void)?
     public var onClean:(() -> Void)?
     var shooterType:Shooter.Type = MapShooter.self
-    var zooms = [Zoom(level:10), Zoom(level:14), Zoom(level:17), Zoom(level:20)]
+    var zooms = Zoom.zooms()
     var path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
     let session = Factory.makeSession()
     private weak var shooter:Shooter?

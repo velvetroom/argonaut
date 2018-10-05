@@ -32,6 +32,7 @@
 		DA6EC95A21538A17005D5795 /* PermissionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6EC95921538A17005D5795 /* PermissionPresenter.swift */; };
 		DA6EC95D215393C3005D5795 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DA6EC95B215393C3005D5795 /* InfoPlist.strings */; };
 		DA743B642167488C00E62E1E /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA743B632167488C00E62E1E /* Home.swift */; };
+		DA743B66216759E400E62E1E /* Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA743B65216759E400E62E1E /* Permission.swift */; };
 		DA9A570A214E73410042558D /* Exception.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A5709214E73410042558D /* Exception.swift */; };
 		DA9A570F214E9C430042558D /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A570D214E98E60042558D /* Shot.swift */; };
 		DA9A5711214E9E1A0042558D /* TestShots.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9A5710214E9E1A0042558D /* TestShots.swift */; };
@@ -112,6 +113,7 @@
 		DA6EC95921538A17005D5795 /* PermissionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionPresenter.swift; sourceTree = "<group>"; };
 		DA6EC95C215393C3005D5795 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DA743B632167488C00E62E1E /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		DA743B65216759E400E62E1E /* Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permission.swift; sourceTree = "<group>"; };
 		DA9A5709214E73410042558D /* Exception.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exception.swift; sourceTree = "<group>"; };
 		DA9A570D214E98E60042558D /* Shot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
 		DA9A5710214E9E1A0042558D /* TestShots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestShots.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 			children = (
 				DA6EC95921538A17005D5795 /* PermissionPresenter.swift */,
 				DA6EC957215389F9005D5795 /* PermissionView.swift */,
+				DA743B65216759E400E62E1E /* Permission.swift */,
 			);
 			path = Permission;
 			sourceTree = "<group>";
@@ -612,6 +615,7 @@
 				DABF545D215E2D910035E84F /* String.swift in Sources */,
 				DA6EC95A21538A17005D5795 /* PermissionPresenter.swift in Sources */,
 				DA9D3CBC216618C60006DEE3 /* Storage.swift in Sources */,
+				DA743B66216759E400E62E1E /* Permission.swift in Sources */,
 				DA0000BC214D503C00AD02D2 /* Navigation.swift in Sources */,
 				DA6EC958215389F9005D5795 /* PermissionView.swift in Sources */,
 				DABF545F215E2FB00035E84F /* LoadingView.swift in Sources */,

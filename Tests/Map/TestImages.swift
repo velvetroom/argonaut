@@ -8,7 +8,7 @@ class TestImages:XCTestCase {
         Factory.storage = MockStorage.self
         map = Map()
         map.path = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("test")
-        map.zooms = [Zoom(level:2)]
+        map.zooms = [Zoom(2)]
     }
     
     override func tearDown() {
@@ -30,7 +30,7 @@ class TestImages:XCTestCase {
     func testMakeTiles() {
         let url = map.path.appendingPathComponent("test")
         try! FileManager.default.createDirectory(at:url, withIntermediateDirectories:true)
-        map.makeTiles(url:url, shot:Shot(tileX:1, tileY:1, zoom:Zoom(level:10)),
+        map.makeTiles(url:url, shot:Shot(tileX:1, tileY:1, zoom:Zoom(10)),
                       image:makeImage(width:2560, height:2560))
         for y in 0 ..< 10 {
             for x in 0 ..< 10 {
