@@ -11,17 +11,6 @@ class TestProfile:XCTestCase {
         (session.storage as! MockStorage).onSaveProject = nil
     }
     
-    func testLoadProfile() {
-        let expect = expectation(description:String())
-        DispatchQueue.global(qos:.background).async {
-            self.session.load { (_:Profile) in
-                XCTAssertEqual(Thread.main, Thread.current)
-                expect.fulfill()
-            }
-        }
-        waitForExpectations(timeout:1)
-    }
-    
     func testCacheProfile() {
         let profile = Profile()
         session.profile = profile

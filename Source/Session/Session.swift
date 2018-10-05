@@ -5,13 +5,6 @@ public class Session {
     let storage = Factory.makeStorage()
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
     
-    public func load(completion:@escaping((Profile) -> Void)) {
-        queue.async { [weak self] in
-            guard let profile = self?.getProfile() else { return }
-            DispatchQueue.main.async { completion(profile) }
-        }
-    }
-    
     public func load(completion:@escaping(([Project]) -> Void)) {
         queue.async { [weak self] in
             guard let items = self?.getProfile().projects.compactMap({ try? self?.storage.load(project:$0) })

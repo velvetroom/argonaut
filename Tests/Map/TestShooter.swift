@@ -41,7 +41,7 @@ class TestShooter:XCTestCase {
             expect.fulfill()
         }
         map.makeMap(points:[MKPointAnnotation()], route:nil)
-        waitForExpectations(timeout:2)
+        waitForExpectations(timeout:3)
     }
     
     func testUpdateProgress() {
