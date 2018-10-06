@@ -18,6 +18,12 @@ class MakeView:View<MakePresenter> {
         load.tintColor = .white
         view.addSubview(load)
         
+        let icon = UIImageView(image:#imageLiteral(resourceName: "iconLogo.pdf"))
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.clipsToBounds = true
+        icon.contentMode = .center
+        view.addSubview(icon)
+        
         let label = UILabel()
         label.isUserInteractionEnabled = false
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -47,6 +53,11 @@ class MakeView:View<MakePresenter> {
         
         load.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
         load.centerYAnchor.constraint(equalTo:view.centerYAnchor).isActive = true
+        
+        icon.widthAnchor.constraint(equalToConstant:75).isActive = true
+        icon.heightAnchor.constraint(equalToConstant:75).isActive = true
+        icon.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
+        icon.centerYAnchor.constraint(equalTo:view.centerYAnchor).isActive = true
         
         label.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
         
