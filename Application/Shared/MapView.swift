@@ -2,7 +2,7 @@ import MapKit
 
 class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
     private let location = CLLocationManager()
-    private var indicator = UIImageView()
+    private var indicator = UIImageView(image:#imageLiteral(resourceName: "iconHeading.pdf"))
     
     init() {
         super.init(frame:.zero)
@@ -23,12 +23,11 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         region.span.latitudeDelta = 0.01
         region.span.longitudeDelta = 0.01
         setRegion(region, animated:false)
-        indicator.image = #imageLiteral(resourceName: "iconHeading.pdf")
         indicator.clipsToBounds = true
         indicator.contentMode = .center
         location.delegate = self
         location.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        location.distanceFilter = 100
+        location.distanceFilter = 35
         location.startUpdatingLocation()
         location.startUpdatingHeading()
         start()

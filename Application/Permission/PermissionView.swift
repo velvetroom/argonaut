@@ -22,12 +22,11 @@ class PermissionView:View<PermissionPresenter>, CLLocationManagerDelegate {
     }
     
     private func makeOutlets() {
-        let icon = UIImageView()
+        let icon = UIImageView(image:#imageLiteral(resourceName: "iconLogo.pdf"))
         icon.isUserInteractionEnabled = false
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.clipsToBounds = true
         icon.contentMode = .center
-        icon.image = #imageLiteral(resourceName: "iconLogo.pdf")
         view.addSubview(icon)
         
         let message = UILabel()

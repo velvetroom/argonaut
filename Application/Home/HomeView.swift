@@ -38,12 +38,11 @@ class HomeView:View<HomePresenter> {
         scroll.addSubview(items)
         self.items = items
         
-        let icon = UIImageView()
+        let icon = UIImageView(image:#imageLiteral(resourceName: "iconLogo.pdf"))
         icon.isUserInteractionEnabled = false
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.clipsToBounds = true
         icon.contentMode = .center
-        icon.image = #imageLiteral(resourceName: "iconLogo.pdf")
         view.addSubview(icon)
         self.icon = icon
         
