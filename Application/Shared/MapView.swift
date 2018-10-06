@@ -2,7 +2,7 @@ import MapKit
 
 class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
     private let location = CLLocationManager()
-    private weak var headingIndicator:UIImageView?
+    private var indicator = UIImageView()
     
     init() {
         super.init(frame:.zero)
@@ -23,6 +23,9 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         region.span.latitudeDelta = 0.01
         region.span.longitudeDelta = 0.01
         setRegion(region, animated:false)
+        indicator.image = #imageLiteral(resourceName: "iconHeading.pdf")
+        indicator.clipsToBounds = true
+        indicator.contentMode = .center
         location.delegate = self
         location.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         location.distanceFilter = 100
@@ -87,22 +90,18 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         centre(coordinate:locations.last!.coordinate)
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+    func locationManager(_:CLLocationManager, didUpdateHeading newHeading:CLHeading) {
         if newHeading.headingAccuracy > 0 {
             let heading = newHeading.trueHeading > 0 ? newHeading.trueHeading : newHeading.magneticHeading
-            headingIndicator?.transform = CGAffineTransform(rotationAngle:CGFloat((heading / 180) * Double.pi))
+            let transform = CGAffineTransform(rotationAngle:CGFloat((heading / 180) * Double.pi))
+            UIView.animate(withDuration:0.3) { [weak self] in self?.indicator.transform = transform }
         }
     }
     
     func mapView(_:MKMapView, didAdd views:[MKAnnotationView]) {
-        if  headingIndicator == nil,
-            let user = views.first(where: { view in view.annotation is MKUserLocation }) {
-            let headingIndicator = UIImageView(frame:user.bounds)
-            headingIndicator.image = #imageLiteral(resourceName: "iconHeading.pdf")
-            headingIndicator.clipsToBounds = true
-            headingIndicator.contentMode = .center
-            self.headingIndicator = headingIndicator
-            user.addSubview(headingIndicator)
+        if  let user = views.first(where: { view in view.annotation is MKUserLocation }) {
+            indicator.frame = user.bounds
+            user.addSubview(indicator)
         }
     }
 }
