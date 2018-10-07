@@ -12,10 +12,7 @@ class MakePresenter:Presenter {
     override func didLoad() {
         map.onSuccess = { [weak self] project in self?.success(project:project) }
         map.onFail = { _ in }
-        map.onProgress = { [weak self] progress in
-            self?.update(viewModel:progress)
-        }
-        
+        map.onProgress = { [weak self] progress in self?.update(viewModel:progress) }
         map.makeMap(points:plan, route:route)
     }
     

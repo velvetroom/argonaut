@@ -58,11 +58,8 @@ public class Map {
     }
     
     func makeUrl(project:Project) -> URL {
-        var url = path.appendingPathComponent(project.id)
-        var resources = URLResourceValues()
-        resources.isExcludedFromBackup = true
+        let url = path.appendingPathComponent(project.id)
         try! FileManager.default.createDirectory(at:url, withIntermediateDirectories:true)
-        try! url.setResourceValues(resources)
         return url
     }
     
