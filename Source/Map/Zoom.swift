@@ -13,7 +13,7 @@ struct Zoom {
 extension Zoom {
     static func zooms() -> [Zoom] {
         var items = [Zoom]()
-        for index in 12 ... 21 {
+        for index in 14 ... 20 {
             items.append(Zoom(index))
         }
         return items
