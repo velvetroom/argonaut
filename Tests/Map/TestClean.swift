@@ -11,10 +11,6 @@ class TestClean:XCTestCase {
     }
     
     override func tearDown() {
-        MockShooter.image = nil
-        MockShooter.error = nil
-        (map.session.storage as! MockStorage).onSaveProfile = nil
-        (map.session.storage as! MockStorage).onSaveProject = nil
         try? FileManager.default.removeItem(at:map.path)
     }
     

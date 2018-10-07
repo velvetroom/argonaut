@@ -15,9 +15,6 @@ class TestShooter:XCTestCase {
     
     override func tearDown() {
         MockShooter.image = nil
-        MockShooter.error = nil
-        (map.session.storage as! MockStorage).onSaveProfile = nil
-        (map.session.storage as! MockStorage).onSaveProject = nil
         try? FileManager.default.removeItem(at:map.path)
     }
     
@@ -46,6 +43,7 @@ class TestShooter:XCTestCase {
     func testUpdateProgress() {
         let expect = expectation(description:String())
         MockShooter.image = makeImage(width:1, height:1)
+        map.builder = Builder()
         map.onProgress = { progress in
             XCTAssertEqual(Thread.main, Thread.current)
             XCTAssertGreaterThanOrEqual(progress, 0)

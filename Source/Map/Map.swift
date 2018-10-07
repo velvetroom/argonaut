@@ -5,6 +5,7 @@ public class Map {
     public var onFail:((Error) -> Void)?
     public var onProgress:((Float) -> Void)?
     public var onClean:(() -> Void)?
+    var builder:Builder!
     var shooterType:Shooter.Type = MapShooter.self
     var zooms = Zoom.zooms()
     var path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
@@ -14,11 +15,12 @@ public class Map {
     public init() { }
     
     public func makeMap(points:[MKAnnotation], route:MKRoute?) {
-        queue.async {
-            let project = self.makeProject(points:points, route:route)
-            let rect = self.makeRect(points:points)
-            let shots = self.zooms.flatMap { zoom in self.makeShots(rect:rect, zoom:zoom) }
-            self.makeMap(project:project, url:self.makeUrl(project:project), shots:shots, index:0)
+        queue.async { [weak self] in
+            self?.builder = Builder()
+            self?.makeProject(points:points, route:route)
+            self?.makeShots(points:points)
+            self?.makeUrl()
+            self?.retry()
         }
     }
     
@@ -29,19 +31,24 @@ public class Map {
         }
     }
     
-    func makeProject(points:[MKAnnotation], route:MKRoute?) -> Project {
-        let project = Project()
-        project.id = UUID().uuidString
-        if let name = route?.name { project.name = name }
+    public func retry() {
+        queue.async { [weak self] in
+            self?.makeMap()
+        }
+    }
+    
+    func makeProject(points:[MKAnnotation], route:MKRoute?) {
+        builder.project.id = UUID().uuidString
+        if let name = route?.name { builder.project.name = name }
         if let origin = points.first {
-            if let title = origin.title as? String { project.origin.title = title }
-            project.origin.point.latitude = origin.coordinate.latitude
-            project.origin.point.longitude = origin.coordinate.longitude
+            if let title = origin.title as? String { builder.project.origin.title = title }
+            builder.project.origin.point.latitude = origin.coordinate.latitude
+            builder.project.origin.point.longitude = origin.coordinate.longitude
         }
         if points.count > 1 {
-            if let title = points[1].title as? String { project.destination.title = title }
-            project.destination.point.latitude = points[1].coordinate.latitude
-            project.destination.point.longitude = points[1].coordinate.longitude
+            if let title = points[1].title as? String { builder.project.destination.title = title }
+            builder.project.destination.point.latitude = points[1].coordinate.latitude
+            builder.project.destination.point.longitude = points[1].coordinate.longitude
         }
         if let route = route {
             let points = route.polyline.points()
@@ -49,18 +56,16 @@ public class Map {
                 var point = Point()
                 point.latitude = points[index].coordinate.latitude
                 point.longitude = points[index].coordinate.longitude
-                project.route.append(point)
+                builder.project.route.append(point)
             }
-            project.distance = route.distance
-            project.duration = route.expectedTravelTime
+            builder.project.distance = route.distance
+            builder.project.duration = route.expectedTravelTime
         }
-        return project
     }
     
-    func makeUrl(project:Project) -> URL {
-        let url = path.appendingPathComponent(project.id)
-        try! FileManager.default.createDirectory(at:url, withIntermediateDirectories:true)
-        return url
+    func makeUrl() {
+        builder.url = path.appendingPathComponent(builder.project.id)
+        try! FileManager.default.createDirectory(at:builder.url, withIntermediateDirectories:true)
     }
     
     func makeShots(rect:MKMapRect, zoom:Zoom) -> [Shot] {
@@ -73,12 +78,12 @@ public class Map {
         return list
     }
     
-    func makeTiles(url:URL, shot:Shot, image:UIImage) {
+    func makeTiles(shot:Shot, image:UIImage) {
         for y in 0 ..< Int(image.size.width / 256) {
             for x in 0 ..< Int(image.size.height / 256) {
                 let cropped = crop(image:image, rect:CGRect(x:x * 512, y:y * 512, width:512, height:512))
                 let location = "\(shot.zoom.level)_\(shot.tileX + x)_\(shot.tileY + y).png"
-                try! cropped.pngData()!.write(to:url.appendingPathComponent(location))
+                try! cropped.pngData()!.write(to:builder.url.appendingPathComponent(location))
             }
         }
     }
@@ -119,15 +124,22 @@ public class Map {
         return rect
     }
     
-    private func makeMap(project:Project, url:URL, shots:[Shot], index:Int) {
-        if index < shots.count {
-            shooterType.init(shot:shots[index]).make(queue:queue, success: { [weak self] image in
-                self?.progress(value:Float(index + 1) / Float(shots.count))
-                self?.makeTiles(url:url, shot:shots[index], image:image)
-                self?.makeMap(project:project, url:url, shots:shots, index:index + 1)
+    private func makeShots(points:[MKAnnotation]) {
+        let rect = makeRect(points:points)
+        builder.shots = zooms.flatMap { zoom in makeShots(rect:rect, zoom:zoom) }
+    }
+    
+    private func makeMap() {
+        if builder.index < builder.shots.count {
+            let shot = builder.shots[builder.index]
+            shooterType.init(shot:builder.shots[builder.index]).make(queue:queue, success: { [weak self] image in
+                self?.progress()
+                self?.makeTiles(shot:shot, image:image)
+                self?.builder.index += 1
+                self?.makeMap()
             }) { [weak self] error in self?.fails(error:error) }
         } else {
-            save(project:project)
+            save()
         }
     }
     
@@ -141,9 +153,9 @@ public class Map {
         return stride(from:start, to:start + size, by:10)
     }
     
-    private func save(project:Project) {
-        session.add(project:project)
-        success(project:project)
+    private func save() {
+        session.add(project:builder.project)
+        success()
     }
     
     private func clean(projects:[String]) {
@@ -154,8 +166,16 @@ public class Map {
         clean()
     }
     
-    private func success(project:Project) { DispatchQueue.main.async { [weak self] in self?.onSuccess?(project) } }
+    private func progress() {
+        let value = Float(builder.index + 1) / Float(builder.shots.count)
+        DispatchQueue.main.async { [weak self] in self?.onProgress?(value) }
+    }
+    
+    private func success() {
+        let project = builder.project
+        DispatchQueue.main.async { [weak self] in self?.onSuccess?(project) }
+    }
+    
     private func fails(error:Error) { DispatchQueue.main.async { [weak self] in self?.onFail?(error) } }
-    private func progress(value:Float) { DispatchQueue.main.async { [weak self] in self?.onProgress?(value) } }
     private func clean() { DispatchQueue.main.async { [weak self] in self?.onClean?() } }
 }

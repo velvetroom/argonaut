@@ -11,7 +11,6 @@ class TestProfile:XCTestCase {
     
     override func tearDown() {
         (session.storage as! MockStorage).onSaveProfile = nil
-        (session.storage as! MockStorage).onSaveProject = nil
     }
     
     func testCacheProfile() {

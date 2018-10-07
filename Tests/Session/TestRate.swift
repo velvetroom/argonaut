@@ -9,11 +9,6 @@ class TestRate:XCTestCase {
         session = Session()
     }
     
-    override func tearDown() {
-        (session.storage as! MockStorage).onSaveProfile = nil
-        (session.storage as! MockStorage).onSaveProject = nil
-    }
-    
     func testNoRateAtFirst() {
         XCTAssertFalse(session.rate())
     }
