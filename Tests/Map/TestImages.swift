@@ -33,11 +33,11 @@ class TestImages:XCTestCase {
         for y in 0 ..< 10 {
             for x in 0 ..< 10 {
                 let image = UIImage(data:
-                    try! Data(contentsOf:map.builder.url.appendingPathComponent("10_\(1 + x)_\(1 + y).png")), scale:2)
+                    try! Data(contentsOf:map.builder.url.appendingPathComponent("10_\(1 + x)_\(1 + y).png")), scale:1)
                 XCTAssertEqual(256, image?.size.width)
                 XCTAssertEqual(256, image?.size.height)
-                XCTAssertEqual(512, image?.cgImage?.width)
-                XCTAssertEqual(512, image?.cgImage?.height)
+                XCTAssertEqual(256, image?.cgImage?.width)
+                XCTAssertEqual(256, image?.cgImage?.height)
             }
         }
     }

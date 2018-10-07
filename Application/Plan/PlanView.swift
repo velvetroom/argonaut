@@ -69,6 +69,18 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         }
     }
     
+    override func viewDidAppear(_ animated:Bool) {
+        super.viewDidAppear(animated)
+        map.location.startUpdatingHeading()
+        map.location.startUpdatingLocation()
+    }
+    
+    override func viewWillDisappear(_ animated:Bool) {
+        super.viewWillDisappear(animated)
+        map.location.stopUpdatingHeading()
+        map.location.stopUpdatingLocation()
+    }
+    
     private func makeOutlets() {
         let map = PlanMapView()
         view.addSubview(map)

@@ -10,11 +10,10 @@ struct Zoom {
     }
 }
 
-
 extension Zoom {
     static func zooms() -> [Zoom] {
         var items = [Zoom]()
-        for index in 0 ... 20 {
+        for index in 12 ... 21 {
             items.append(Zoom(index))
         }
         return items

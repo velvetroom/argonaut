@@ -1,7 +1,7 @@
 import MapKit
 
 class MapShooter:MKMapSnapshotter, Shooter {
-    var timeout = 7.0
+    var timeout = 10.0
     private weak var timer:Timer?
     private var fail:((Error) -> Void)?
     required init(shot:Shot) { super.init(options:shot.options()) }

@@ -6,7 +6,7 @@ class TravelTiler:MKTileOverlay {
     init() {
         super.init(urlTemplate:"{z}_{x}_{y}")
         canReplaceMapContent = true
-        tileSize = CGSize(width:512, height:512)
+        tileSize = CGSize(width:256, height:256)
     }
     
     override func loadTile(at path:MKTileOverlayPath, result:@escaping(Data?, Error?) -> Void) {

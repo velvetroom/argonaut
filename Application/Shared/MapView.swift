@@ -1,7 +1,7 @@
 import MapKit
 
 class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
-    private let location = CLLocationManager()
+    let location = CLLocationManager()
     private var indicator = UIImageView(image:#imageLiteral(resourceName: "iconHeading.pdf"))
     
     init() {
@@ -27,10 +27,7 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         indicator.contentMode = .center
         location.delegate = self
         location.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        location.distanceFilter = 35
-        location.startUpdatingLocation()
-        location.startUpdatingHeading()
-        start()
+        location.distanceFilter = 40
     }
     
     deinit {
@@ -39,7 +36,6 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     required init?(coder:NSCoder) { return nil }
-    func start() { }
     @objc func centreUser() { centre(coordinate:userLocation.coordinate) }
     
     func centre(coordinate:CLLocationCoordinate2D) {

@@ -81,7 +81,7 @@ public class Map {
     func makeTiles(shot:Shot, image:UIImage) {
         for y in 0 ..< Int(image.size.width / 256) {
             for x in 0 ..< Int(image.size.height / 256) {
-                let cropped = crop(image:image, rect:CGRect(x:x * 512, y:y * 512, width:512, height:512))
+                let cropped = crop(image:image, rect:CGRect(x:x * 256, y:y * 256, width:256, height:256))
                 let location = "\(shot.zoom.level)_\(shot.tileX + x)_\(shot.tileY + y).png"
                 try! cropped.pngData()!.write(to:builder.url.appendingPathComponent(location))
             }
@@ -133,13 +133,13 @@ public class Map {
         if builder.index < builder.shots.count {
             let shot = builder.shots[builder.index]
             shooterType.init(shot:builder.shots[builder.index]).make(queue:queue, success: { [weak self] image in
-                self?.queue.async { [weak self] in self?.makeTiles(shot:shot, image:image) }
+                self?.makeTiles(shot:shot, image:image)
                 self?.progress()
                 self?.builder.index += 1
                 self?.makeMap()
             }) { [weak self] error in self?.fails(error:error) }
         } else {
-            queue.async { [weak self] in self?.save() }
+            save()
         }
     }
     
