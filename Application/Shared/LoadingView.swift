@@ -24,6 +24,17 @@ class LoadingView:UIView {
         groupAnimation.isRemovedOnCompletion = false
         groupAnimation.fillMode = .forwards
         pulse.add(groupAnimation, forKey:"animation")
+        
+        let icon = UIImageView(image:#imageLiteral(resourceName: "iconLogo.pdf"))
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.clipsToBounds = true
+        icon.contentMode = .center
+        addSubview(icon)
+        
+        icon.widthAnchor.constraint(equalToConstant:75).isActive = true
+        icon.heightAnchor.constraint(equalToConstant:75).isActive = true
+        icon.centerXAnchor.constraint(equalTo:centerXAnchor).isActive = true
+        icon.centerYAnchor.constraint(equalTo:centerYAnchor).isActive = true
     }
     
     required init?(coder:NSCoder) { return nil }

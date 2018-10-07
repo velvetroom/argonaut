@@ -4,7 +4,7 @@ class HomeView:View<HomePresenter> {
     private weak var scroll:UIScrollView!
     private weak var items:UIView!
     private weak var icon:UIImageView!
-    private weak var button:UIButton!
+    private weak var button:ButtonBlue!
     override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
     
     override func viewDidLoad() {
@@ -46,15 +46,7 @@ class HomeView:View<HomePresenter> {
         view.addSubview(icon)
         self.icon = icon
         
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 6
-        button.backgroundColor = .greekBlue
-        button.setTitleColor(.black, for:.normal)
-        button.setTitleColor(UIColor(white:0, alpha:0.2), for:.highlighted)
-        button.setTitle(.local("HomeView.button"), for:[])
-        button.titleLabel!.font = .systemFont(ofSize:14, weight:.light)
+        let button = ButtonBlue(title:.local("HomeView.button"))
         button.addTarget(presenter, action:#selector(presenter.planMap), for:.touchUpInside)
         button.isHidden = true
         view.addSubview(button)
@@ -75,8 +67,6 @@ class HomeView:View<HomePresenter> {
         
         button.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
         button.topAnchor.constraint(equalTo:icon.bottomAnchor, constant:20).isActive = true
-        button.widthAnchor.constraint(equalToConstant:120).isActive = true
-        button.heightAnchor.constraint(equalToConstant:32).isActive = true
         
         if #available(iOS 11.0, *) {
             bar.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true

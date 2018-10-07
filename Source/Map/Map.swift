@@ -133,13 +133,13 @@ public class Map {
         if builder.index < builder.shots.count {
             let shot = builder.shots[builder.index]
             shooterType.init(shot:builder.shots[builder.index]).make(queue:queue, success: { [weak self] image in
+                self?.queue.async { [weak self] in self?.makeTiles(shot:shot, image:image) }
                 self?.progress()
-                self?.makeTiles(shot:shot, image:image)
                 self?.builder.index += 1
                 self?.makeMap()
             }) { [weak self] error in self?.fails(error:error) }
         } else {
-            save()
+            queue.async { [weak self] in self?.save() }
         }
     }
     

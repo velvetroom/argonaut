@@ -2,7 +2,7 @@ import CleanArchitecture
 import CoreLocation
 
 class PermissionView:View<PermissionPresenter>, CLLocationManagerDelegate {
-    private weak var requestButton:UIButton!
+    private weak var requestButton:ButtonBlue!
     private weak var message:UILabel!
     private var manager:CLLocationManager?
     override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
@@ -36,15 +36,7 @@ class PermissionView:View<PermissionPresenter>, CLLocationManagerDelegate {
         view.addSubview(message)
         self.message = message
         
-        let requestButton = UIButton()
-        requestButton.translatesAutoresizingMaskIntoConstraints = false
-        requestButton.clipsToBounds = true
-        requestButton.layer.cornerRadius = 6
-        requestButton.backgroundColor = .greekBlue
-        requestButton.setTitleColor(.black, for:.normal)
-        requestButton.setTitleColor(UIColor(white:0, alpha:0.2), for:.highlighted)
-        requestButton.setTitle(.local("PermissionView.requestButton"), for:[])
-        requestButton.titleLabel!.font = .systemFont(ofSize:14, weight:.light)
+        let requestButton = ButtonBlue(title:.local("PermissionView.requestButton"))
         requestButton.addTarget(self, action:#selector(request), for:.touchUpInside)
         requestButton.isHidden = true
         view.addSubview(requestButton)
@@ -61,8 +53,6 @@ class PermissionView:View<PermissionPresenter>, CLLocationManagerDelegate {
         
         requestButton.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
         requestButton.topAnchor.constraint(equalTo:message.bottomAnchor, constant:40).isActive = true
-        requestButton.widthAnchor.constraint(equalToConstant:120).isActive = true
-        requestButton.heightAnchor.constraint(equalToConstant:32).isActive = true
     }
     
     private func configureViewModel() {

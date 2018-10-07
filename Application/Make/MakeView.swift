@@ -3,14 +3,18 @@ import MarkdownHero
 
 class MakeView:View<MakePresenter> {
     private weak var progress:UIProgressView!
+    private weak var load:LoadingView!
+    private weak var error:UIImageView!
+    private weak var retry:ButtonBlue!
+    private weak var message:UILabel!
     private let parser = Parser()
     override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         view.backgroundColor = .black
         makeOutlets()
         configureViewModel()
+        super.viewDidLoad()
     }
     
     override func viewDidAppear(_ animated:Bool) {
@@ -27,12 +31,16 @@ class MakeView:View<MakePresenter> {
         let load = LoadingView()
         load.tintColor = .white
         view.addSubview(load)
+        self.load = load
         
-        let icon = UIImageView(image:#imageLiteral(resourceName: "iconLogo.pdf"))
-        icon.translatesAutoresizingMaskIntoConstraints = false
-        icon.clipsToBounds = true
-        icon.contentMode = .center
-        view.addSubview(icon)
+        let error = UIImageView(image:#imageLiteral(resourceName: "iconError.pdf"))
+        error.clipsToBounds = true
+        error.contentMode = .center
+        error.translatesAutoresizingMaskIntoConstraints = false
+        error.isUserInteractionEnabled = false
+        error.isHidden = true
+        view.addSubview(error)
+        self.error = error
         
         let label = UILabel()
         label.isUserInteractionEnabled = false
@@ -44,6 +52,15 @@ class MakeView:View<MakePresenter> {
         view.addSubview(label)
         parser.parse(string:.local("MakeView.label")) { [weak label] string in label?.attributedText = string }
         
+        let message = UILabel()
+        message.isUserInteractionEnabled = false
+        message.translatesAutoresizingMaskIntoConstraints = false
+        message.textColor = .white
+        message.numberOfLines = 0
+        message.textAlignment = .center
+        view.addSubview(message)
+        self.message = message
+        
         let cancel = UIButton()
         cancel.translatesAutoresizingMaskIntoConstraints = false
         cancel.setTitle(.local("MakeView.cancel"), for:[])
@@ -52,6 +69,12 @@ class MakeView:View<MakePresenter> {
         cancel.titleLabel!.font = .systemFont(ofSize:16, weight:.regular)
         cancel.addTarget(presenter, action:#selector(presenter.cancel), for:.touchUpInside)
         view.addSubview(cancel)
+        
+        let retry = ButtonBlue(title:.local("MakeView.retry"))
+        retry.addTarget(presenter, action:#selector(presenter.retry), for:.touchUpInside)
+        retry.isHidden = true
+        view.addSubview(retry)
+        self.retry = retry
         
         let progress = UIProgressView()
         progress.translatesAutoresizingMaskIntoConstraints = false
@@ -64,10 +87,10 @@ class MakeView:View<MakePresenter> {
         load.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
         load.centerYAnchor.constraint(equalTo:view.centerYAnchor).isActive = true
         
-        icon.widthAnchor.constraint(equalToConstant:75).isActive = true
-        icon.heightAnchor.constraint(equalToConstant:75).isActive = true
-        icon.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
-        icon.centerYAnchor.constraint(equalTo:view.centerYAnchor).isActive = true
+        error.centerXAnchor.constraint(equalTo:load.centerXAnchor).isActive = true
+        error.centerYAnchor.constraint(equalTo:load.centerYAnchor).isActive = true
+        error.widthAnchor.constraint(equalToConstant:75).isActive = true
+        error.heightAnchor.constraint(equalToConstant:75).isActive = true
         
         label.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
         
@@ -79,6 +102,13 @@ class MakeView:View<MakePresenter> {
         progress.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         progress.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         progress.heightAnchor.constraint(equalToConstant:10).isActive = true
+        
+        message.widthAnchor.constraint(equalToConstant:300).isActive = true
+        message.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
+        message.bottomAnchor.constraint(equalTo:retry.topAnchor, constant:-30).isActive = true
+        
+        retry.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
+        retry.bottomAnchor.constraint(equalTo:cancel.topAnchor, constant:-60).isActive = true
         
         if #available(iOS 11.0, *) {
             label.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor, constant:20).isActive = true
@@ -92,6 +122,12 @@ class MakeView:View<MakePresenter> {
     private func configureViewModel() {
         presenter.viewModel { [weak self] (progress:Float) in
             self?.progress.setProgress(progress, animated:true)
+        }
+        presenter.viewModel { [weak self] (viewModel:Make) in
+            self?.load.isHidden = viewModel.loadHidden
+            self?.error.isHidden = viewModel.errorHidden
+            self?.retry.isHidden = viewModel.retryHidden
+            self?.message.attributedText = viewModel.message
         }
     }
 }
