@@ -18,6 +18,7 @@ class TestTimer:XCTestCase {
         MockShooter.image = nil
         MockShooter.error = nil
         try? FileManager.default.removeItem(at:map.path)
+        map = nil
     }
     
     func testFailsIfTimeout() {
@@ -40,6 +41,7 @@ class TestTimer:XCTestCase {
             self.map.retry()
         }
         map.onSuccess = { project in
+            XCTAssertFalse(id.isEmpty)
             XCTAssertEqual(id, project.id)
             expect.fulfill()
         }

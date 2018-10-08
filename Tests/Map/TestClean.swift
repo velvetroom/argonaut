@@ -3,9 +3,11 @@ import XCTest
 
 class TestClean:XCTestCase {
     private var map:Map!
+    private var session:Session!
     
     override func setUp() {
         Factory.storage = MockStorage.self
+        session = Factory.makeSession()
         map = Map()
         map.path = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("test")
     }
@@ -28,7 +30,7 @@ class TestClean:XCTestCase {
         XCTAssertTrue(FileManager.default.fileExists(atPath:pathB.path))
         XCTAssertTrue(FileManager.default.fileExists(atPath:pathC.path))
         XCTAssertTrue(FileManager.default.fileExists(atPath:pathData.path))
-        map.session.profile().projects = ["B"]
+        session.profile().projects = ["B"]
         map.onClean = {
             XCTAssertEqual(Thread.main, Thread.current)
             XCTAssertFalse(FileManager.default.fileExists(atPath:pathA.path))
@@ -38,6 +40,21 @@ class TestClean:XCTestCase {
             expect.fulfill()
         }
         DispatchQueue.global(qos:.background).async { self.map.cleanDisk() }
+        waitForExpectations(timeout:1)
+    }
+    
+    func testDelete() {
+        let expectProject = expectation(description:String())
+        let expectProfile = expectation(description:String())
+        let project = Project()
+        project.id = "helloworld"
+        session.profile().projects = [project.id]
+        (session.storage as! MockStorage).onDeleteProject = { expectProject.fulfill() }
+        (session.storage as! MockStorage).onSaveProfile = {
+            XCTAssertTrue(self.session.profile().projects.isEmpty)
+            expectProfile.fulfill()
+        }
+        session.delete(project:project)
         waitForExpectations(timeout:1)
     }
 }

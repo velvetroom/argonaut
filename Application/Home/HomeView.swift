@@ -15,6 +15,11 @@ class HomeView:View<HomePresenter> {
         configureViewModel()
     }
     
+    override func viewDidAppear(_ animated:Bool) {
+        super.viewDidAppear(animated)
+        presenter.refresh()
+    }
+    
     override func viewWillTransition(to size:CGSize, with coordinator:UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to:size, with:coordinator)
         layoutItems(size:size)
@@ -77,11 +82,13 @@ class HomeView:View<HomePresenter> {
     }
     
     private func update(viewModel:Home) {
+        items.subviews.forEach { $0.removeFromSuperview() }
         var top = items.topAnchor
         viewModel.items.forEach { item in
             let cell = HomeCellView()
             cell.viewModel = item
             cell.addTarget(presenter, action:#selector(presenter.open(cell:)), for:.touchUpInside)
+            cell.button.addTarget(presenter, action:#selector(presenter.delete(button:)), for:.touchUpInside)
             items.addSubview(cell)
             
             cell.topAnchor.constraint(equalTo:top, constant:20).isActive = true
@@ -96,7 +103,7 @@ class HomeView:View<HomePresenter> {
     }
     
     private func layoutItems(size:CGSize) {
-        items.frame = CGRect(x:0, y:60, width:size.width, height:(CGFloat(items.subviews.count) * 80) + 20)
+        items.frame = CGRect(x:0, y:70, width:size.width, height:(CGFloat(items.subviews.count) * 80) + 20)
         scroll.contentSize = CGSize(width:size.width, height:items.frame.maxY)
     }
 }

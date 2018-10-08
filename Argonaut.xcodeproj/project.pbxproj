@@ -13,6 +13,7 @@
 		DA0000C2214D514C00AD02D2 /* libArgonaut.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA46C8B8214D3362002E882A /* libArgonaut.a */; };
 		DA0000C7214D564000AD02D2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DA0000C5214D564000AD02D2 /* Localizable.strings */; };
 		DA0000C9214D56BB00AD02D2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000C8214D56BB00AD02D2 /* MapView.swift */; };
+		DA0F0D5F216B4C8A0097DCB4 /* HomeDeleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0F0D5E216B4C8A0097DCB4 /* HomeDeleteView.swift */; };
 		DA0FA4F02150EB350087ECFF /* Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0FA4EF2150EB350087ECFF /* Zoom.swift */; };
 		DA219171215D05F0002C11DD /* PlanResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA219170215D05F0002C11DD /* PlanResultView.swift */; };
 		DA3558B82160C54B00D8B7AB /* TravelPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3558B72160C54B00D8B7AB /* TravelPresenter.swift */; };
@@ -95,6 +96,7 @@
 		DA0000C0214D50F900AD02D2 /* PlanPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanPresenter.swift; sourceTree = "<group>"; };
 		DA0000C6214D564000AD02D2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DA0000C8214D56BB00AD02D2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		DA0F0D5E216B4C8A0097DCB4 /* HomeDeleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDeleteView.swift; sourceTree = "<group>"; };
 		DA0FA4EF2150EB350087ECFF /* Zoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zoom.swift; sourceTree = "<group>"; };
 		DA219170215D05F0002C11DD /* PlanResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanResultView.swift; sourceTree = "<group>"; };
 		DA3558B72160C54B00D8B7AB /* TravelPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelPresenter.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				DAE35793216234130006611B /* HomePresenter.swift */,
 				DAE35795216234230006611B /* HomeView.swift */,
 				DAFF03C721633EAB00F964A2 /* HomeCellView.swift */,
+				DA0F0D5E216B4C8A0097DCB4 /* HomeDeleteView.swift */,
 				DA743B632167488C00E62E1E /* Home.swift */,
 				DAFF03C92163403200F964A2 /* HomeItem.swift */,
 			);
@@ -619,6 +622,7 @@
 				DA3558BE2160D88700D8B7AB /* TravelTiler.swift in Sources */,
 				DAB8F5B82163866E00397CC0 /* SettingsPresenter.swift in Sources */,
 				DAED25F7215CD8EE00FAC1AF /* UIColor.swift in Sources */,
+				DA0F0D5F216B4C8A0097DCB4 /* HomeDeleteView.swift in Sources */,
 				DA743B642167488C00E62E1E /* Home.swift in Sources */,
 				DABF5462215E2FE60035E84F /* MakeView.swift in Sources */,
 				DA0000C9214D56BB00AD02D2 /* MapView.swift in Sources */,

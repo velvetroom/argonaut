@@ -29,6 +29,12 @@ public class Session {
         return rating
     }
     
+    public func delete(project:Project) {
+        profile().projects.removeAll { $0 == project.id }
+        save()
+        storage.delete(project:project)
+    }
+    
     func profile() -> Profile {
         if cachedProfile == nil {
             if let loaded = try? storage.load() {
