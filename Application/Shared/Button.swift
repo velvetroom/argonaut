@@ -3,16 +3,15 @@ import UIKit
 class Button:UIControl {
     override var intrinsicContentSize:CGSize { return CGSize(width:52, height:56) }
     
-    init(image:UIImage) {
+    init(_ image:UIImage) {
         super.init(frame:.zero)
         translatesAutoresizingMaskIntoConstraints = false
         
-        let imageView = UIImageView()
+        let imageView = UIImageView(image:image)
         imageView.clipsToBounds = true
         imageView.contentMode = .center
         imageView.isUserInteractionEnabled = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = image
         addSubview(imageView)
         
         imageView.topAnchor.constraint(equalTo:topAnchor).isActive = true

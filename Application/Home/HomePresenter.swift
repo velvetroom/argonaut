@@ -8,6 +8,14 @@ class HomePresenter:Presenter {
     private let parser = Parser()
     private let formatter = DateComponentsFormatter()
     
+    func refresh() { session.load { [weak self] (projects:[Project]) in self?.loaded(projects:projects) } }
+    
+    func deleteConfirm(project:Project) {
+        Application.navigation.dismiss(animated:true)
+        session.delete(project:project)
+        refresh()
+    }
+    
     @objc func planMap() {
         Application.navigation.pushViewController(PlanView(), animated:true)
     }
@@ -22,12 +30,20 @@ class HomePresenter:Presenter {
         Application.navigation.setViewControllers([SettingsView()], animated:true)
     }
     
+    @objc func delete(button:UIButton) {
+        let view = HomeDeleteView(presenter:self)
+        view.viewModel = (button.superview as! HomeCellView).viewModel
+        Application.navigation.present(view, animated:true)
+    }
+    
+    @objc func deleteCancel() {
+        Application.navigation.dismiss(animated:true)
+    }
+    
     override func didLoad() {
         formatter.unitsStyle = .full
         formatter.allowedUnits = [.minute, .hour]
     }
-    
-    override func didAppear() { session.load { [weak self] (projects:[Project]) in self?.loaded(projects:projects) } }
     
     private func makeTitle(project:Project) -> NSAttributedString {
         var string = "**\(project.name)**\n"

@@ -8,10 +8,13 @@ class PlanMapView:MapView {
     private let geocoder = CLGeocoder()
     private let formatter = DateComponentsFormatter()
     
-    override func start() {
+    override init() {
+        super.init()
         formatter.unitsStyle = .full
         formatter.allowedUnits = [.minute, .hour]
     }
+    
+    required init?(coder:NSCoder) { return nil }
     
     func updateRoute() {
         removeOverlays(overlays)
@@ -52,6 +55,7 @@ class PlanMapView:MapView {
                  fromOldState:MKAnnotationView.DragState) {
         if state == .ending {
             geocode(mark:view.annotation as! MKPointAnnotation)
+            updateDistance(view:view)
         }
     }
     

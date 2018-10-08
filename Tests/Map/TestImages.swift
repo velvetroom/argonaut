@@ -12,8 +12,6 @@ class TestImages:XCTestCase {
     }
     
     override func tearDown() {
-        (map.session.storage as! MockStorage).onSaveProfile = nil
-        (map.session.storage as! MockStorage).onSaveProject = nil
         try? FileManager.default.removeItem(at:map.path)
     }
     
@@ -28,18 +26,18 @@ class TestImages:XCTestCase {
     }
     
     func testMakeTiles() {
-        let url = map.path.appendingPathComponent("test")
-        try! FileManager.default.createDirectory(at:url, withIntermediateDirectories:true)
-        map.makeTiles(url:url, shot:Shot(tileX:1, tileY:1, zoom:Zoom(10)),
-                      image:makeImage(width:2560, height:2560))
+        map.builder = Builder()
+        map.builder.url = map.path.appendingPathComponent("test")
+        try! FileManager.default.createDirectory(at:map.builder.url, withIntermediateDirectories:true)
+        map.makeTiles(shot:Shot(tileX:1, tileY:1, zoom:Zoom(10)), image:makeImage(width:2560, height:2560))
         for y in 0 ..< 10 {
             for x in 0 ..< 10 {
                 let image = UIImage(data:
-                    try! Data(contentsOf:url.appendingPathComponent("10_\(1 + x)_\(1 + y).png")), scale:2)
+                    try! Data(contentsOf:map.builder.url.appendingPathComponent("10_\(1 + x)_\(1 + y).png")), scale:1)
                 XCTAssertEqual(256, image?.size.width)
                 XCTAssertEqual(256, image?.size.height)
-                XCTAssertEqual(512, image?.cgImage?.width)
-                XCTAssertEqual(512, image?.cgImage?.height)
+                XCTAssertEqual(256, image?.cgImage?.width)
+                XCTAssertEqual(256, image?.cgImage?.height)
             }
         }
     }

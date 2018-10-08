@@ -20,4 +20,10 @@ class Storage:StorageService {
     func save(project:Project) {
         try? hero.save(model:project, path:project.id + ".argonaut")
     }
+    
+    func delete(project:Project) {
+        let url = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask).last!.appendingPathComponent(
+            project.id + ".argonaut")
+        try! FileManager.default.removeItem(at:url)
+    }
 }

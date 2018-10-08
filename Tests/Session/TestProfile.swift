@@ -11,7 +11,6 @@ class TestProfile:XCTestCase {
     
     override func tearDown() {
         (session.storage as! MockStorage).onSaveProfile = nil
-        (session.storage as! MockStorage).onSaveProject = nil
     }
     
     func testCacheProfile() {
@@ -21,7 +20,7 @@ class TestProfile:XCTestCase {
     func testCreateOnFirstTime() {
         let expect = expectation(description:String())
         let storage = session.storage as! MockStorage
-        storage.error = NSError()
+        storage.error = Exception.mapUnknownError
         storage.onSaveProfile = { expect.fulfill() }
         let _ = session.profile()
         waitForExpectations(timeout:1)

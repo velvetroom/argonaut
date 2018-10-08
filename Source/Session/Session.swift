@@ -29,11 +29,18 @@ public class Session {
         return rating
     }
     
+    public func delete(project:Project) {
+        profile().projects.removeAll { $0 == project.id }
+        save()
+        storage.delete(project:project)
+    }
+    
     func profile() -> Profile {
         if cachedProfile == nil {
             if let loaded = try? storage.load() {
                 cachedProfile = loaded
             } else {
+                avoidBackup()
                 cachedProfile = Profile()
                 storage.save(profile:cachedProfile)
             }
@@ -50,5 +57,12 @@ public class Session {
         profile().planed += 1
         save()
         storage.save(project:project)
+    }
+    
+    private func avoidBackup() {
+        var url = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0]
+        var resources = URLResourceValues()
+        resources.isExcludedFromBackup = true
+        try! url.setResourceValues(resources)
     }
 }

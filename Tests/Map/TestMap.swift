@@ -14,15 +14,29 @@ class TestMap:XCTestCase {
     }
     
     override func tearDown() {
-        MockShooter.image = nil
         MockShooter.error = nil
         (map.session.storage as! MockStorage).onSaveProfile = nil
-        (map.session.storage as! MockStorage).onSaveProject = nil
         try? FileManager.default.removeItem(at:map.path)
     }
     
     func testSessionIsMonostate() {
         XCTAssertTrue(map.session === Factory.makeSession())
+    }
+    
+    func testRefreshBuilder() {
+        let expect = expectation(description:String())
+        MockShooter.error = Exception.mapUnknownError
+        map.onFail = { error in
+            self.map.builder.project.id = "hello world"
+            MockShooter.error = nil
+            self.map.makeMap(points:[], route:nil)
+        }
+        map.onSuccess = { project in
+            XCTAssertNotEqual("hello world", self.map.builder.project.id)
+            expect.fulfill()
+        }
+        map.makeMap(points:[], route:nil)
+        waitForExpectations(timeout:1)
     }
     
     func testCreateMap() {
@@ -38,8 +52,8 @@ class TestMap:XCTestCase {
     }
     
     func testGetError() {
-        MockShooter.error = Exception.mapUnknownError
         let expect = expectation(description:String())
+        MockShooter.error = Exception.mapUnknownError
         map.onFail = { error in
             XCTAssertEqual(Thread.main, Thread.current)
             expect.fulfill()
@@ -49,12 +63,12 @@ class TestMap:XCTestCase {
     }
     
     func testCreateUrl() {
-        let project = Project()
-        project.id = "hello world"
-        let url = map.makeUrl(project:project)
-        XCTAssertTrue(FileManager.default.fileExists(atPath:url.path))
-        XCTAssertTrue(url.path.contains(map.path.path))
-        XCTAssertTrue(url.path.contains(project.id))
+        map.builder = Builder()
+        map.builder.project.id = "hello world"
+        map.makeUrl()
+        XCTAssertTrue(FileManager.default.fileExists(atPath:map.builder.url.path))
+        XCTAssertTrue(map.builder.url.path.contains(map.path.path))
+        XCTAssertTrue(map.builder.url.path.contains(map.builder.project.id))
     }
     
     func testMakeZeroRect() {
@@ -119,13 +133,14 @@ class TestMap:XCTestCase {
         let origin = CLLocationCoordinate2D(latitude:51.482393, longitude:-0.121620)
         let destination = CLLocationCoordinate2D(latitude:51.487404, longitude:-0.127049)
         let route = MKRoute()
-        let project = map.makeProject(points:[MKPlacemark(coordinate:origin, addressDictionary:nil),
-                                              MKPlacemark(coordinate:destination, addressDictionary:nil)], route:route)
-        XCTAssertFalse(project.id.isEmpty)
-        XCTAssertEqual(51.482393, project.origin.point.latitude)
-        XCTAssertEqual(-0.121620, project.origin.point.longitude)
-        XCTAssertEqual(51.487404, project.destination.point.latitude)
-        XCTAssertEqual(-0.127049, project.destination.point.longitude)
+        map.builder = Builder()
+        map.makeProject(points:[MKPlacemark(coordinate:origin, addressDictionary:nil),
+                                MKPlacemark(coordinate:destination, addressDictionary:nil)], route:route)
+        XCTAssertFalse(map.builder.project.id.isEmpty)
+        XCTAssertEqual(51.482393, map.builder.project.origin.point.latitude)
+        XCTAssertEqual(-0.121620, map.builder.project.origin.point.longitude)
+        XCTAssertEqual(51.487404, map.builder.project.destination.point.latitude)
+        XCTAssertEqual(-0.127049, map.builder.project.destination.point.longitude)
     }
     
     func testUpdatesProfile() {

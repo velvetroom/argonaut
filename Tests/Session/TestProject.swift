@@ -34,6 +34,6 @@ class TestProject:XCTestCase {
                 expect.fulfill()
             }
         }
-        waitForExpectations(timeout:1)
+        waitForExpectations(timeout:2)
     }
 }

@@ -11,14 +11,13 @@ class TestShooter:XCTestCase {
         map.shooterType = MockShooter.self
         map.path = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("test")
         map.zooms = [Zoom(2)]
+        map.builder = Builder()
     }
     
     override func tearDown() {
         MockShooter.image = nil
-        MockShooter.error = nil
-        (map.session.storage as! MockStorage).onSaveProfile = nil
-        (map.session.storage as! MockStorage).onSaveProject = nil
         try? FileManager.default.removeItem(at:map.path)
+        map = nil
     }
     
     func testHappyPath() {
@@ -33,10 +32,11 @@ class TestShooter:XCTestCase {
         let expect = expectation(description:String())
         map.zooms = [Zoom(2), Zoom(3)]
         MockShooter.image = makeImage(width:256, height:256)
-        map.onSuccess = { project in
-            let url = self.map.path.appendingPathComponent(project.id)
-            XCTAssertTrue(FileManager.default.fileExists(atPath:url.appendingPathComponent("2_0_0.png").path))
-            XCTAssertTrue(FileManager.default.fileExists(atPath:url.appendingPathComponent("3_0_0.png").path))
+        map.onSuccess = { _ in
+            XCTAssertTrue(FileManager.default.fileExists(atPath:
+                self.map.builder.url.appendingPathComponent("2_0_0.png").path))
+            XCTAssertTrue(FileManager.default.fileExists(atPath:
+                self.map.builder.url.appendingPathComponent("3_0_0.png").path))
             expect.fulfill()
         }
         map.makeMap(points:[MKPointAnnotation()], route:nil)

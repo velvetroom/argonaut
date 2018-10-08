@@ -4,6 +4,7 @@ class HomeCellView:UIControl {
     var viewModel:HomeItem! { didSet {
         label.attributedText = viewModel.title
     }}
+    private(set) weak var button:UIButton!
     private weak var label:UILabel!
     
     init() {
@@ -28,10 +29,24 @@ class HomeCellView:UIControl {
         addSubview(label)
         self.label = label
         
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(#imageLiteral(resourceName: "iconDelete.pdf"), for:[])
+        button.imageView!.clipsToBounds = true
+        button.imageView!.contentMode = .center
+        button.imageEdgeInsets = UIEdgeInsets(top:0, left:10, bottom:0, right:0)
+        addSubview(button)
+        self.button = button
+        
         label.topAnchor.constraint(equalTo:topAnchor).isActive = true
         label.bottomAnchor.constraint(equalTo:bottomAnchor).isActive = true
         label.leftAnchor.constraint(equalTo:leftAnchor, constant:10).isActive = true
         label.rightAnchor.constraint(equalTo:rightAnchor, constant:-10).isActive = true
+        
+        button.topAnchor.constraint(equalTo:topAnchor).isActive = true
+        button.bottomAnchor.constraint(equalTo:bottomAnchor).isActive = true
+        button.rightAnchor.constraint(equalTo:rightAnchor).isActive = true
+        button.widthAnchor.constraint(equalToConstant:60).isActive = true
     }
     
     private func update() {
