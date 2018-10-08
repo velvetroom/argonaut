@@ -160,7 +160,8 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         searchWidth = search.widthAnchor.constraint(equalToConstant:49)
         searchWidth.isActive = true
         
-        trip.centerYAnchor.constraint(equalTo:bar.centerYAnchor).isActive = true
+        trip.topAnchor.constraint(equalTo:bar.topAnchor, constant:26).isActive = true
+        trip.bottomAnchor.constraint(equalTo:bar.bottomAnchor).isActive = true
         trip.leftAnchor.constraint(equalTo:cancel.rightAnchor).isActive = true
         trip.rightAnchor.constraint(equalTo:centre.leftAnchor).isActive = true
         

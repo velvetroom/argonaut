@@ -27,7 +27,7 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         indicator.contentMode = .center
         location.delegate = self
         location.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        location.distanceFilter = 40
+        location.distanceFilter = 35
     }
     
     deinit {
@@ -37,6 +37,7 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
     
     required init?(coder:NSCoder) { return nil }
     @objc func centreUser() { centre(coordinate:userLocation.coordinate) }
+    func mapView(_:MKMapView, didSelect view:MKAnnotationView) { updateDistance(view:view) }
     
     func centre(coordinate:CLLocationCoordinate2D) {
         var region = MKCoordinateRegion()
@@ -58,10 +59,6 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
             formatter.numberFormatter.maximumFractionDigits = 1
             mark.subtitle = formatter.string(from:Measurement(value:distance, unit:UnitLength.meters)) as String
         }
-    }
-    
-    func mapView(_:MKMapView, didSelect view:MKAnnotationView) {
-        updateDistance(view:view)
     }
     
     func mapView(_:MKMapView, viewFor annotation:MKAnnotation) -> MKAnnotationView? {
@@ -107,8 +104,17 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
+    func mapView(_:MKMapView, didAdd views:[MKAnnotationView]) {
+        if  let user = views.first(where: { view in view.annotation is MKUserLocation }) {
+            indicator.frame = user.bounds
+            user.addSubview(indicator)
+        }
+    }
+    
     func locationManager(_:CLLocationManager, didUpdateLocations locations:[CLLocation]) {
-        centre(coordinate:locations.last!.coordinate)
+        if !(selectedAnnotations.first is MKPointAnnotation) {
+            centre(coordinate:locations.last!.coordinate)
+        }
     }
     
     func locationManager(_:CLLocationManager, didUpdateHeading newHeading:CLHeading) {
@@ -116,13 +122,6 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
             let heading = newHeading.trueHeading > 0 ? newHeading.trueHeading : newHeading.magneticHeading
             let transform = CGAffineTransform(rotationAngle:CGFloat((heading / 180) * Double.pi))
             UIView.animate(withDuration:0.3) { [weak self] in self?.indicator.transform = transform }
-        }
-    }
-    
-    func mapView(_:MKMapView, didAdd views:[MKAnnotationView]) {
-        if  let user = views.first(where: { view in view.annotation is MKUserLocation }) {
-            indicator.frame = user.bounds
-            user.addSubview(indicator)
         }
     }
 }
