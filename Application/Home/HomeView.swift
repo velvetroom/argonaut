@@ -37,7 +37,7 @@ class HomeView:View<HomePresenter> {
         map.addTarget(presenter, action:#selector(presenter.planMap), for:.touchUpInside)
         let settings = Button(#imageLiteral(resourceName: "iconSettings.pdf"))
         settings.addTarget(presenter, action:#selector(presenter.settings), for:.touchUpInside)
-        let bar = Bar(.local("HomeView.title"), right:[map])
+        let bar = Bar(.local("HomeView.title"), left:[settings], right:[map])
         view.addSubview(bar)
         self.bar = bar
         
