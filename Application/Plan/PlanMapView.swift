@@ -55,6 +55,7 @@ class PlanMapView:MapView {
                  fromOldState:MKAnnotationView.DragState) {
         if state == .ending {
             geocode(mark:view.annotation as! MKPointAnnotation)
+            updateDistance(view:view)
         }
     }
     

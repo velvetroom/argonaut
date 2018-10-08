@@ -45,6 +45,25 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         setRegion(region, animated:true)
     }
     
+    func updateDistance(view:MKAnnotationView) {
+        guard
+            let mark = view.annotation as? MKPointAnnotation,
+            let distance = userLocation.location?.distance(from:CLLocation(latitude:mark.coordinate.latitude,
+                                                                           longitude:mark.coordinate.longitude))
+        else { return }
+        if #available(iOS 10.0, *) {
+            let formatter = MeasurementFormatter()
+            formatter.unitStyle = .long
+            formatter.unitOptions = .naturalScale
+            formatter.numberFormatter.maximumFractionDigits = 1
+            mark.subtitle = formatter.string(from:Measurement(value:distance, unit:UnitLength.meters)) as String
+        }
+    }
+    
+    func mapView(_:MKMapView, didSelect view:MKAnnotationView) {
+        updateDistance(view:view)
+    }
+    
     func mapView(_:MKMapView, viewFor annotation:MKAnnotation) -> MKAnnotationView? {
         guard let mark = annotation as? MKPointAnnotation else { return view(for:annotation) }
         var point:MKAnnotationView!
@@ -78,6 +97,13 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
             return renderer
         } else {
             return MKOverlayRenderer()
+        }
+    }
+    
+    func mapView(_:MKMapView, didUpdate:MKUserLocation) {
+        if let selected = selectedAnnotations.first as? MKPointAnnotation,
+            let view = view(for:selected) {
+            updateDistance(view:view)
         }
     }
     
