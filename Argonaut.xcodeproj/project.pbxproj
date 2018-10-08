@@ -28,8 +28,8 @@
 		DA4E02D321523A3100FFE200 /* MapShooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4E02D221523A3100FFE200 /* MapShooter.swift */; };
 		DA4E02D521523CD800FFE200 /* MockShooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4E02D421523CD800FFE200 /* MockShooter.swift */; };
 		DA4E02D721523D8500FFE200 /* TestShooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4E02D621523D8500FFE200 /* TestShooter.swift */; };
-		DA55E01C216B87030036185C /* ABOVE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA55E01B216B85580036185C /* ABOVE.ttf */; };
 		DA55E01E216B881B0036185C /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA55E01D216B881B0036185C /* UIFont.swift */; };
+		DA55E021216B8B810036185C /* CaviarDreams.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA55E01F216B8B810036185C /* CaviarDreams.ttf */; };
 		DA578B342156833B00C5D285 /* brand.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA578B332156833B00C5D285 /* brand.xcassets */; };
 		DA6EC958215389F9005D5795 /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6EC957215389F9005D5795 /* PermissionView.swift */; };
 		DA6EC95A21538A17005D5795 /* PermissionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6EC95921538A17005D5795 /* PermissionPresenter.swift */; };
@@ -115,8 +115,8 @@
 		DA4E02D221523A3100FFE200 /* MapShooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapShooter.swift; sourceTree = "<group>"; };
 		DA4E02D421523CD800FFE200 /* MockShooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockShooter.swift; sourceTree = "<group>"; };
 		DA4E02D621523D8500FFE200 /* TestShooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestShooter.swift; sourceTree = "<group>"; };
-		DA55E01B216B85580036185C /* ABOVE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ABOVE.ttf; sourceTree = "<group>"; };
 		DA55E01D216B881B0036185C /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
+		DA55E01F216B8B810036185C /* CaviarDreams.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CaviarDreams.ttf; sourceTree = "<group>"; };
 		DA578B322156832600C5D285 /* Design */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Design; sourceTree = "<group>"; };
 		DA578B332156833B00C5D285 /* brand.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = brand.xcassets; sourceTree = "<group>"; };
 		DA6EC957215389F9005D5795 /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
@@ -228,7 +228,7 @@
 		DA46C8BD214D33CA002E882A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DA55E01B216B85580036185C /* ABOVE.ttf */,
+				DA55E01F216B8B810036185C /* CaviarDreams.ttf */,
 				DAF48452214D4E84000CD005 /* LaunchScreen.storyboard */,
 				DA0000C5214D564000AD02D2 /* Localizable.strings */,
 				DA6EC95B215393C3005D5795 /* InfoPlist.strings */,
@@ -544,9 +544,9 @@
 			files = (
 				DAF48453214D4E84000CD005 /* LaunchScreen.storyboard in Resources */,
 				DA578B342156833B00C5D285 /* brand.xcassets in Resources */,
+				DA55E021216B8B810036185C /* CaviarDreams.ttf in Resources */,
 				DA6EC95D215393C3005D5795 /* InfoPlist.strings in Resources */,
 				DA0000C7214D564000AD02D2 /* Localizable.strings in Resources */,
-				DA55E01C216B87030036185C /* ABOVE.ttf in Resources */,
 				DADCD67B21591470009C3653 /* assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

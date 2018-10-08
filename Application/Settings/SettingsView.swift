@@ -38,8 +38,8 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
         labelName.isUserInteractionEnabled = false
         labelName.textColor = .white
         labelName.textAlignment = .center
-        labelName.text = "Argonaut"
-        labelName.font = .above(30)
+        labelName.text = .local("SettingsView.labelName")
+        labelName.font = .argonaut(30)
         view.addSubview(labelName)
         
         let labelVersion = UILabel()
