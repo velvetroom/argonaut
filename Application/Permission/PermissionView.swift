@@ -36,7 +36,7 @@ class PermissionView:View<PermissionPresenter>, CLLocationManagerDelegate {
         view.addSubview(message)
         self.message = message
         
-        let requestButton = ButtonBlue(title:.local("PermissionView.requestButton"))
+        let requestButton = ButtonBlue(.local("PermissionView.requestButton"))
         requestButton.addTarget(self, action:#selector(request), for:.touchUpInside)
         requestButton.isHidden = true
         view.addSubview(requestButton)

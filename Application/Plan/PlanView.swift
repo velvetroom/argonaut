@@ -91,16 +91,15 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         view.addSubview(type)
         self.type = type
         
-        let cancel = Button(image:#imageLiteral(resourceName: "iconCancel.pdf"))
+        let cancel = Button(#imageLiteral(resourceName: "iconCancel.pdf"))
         cancel.addTarget(presenter, action:#selector(presenter.cancel), for:.touchUpInside)
-        let centre = Button(image:#imageLiteral(resourceName: "iconCentre.pdf"))
+        let centre = Button(#imageLiteral(resourceName: "iconCentre.pdf"))
         centre.addTarget(map, action:#selector(map.centreUser), for:.touchUpInside)
-        let add = Button(image:#imageLiteral(resourceName: "iconAdd.pdf"))
+        let add = Button(#imageLiteral(resourceName: "iconAdd.pdf"))
         add.addTarget(map, action:#selector(map.addPoint), for:.touchUpInside)
-        let save = Button(image:#imageLiteral(resourceName: "iconSave"))
+        let save = Button(#imageLiteral(resourceName: "iconSave"))
         save.addTarget(self, action:#selector(make), for:.touchUpInside)
         let bar = Bar(String(), left:[cancel], right:[save, add, centre])
-        bar.border.isHidden = true
         view.addSubview(bar)
         
         let search = UISearchBar()
@@ -171,15 +170,13 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         resultsHeight = results.heightAnchor.constraint(equalToConstant:0)
         resultsHeight.isActive = true
         
+        bar.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
         bar.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         bar.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         
         if #available(iOS 11.0, *) {
             completer = MKLocalSearchCompleter()
             (completer as! MKLocalSearchCompleter).delegate = self
-            bar.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
-        } else {
-            bar.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
         }
     }
     

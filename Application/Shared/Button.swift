@@ -3,7 +3,7 @@ import UIKit
 class Button:UIControl {
     override var intrinsicContentSize:CGSize { return CGSize(width:52, height:56) }
     
-    init(image:UIImage) {
+    init(_ image:UIImage) {
         super.init(frame:.zero)
         translatesAutoresizingMaskIntoConstraints = false
         

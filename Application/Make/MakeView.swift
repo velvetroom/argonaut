@@ -70,7 +70,7 @@ class MakeView:View<MakePresenter> {
         cancel.addTarget(presenter, action:#selector(presenter.cancel), for:.touchUpInside)
         view.addSubview(cancel)
         
-        let retry = ButtonBlue(title:.local("MakeView.retry"))
+        let retry = ButtonBlue(.local("MakeView.retry"))
         retry.addTarget(presenter, action:#selector(presenter.retry), for:.touchUpInside)
         retry.isHidden = true
         view.addSubview(retry)

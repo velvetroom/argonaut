@@ -1,7 +1,7 @@
 import UIKit
 
 class ButtonBlue:UIButton {
-    init(title:String) {
+    init(_ title:String) {
         super.init(frame:.zero)
         translatesAutoresizingMaskIntoConstraints = false
         clipsToBounds = true

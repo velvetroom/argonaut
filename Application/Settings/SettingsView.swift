@@ -12,7 +12,7 @@ class SettingsView:View<SettingsPresenter> {
     }
     
     private func makeOutlets() {
-        let close = Button(image:#imageLiteral(resourceName: "iconCancel.pdf"))
+        let close = Button(#imageLiteral(resourceName: "iconCancel.pdf"))
         close.addTarget(presenter, action:#selector(presenter.close), for:.touchUpInside)
         let bar = Bar(.local("SettingsView.title"), left:[close])
         view.addSubview(bar)
