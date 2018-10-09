@@ -10,7 +10,7 @@ class Bar:UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = false
         label.textColor = .white
-        label.font = .systemFont(ofSize:16, weight:.ultraLight)
+        label.font = .systemFont(ofSize:16, weight:.bold)
         label.text = title
         label.textAlignment = .center
         addSubview(label)
