@@ -2,7 +2,7 @@ import CleanArchitecture
 import MessageUI
 
 class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate {
-    private let url = "itunes.apple.com/\(Locale.current.regionCode!.lowercased())/app/catban/id1436394937"
+    private let url = "itunes.apple.com/\(Locale.current.regionCode!.lowercased())/app/argonaut/id1436394937"
     override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
     
     override func viewDidLoad() {
