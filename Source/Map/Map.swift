@@ -5,7 +5,7 @@ public class Map {
     public var onFail:((Error) -> Void)?
     public var onProgress:((Float) -> Void)?
     public var onClean:(() -> Void)?
-    var builder:Builder!
+    var builder = Builder()
     var shooterType:Shooter.Type = MapShooter.self
     var zooms = Zoom.zooms()
     var path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
@@ -115,6 +115,10 @@ public class Map {
                 left = min(left, point.coordinate.longitude)
                 right = max(right, point.coordinate.longitude)
             }
+            top += 0.1
+            bottom -= 0.1
+            left -= 0.1
+            right += 0.1
             let topLeft = MKMapPoint(CLLocationCoordinate2D(latitude:top, longitude:left))
             let bottomRight = MKMapPoint(CLLocationCoordinate2D(latitude:bottom, longitude:right))
             let width = bottomRight.x - topLeft.x
@@ -125,8 +129,7 @@ public class Map {
     }
     
     private func makeShots(points:[MKAnnotation]) {
-        let rect = makeRect(points:points)
-        builder.shots = zooms.flatMap { zoom in makeShots(rect:rect, zoom:zoom) }
+        builder.shots = zooms.flatMap { zoom in makeShots(rect:makeRect(points:points), zoom:zoom) }
     }
     
     private func makeMap() {
@@ -137,7 +140,9 @@ public class Map {
                 self?.progress()
                 self?.builder.index += 1
                 self?.makeMap()
-            }) { [weak self] error in self?.fails(error:error) }
+            }) { [weak self] error in
+                self?.fails(error:error)
+            }
         } else {
             save()
         }

@@ -37,15 +37,25 @@ class TestTimer:XCTestCase {
         map.onFail = { _ in
             id = self.map.builder.project.id
             MockShooter.error = nil
-            MockShooter.image = UIImage()
+            MockShooter.image = self.makeImage(width:2, height:2)
             self.map.retry()
         }
         map.onSuccess = { project in
             XCTAssertFalse(id.isEmpty)
             XCTAssertEqual(id, project.id)
+            MockShooter.image = nil
             expect.fulfill()
         }
-        map.makeMap(points:[MKPointAnnotation()], route:nil)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude:0, longitude:0)
+        map.makeMap(points:[annotation], route:nil)
         waitForExpectations(timeout:2)
+    }
+    
+    private func makeImage(width:Double, height:Double) -> UIImage {
+        UIGraphicsBeginImageContext(CGSize(width:width, height:height))
+        let image = UIImage(cgImage:UIGraphicsGetCurrentContext()!.makeImage()!)
+        UIGraphicsEndImageContext()
+        return image
     }
 }
