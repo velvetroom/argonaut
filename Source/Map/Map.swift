@@ -115,10 +115,10 @@ public class Map {
                 left = min(left, point.coordinate.longitude)
                 right = max(right, point.coordinate.longitude)
             }
-            top += 0.1
-            bottom -= 0.1
-            left -= 0.1
-            right += 0.1
+            top += 0.001
+            bottom -= 0.001
+            left -= 0.001
+            right += 0.001
             let topLeft = MKMapPoint(CLLocationCoordinate2D(latitude:top, longitude:left))
             let bottomRight = MKMapPoint(CLLocationCoordinate2D(latitude:bottom, longitude:right))
             let width = bottomRight.x - topLeft.x
@@ -129,7 +129,8 @@ public class Map {
     }
     
     private func makeShots(points:[MKAnnotation]) {
-        builder.shots = zooms.flatMap { zoom in makeShots(rect:makeRect(points:points), zoom:zoom) }
+        let rect = makeRect(points:points)
+        builder.shots = zooms.flatMap { zoom in makeShots(rect:rect, zoom:zoom) }
     }
     
     private func makeMap() {
