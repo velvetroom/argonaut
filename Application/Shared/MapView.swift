@@ -25,6 +25,7 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         setRegion(region, animated:false)
         indicator.clipsToBounds = true
         indicator.contentMode = .center
+        indicator.translatesAutoresizingMaskIntoConstraints = false
         location.delegate = self
         location.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         location.distanceFilter = 35
@@ -106,8 +107,11 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
     
     func mapView(_:MKMapView, didAdd views:[MKAnnotationView]) {
         if  let user = views.first(where: { view in view.annotation is MKUserLocation }) {
-            indicator.frame = user.bounds
             user.addSubview(indicator)
+            indicator.topAnchor.constraint(equalTo:user.topAnchor).isActive = true
+            indicator.bottomAnchor.constraint(equalTo:user.bottomAnchor).isActive = true
+            indicator.leftAnchor.constraint(equalTo:user.leftAnchor).isActive = true
+            indicator.rightAnchor.constraint(equalTo:user.rightAnchor).isActive = true
         }
     }
     
