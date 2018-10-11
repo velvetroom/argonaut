@@ -7,7 +7,7 @@ class MakeView:View<MakePresenter> {
     private weak var error:UIImageView!
     private weak var retry:ButtonBlue!
     private weak var message:UILabel!
-    private let parser = Parser()
+    private let hero = Hero()
     override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
     
     override func viewDidLoad() {
@@ -49,7 +49,7 @@ class MakeView:View<MakePresenter> {
         label.textColor = .white
         label.numberOfLines = 0
         view.addSubview(label)
-        parser.parse(string:.local("MakeView.label")) { [weak label] string in label?.attributedText = string }
+        hero.parse(string:.local("MakeView.label")) { [weak label] string in label?.attributedText = string }
         
         let message = UILabel()
         message.isUserInteractionEnabled = false

@@ -9,7 +9,7 @@ class MakePresenter:Presenter {
     var route:MKRoute?
     private let session = Factory.makeSession()
     private let map = Map()
-    private let parser = Parser()
+    private let hero = Hero()
     
     override func didLoad() {
         map.onSuccess = { [weak self] project in self?.success(project:project) }
@@ -40,8 +40,8 @@ class MakePresenter:Presenter {
         viewModel.errorHidden = false
         viewModel.retryHidden = false
         switch error {
-        case Exception.mapTimeout: viewModel.message = parser.parse(string:.local("MakePresenter.errorTimeout"))
-        default: viewModel.message = parser.parse(string:.local("MakePresenter.errorUnknown"))
+        case Exception.mapTimeout: viewModel.message = hero.parse(string:.local("MakePresenter.errorTimeout"))
+        default: viewModel.message = hero.parse(string:.local("MakePresenter.errorUnknown"))
         }
         update(viewModel:viewModel)
     }

@@ -5,7 +5,7 @@ import MarkdownHero
 class HomePresenter:Presenter {
     private let map = Map()
     private let session = Factory.makeSession()
-    private let parser = Parser()
+    private let hero = Hero()
     private let formatter = DateComponentsFormatter()
     
     func refresh() { session.load { [weak self] (projects:[Project]) in self?.loaded(projects:projects) } }
@@ -59,7 +59,7 @@ class HomePresenter:Presenter {
             distance.numberFormatter.maximumFractionDigits = 1
             string += " - " + distance.string(from:Measurement(value:project.distance, unit:UnitLength.meters))
         }
-        return parser.parse(string:string)
+        return hero.parse(string:string)
     }
     
     private func loaded(projects:[Project]) {

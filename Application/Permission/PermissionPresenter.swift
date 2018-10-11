@@ -2,17 +2,17 @@ import CleanArchitecture
 import MarkdownHero
 
 class PermissionPresenter:Presenter {
-    private let parser = Parser()
+    private let hero = Hero()
     
     func denied() {
         var viewModel = Permission()
-        viewModel.message = parser.parse(string:.local("PermissionPresenter.denied"))
+        viewModel.message = hero.parse(string:.local("PermissionPresenter.denied"))
         update(viewModel:viewModel)
     }
     
     func notDetermined() {
         var viewModel = Permission()
-        viewModel.message = parser.parse(string:.local("PermissionPresenter.notDetermined"))
+        viewModel.message = hero.parse(string:.local("PermissionPresenter.notDetermined"))
         viewModel.requestButtonHidden = false
         update(viewModel:viewModel)
     }
