@@ -13,4 +13,8 @@ import Argonaut
         window!.rootViewController = Application.navigation
         return true
     }
+    
+    func application(_:UIApplication, open url:URL, options:[UIApplication.OpenURLOptionsKey:Any] = [:]) -> Bool {
+        return false
+    }
 }

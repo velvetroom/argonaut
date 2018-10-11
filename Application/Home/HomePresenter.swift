@@ -21,6 +21,7 @@ class HomePresenter:Presenter {
     }
     
     @objc func open(cell:HomeCellView) {
+        DispatchQueue.global(qos:.background).async { [weak self] in self?.makeWidget(project:cell.viewModel.project) }
         let view = TravelView()
         view.presenter.project = cell.viewModel.project
         Application.navigation.setViewControllers([view], animated:true)
@@ -43,6 +44,10 @@ class HomePresenter:Presenter {
     override func didLoad() {
         formatter.unitsStyle = .full
         formatter.allowedUnits = [.minute, .hour]
+    }
+    
+    override func didAppear() {
+        DispatchQueue.global(qos:.background).async { Widget.remove() }
     }
     
     private func makeTitle(project:Project) -> NSAttributedString {
@@ -77,5 +82,20 @@ class HomePresenter:Presenter {
             item.project = project
             return item
         }
+    }
+    
+    private func makeWidget(project:Project) {
+        let widget = Widget()
+        widget.origin = make(mark:project.origin)
+        widget.destination = make(mark:project.destination)
+        widget.store()
+    }
+    
+    private func make(mark:Mark) -> WidgetMark {
+        var widget = WidgetMark()
+        widget.title = mark.title
+        widget.latitude = mark.point.latitude
+        widget.longitude = mark.point.longitude
+        return widget
     }
 }

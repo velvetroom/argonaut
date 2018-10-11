@@ -70,6 +70,7 @@
 		DAD81C0D216A1F37008E88CD /* ButtonBlue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD81C0C216A1F37008E88CD /* ButtonBlue.swift */; };
 		DADCD679215911C6009C3653 /* PlanTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCD678215911C6009C3653 /* PlanTypeView.swift */; };
 		DADCD67B21591470009C3653 /* assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DADCD67A21591470009C3653 /* assets.xcassets */; };
+		DAE2D6BA216F7815009D67D4 /* WidgetCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE2D6B9216F7815009D67D4 /* WidgetCellView.swift */; };
 		DAE35794216234130006611B /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE35793216234130006611B /* HomePresenter.swift */; };
 		DAE35796216234230006611B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE35795216234230006611B /* HomeView.swift */; };
 		DAED25F7215CD8EE00FAC1AF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAED25F6215CD8EE00FAC1AF /* UIColor.swift */; };
@@ -186,6 +187,7 @@
 		DAD81C0C216A1F37008E88CD /* ButtonBlue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBlue.swift; sourceTree = "<group>"; };
 		DADCD678215911C6009C3653 /* PlanTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTypeView.swift; sourceTree = "<group>"; };
 		DADCD67A21591470009C3653 /* assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = assets.xcassets; sourceTree = "<group>"; };
+		DAE2D6B9216F7815009D67D4 /* WidgetCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetCellView.swift; sourceTree = "<group>"; };
 		DAE35793216234130006611B /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		DAE35795216234230006611B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DAED25F6215CD8EE00FAC1AF /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 			children = (
 				DA525CE3216F2E65002BEB6B /* Widget.entitlements */,
 				DA525CDF216F21F0002BEB6B /* WidgetView.swift */,
+				DAE2D6B9216F7815009D67D4 /* WidgetCellView.swift */,
 				DA525CE4216F33D7002BEB6B /* Widget.swift */,
 				DA525CEA216F35EC002BEB6B /* WidgetMark.swift */,
 			);
@@ -683,6 +686,7 @@
 			files = (
 				DA525CE0216F21F0002BEB6B /* WidgetView.swift in Sources */,
 				DA525CEC216F35EC002BEB6B /* WidgetMark.swift in Sources */,
+				DAE2D6BA216F7815009D67D4 /* WidgetCellView.swift in Sources */,
 				DA525CE6216F33D7002BEB6B /* Widget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

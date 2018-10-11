@@ -11,6 +11,12 @@ class Widget:Codable {
         return nil
     }
     
+    class func remove() {
+        let store = UserDefaults(suiteName:"group.Argonaut")
+        store?.removeObject(forKey:"widget")
+        store?.synchronize()
+    }
+    
     func store() {
         let store = UserDefaults(suiteName:"group.Argonaut")
         store?.set(try? JSONEncoder().encode(self), forKey:"widget")
