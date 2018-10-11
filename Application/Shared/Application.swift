@@ -15,6 +15,19 @@ import Argonaut
     }
     
     func application(_:UIApplication, open url:URL, options:[UIApplication.OpenURLOptionsKey:Any] = [:]) -> Bool {
+        if let map = try? mapFrom(url:url) {
+            Application.navigation.open(map:map)
+            return true
+        }
         return false
+    }
+    
+    private func mapFrom(url:URL) throws -> String {
+        let components = url.absoluteString.components(separatedBy:"argonaut:map=")
+        if components.count == 2,
+            !components[1].isEmpty {
+            return components[1]
+        }
+        throw Exception.mapUnknownError
     }
 }

@@ -1,6 +1,7 @@
 import Foundation
 
 class Widget:Codable {
+    var id = String()
     var origin = WidgetMark()
     var destination = WidgetMark()
     

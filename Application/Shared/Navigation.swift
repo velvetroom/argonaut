@@ -1,7 +1,17 @@
 import UIKit
+import Argonaut
 
 class Navigation:UINavigationController {
+    private let session = Factory.makeSession()
     override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
+    
+    func open(map:String) {
+        session.load(project:map) { [weak self] project in
+            let view = TravelView()
+            view.presenter.project = project
+            self?.setViewControllers([view], animated:true)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

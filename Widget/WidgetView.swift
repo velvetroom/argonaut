@@ -8,6 +8,7 @@ import CoreLocation
     private weak var effect:UIVisualEffectView!
     private weak var image:UIImageView!
     private weak var label:UILabel!
+    private var widget:Widget?
     private let location = CLLocationManager()
     
     override func viewDidLoad() {
@@ -79,7 +80,8 @@ import CoreLocation
     
     func widgetPerformUpdate(completionHandler:(@escaping(NCUpdateResult) -> Void)) {
         if let widget = Widget.load() {
-            show(widget:widget)
+            self.widget = widget
+            show()
             location.startUpdatingLocation()
             completionHandler(.newData)
         } else {
@@ -94,7 +96,7 @@ import CoreLocation
         destination?.update(user:locations.last!)
     }
     
-    private func show(widget:Widget) {
+    private func show() {
         let user = UIImageView(image:#imageLiteral(resourceName: "iconUser.pdf"))
         user.translatesAutoresizingMaskIntoConstraints = false
         user.clipsToBounds = true
@@ -102,11 +104,11 @@ import CoreLocation
         user.contentMode = .center
         effect.contentView.addSubview(user)
         
-        let origin = WidgetCellView(widget.origin, align:.left)
+        let origin = WidgetCellView(widget!.origin, align:.left)
         effect.contentView.addSubview(origin)
         self.origin = origin
         
-        let destination = WidgetCellView(widget.destination, align:.right)
+        let destination = WidgetCellView(widget!.destination, align:.right)
         effect.contentView.addSubview(destination)
         self.destination = destination
         
@@ -126,7 +128,12 @@ import CoreLocation
         destination.widthAnchor.constraint(equalTo:view.widthAnchor, multiplier:0.5).isActive = true
     }
     
-    @objc private func open() { extensionContext?.open(URL(string:"argonaut:")!, completionHandler:nil) }
     @objc private func highlight() { view.alpha = 0.2 }
     @objc private func unhighlight() { view.alpha = 1 }
+    
+    @objc private func open() {
+        var url = "argonaut:"
+        if let id = widget?.id { url += "map=" + id }
+        extensionContext?.open(URL(string:url)!, completionHandler:nil)
+    }
 }
