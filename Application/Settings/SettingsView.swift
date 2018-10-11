@@ -39,7 +39,7 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
         labelName.textColor = .white
         labelName.textAlignment = .center
         labelName.text = .local("SettingsView.labelName")
-        labelName.font = .argonaut(30)
+        labelName.font = .systemFont(ofSize:22, weight:.medium)
         view.addSubview(labelName)
         
         let labelVersion = UILabel()
@@ -100,7 +100,7 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
         labelName.topAnchor.constraint(equalTo:icon.bottomAnchor, constant:15).isActive = true
         
         labelVersion.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
-        labelVersion.topAnchor.constraint(equalTo:labelName.bottomAnchor, constant:5).isActive = true
+        labelVersion.topAnchor.constraint(equalTo:labelName.bottomAnchor).isActive = true
         
         contact.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
         contact.topAnchor.constraint(equalTo:labelVersion.bottomAnchor, constant:50).isActive = true
