@@ -63,6 +63,7 @@ class HomePresenter:Presenter {
     }
     
     private func loaded(projects:[Project]) {
+        let projects = projects.sorted { $0.name.caseInsensitiveCompare($1.name) == .orderedAscending }
         var viewModel = Home()
         if projects.isEmpty {
             viewModel.buttonHidden = false
@@ -71,15 +72,29 @@ class HomePresenter:Presenter {
             viewModel.items = makeItems(projects:projects)
         }
         update(viewModel:viewModel)
+        makeShortcuts(projects:projects)
         DispatchQueue.global(qos:.background).async { [weak self] in self?.map.cleanDisk() }
     }
     
     private func makeItems(projects:[Project]) -> [HomeItem] {
-        return projects.sorted { $0.name.caseInsensitiveCompare($1.name) == .orderedAscending }.map { project in
+        return projects.map { project in
             var item = HomeItem()
             item.title = makeTitle(project:project)
             item.project = project
             return item
+        }
+    }
+    
+    private func makeShortcuts(projects:[Project]) {
+        let icon:UIApplicationShortcutIcon
+        if #available(iOS 9.1, *) {
+            icon = UIApplicationShortcutIcon(type:.markLocation)
+        } else {
+            icon = UIApplicationShortcutIcon(type:.location)
+        }
+        UIApplication.shared.shortcutItems = projects.map { project in
+            return UIApplicationShortcutItem(type:"argonaut.map", localizedTitle:project.name, localizedSubtitle:nil,
+                                             icon:icon, userInfo:["id":project.id as NSSecureCoding])
         }
     }
 }
