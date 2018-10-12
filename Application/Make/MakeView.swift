@@ -7,7 +7,7 @@ class MakeView:View<MakePresenter> {
     private weak var error:UIImageView!
     private weak var retry:ButtonBlue!
     private weak var message:UILabel!
-    private let parser = Parser()
+    private let hero = Hero()
     override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
     
     override func viewDidLoad() {
@@ -46,11 +46,10 @@ class MakeView:View<MakePresenter> {
         label.isUserInteractionEnabled = false
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.font = .systemFont(ofSize:14, weight:.light)
         label.textColor = .white
         label.numberOfLines = 0
         view.addSubview(label)
-        parser.parse(string:.local("MakeView.label")) { [weak label] string in label?.attributedText = string }
+        hero.parse(string:.local("MakeView.label")) { [weak label] string in label?.attributedText = string }
         
         let message = UILabel()
         message.isUserInteractionEnabled = false
@@ -66,7 +65,7 @@ class MakeView:View<MakePresenter> {
         cancel.setTitle(.local("MakeView.cancel"), for:[])
         cancel.setTitleColor(UIColor(white:1, alpha:0.6), for:.normal)
         cancel.setTitleColor(UIColor(white:1, alpha:0.2), for:.highlighted)
-        cancel.titleLabel!.font = .systemFont(ofSize:16, weight:.regular)
+        cancel.titleLabel!.font = .systemFont(ofSize:14, weight:.regular)
         cancel.addTarget(presenter, action:#selector(presenter.cancel), for:.touchUpInside)
         view.addSubview(cancel)
         
@@ -111,10 +110,10 @@ class MakeView:View<MakePresenter> {
         retry.bottomAnchor.constraint(equalTo:cancel.topAnchor, constant:-60).isActive = true
         
         if #available(iOS 11.0, *) {
-            label.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor, constant:20).isActive = true
+            label.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor, constant:30).isActive = true
             cancel.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor, constant:-50).isActive = true
         } else {
-            label.topAnchor.constraint(equalTo:view.topAnchor, constant:20).isActive = true
+            label.topAnchor.constraint(equalTo:view.topAnchor, constant:30).isActive = true
             cancel.bottomAnchor.constraint(equalTo:view.bottomAnchor, constant:-50).isActive = true
         }
     }

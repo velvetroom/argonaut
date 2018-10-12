@@ -2,7 +2,7 @@ import CleanArchitecture
 import MessageUI
 
 class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate {
-    private let url = "itunes.apple.com/\(Locale.current.regionCode!.lowercased())/app/catban/id1436394937"
+    private let url = "itunes.apple.com/\(Locale.current.regionCode!.lowercased())/app/argonaut/id1436394937"
     override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
     
     override func viewDidLoad() {
@@ -39,7 +39,7 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
         labelName.textColor = .white
         labelName.textAlignment = .center
         labelName.text = .local("SettingsView.labelName")
-        labelName.font = .argonaut(30)
+        labelName.font = .systemFont(ofSize:16, weight:.medium)
         view.addSubview(labelName)
         
         let labelVersion = UILabel()
@@ -49,7 +49,7 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
         labelVersion.textAlignment = .center
         labelVersion.numberOfLines = 0
         labelVersion.text = "\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
-        labelVersion.font = .systemFont(ofSize:13, weight:.ultraLight)
+        labelVersion.font = .systemFont(ofSize:11, weight:.ultraLight)
         view.addSubview(labelVersion)
         
         let contact = UIButton()
@@ -97,10 +97,10 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
         icon.heightAnchor.constraint(equalToConstant:75).isActive = true
         
         labelName.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
-        labelName.topAnchor.constraint(equalTo:icon.bottomAnchor, constant:15).isActive = true
+        labelName.topAnchor.constraint(equalTo:icon.bottomAnchor, constant:10).isActive = true
         
         labelVersion.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
-        labelVersion.topAnchor.constraint(equalTo:labelName.bottomAnchor, constant:5).isActive = true
+        labelVersion.topAnchor.constraint(equalTo:labelName.bottomAnchor).isActive = true
         
         contact.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
         contact.topAnchor.constraint(equalTo:labelVersion.bottomAnchor, constant:50).isActive = true

@@ -40,7 +40,7 @@ class TestClean:XCTestCase {
             expect.fulfill()
         }
         DispatchQueue.global(qos:.background).async { self.map.cleanDisk() }
-        waitForExpectations(timeout:1)
+        waitForExpectations(timeout:2)
     }
     
     func testDelete() {

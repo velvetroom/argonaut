@@ -22,9 +22,11 @@ class TestShooter:XCTestCase {
     
     func testHappyPath() {
         let expect = expectation(description:String())
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude:0, longitude:0)
         MockShooter.image = makeImage(width:1, height:1)
         map.onSuccess = { url in expect.fulfill() }
-        map.makeMap(points:[MKPointAnnotation()], route:nil)
+        map.makeMap(points:[annotation], route:nil)
         waitForExpectations(timeout:2)
     }
     
@@ -39,7 +41,9 @@ class TestShooter:XCTestCase {
                 self.map.builder.url.appendingPathComponent("3_0_0.png").path))
             expect.fulfill()
         }
-        map.makeMap(points:[MKPointAnnotation()], route:nil)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude:0, longitude:0)
+        map.makeMap(points:[annotation], route:nil)
         waitForExpectations(timeout:3)
     }
     
@@ -54,7 +58,9 @@ class TestShooter:XCTestCase {
                 expect.fulfill()
             }
         }
-        DispatchQueue.global(qos:.background).async { self.map.makeMap(points:[MKPointAnnotation()], route:nil) }
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude:0, longitude:0)
+        DispatchQueue.global(qos:.background).async { self.map.makeMap(points:[annotation], route:nil) }
         waitForExpectations(timeout:3)
     }
     

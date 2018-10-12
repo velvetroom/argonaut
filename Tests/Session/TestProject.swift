@@ -14,6 +14,17 @@ class TestProject:XCTestCase {
         (session.storage as! MockStorage).onSaveProject = nil
     }
     
+    func testLoadProject() {
+        let expect = expectation(description:String())
+        DispatchQueue.global(qos:.background).async {
+            self.session.load(project:String()) { _ in
+                XCTAssertEqual(Thread.main, Thread.current)
+                expect.fulfill()
+            }
+        }
+        waitForExpectations(timeout:1)
+    }
+    
     func testAddProject() {
         let expectProfile = expectation(description:String())
         let expectProject = expectation(description:String())

@@ -13,6 +13,13 @@ public class Session {
         }
     }
     
+    public func load(project:String, completion:@escaping((Project) -> Void)) {
+        queue.async { [weak self] in
+            guard let item = try! self?.storage.load(project:project) else { return }
+            DispatchQueue.main.async { completion(item) }
+        }
+    }
+    
     public func rate() -> Bool {
         var rating = false
         if profile().planed > 1 {
