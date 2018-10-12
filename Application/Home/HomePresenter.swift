@@ -54,7 +54,7 @@ class HomePresenter:Presenter {
         string += formatter.string(from:project.duration)!
         if #available(iOS 10.0, *) {
             let distance = MeasurementFormatter()
-            distance.unitStyle = .medium
+            distance.unitStyle = .long
             distance.unitOptions = .naturalScale
             distance.numberFormatter.maximumFractionDigits = 1
             string += " - " + distance.string(from:Measurement(value:project.distance, unit:UnitLength.meters))
