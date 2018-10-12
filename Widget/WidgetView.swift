@@ -10,6 +10,10 @@ import CoreLocation
     private weak var label:UILabel!
     private var widget:Widget?
     private let location = CLLocationManager()
+ 
+    deinit {
+        location.stopUpdatingLocation()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +91,7 @@ import CoreLocation
         } else {
             label.isHidden = false
             image.isHidden = false
+            location.stopUpdatingLocation()
             completionHandler(.noData)
         }
     }
