@@ -1,6 +1,6 @@
 import CleanArchitecture
 
-class HomeView:View<HomePresenter> {
+class HomeView:View<HomePresenter>, UIViewControllerPreviewingDelegate {
     private weak var scroll:UIScrollView!
     private weak var items:UIView!
     private weak var icon:UIImageView!
@@ -25,6 +25,22 @@ class HomeView:View<HomePresenter> {
         layoutItems(size:size)
     }
     
+    func previewingContext(_ context:UIViewControllerPreviewing,
+                           viewControllerForLocation location:CGPoint) -> UIViewController? {
+        var travel:TravelView?
+        if let item = items.subviews.first(where: { $0.frame.contains(location) } ) as? HomeCellView {
+            context.sourceRect = item.frame
+            travel = presenter.viewFor(cell:item)
+            travel?.homeItem = item.viewModel
+            travel?.homePresenter = presenter
+        }
+        return travel
+    }
+    
+    func previewingContext(_:UIViewControllerPreviewing, commit controller:UIViewController) {
+        Application.navigation.setViewControllers([controller], animated:true)
+    }
+    
     private func makeOutlets() {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
@@ -43,6 +59,7 @@ class HomeView:View<HomePresenter> {
         
         let items = UIView()
         scroll.addSubview(items)
+        registerForPreviewing(with:self, sourceView:items)
         self.items = items
         
         let icon = UIImageView(image:#imageLiteral(resourceName: "iconLogo.pdf"))

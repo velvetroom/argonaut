@@ -5,6 +5,7 @@ HomeView.title="Maps";
 HomeView.button="Make a Map";
 HomeDeleteView.delete="Delete";
 HomeDeleteView.cancel="Cancel";
+TravelView.delete="Delete";
 SettingsView.title="Settings";
 SettingsView.clean="Clean";
 MakePresenter.errorTimeout="## Map time out\nDo you want to try again?";

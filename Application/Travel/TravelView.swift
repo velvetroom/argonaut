@@ -2,9 +2,17 @@ import CleanArchitecture
 import MapKit
 
 class TravelView:View<TravelPresenter> {
+    weak var homePresenter:HomePresenter?
+    var homeItem:HomeItem?
     private weak var map:MapView!
     private let tiler = TravelTiler()
     override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
+    override var previewActionItems:[UIPreviewActionItem] { return [
+        UIPreviewAction(title:.local("TravelView.delete"), style:.destructive) { [weak self] _, _ in
+            guard let item = self?.homeItem else { return }
+            self?.homePresenter?.delete(item:item)
+        }]
+    }
     
     override func viewDidLoad() {
         view.backgroundColor = .black
