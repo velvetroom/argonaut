@@ -45,7 +45,7 @@ class WidgetCellView:UIView {
         let formatter = MeasurementFormatter()
         formatter.unitStyle = .long
         formatter.unitOptions = .naturalScale
-        formatter.numberFormatter.maximumFractionDigits = 3
+        formatter.numberFormatter.maximumFractionDigits = 1
         location.distance(from:user)
         distance.text = formatter.string(from:Measurement(value:location.distance(from:user),
                                                           unit:UnitLength.meters)) as String

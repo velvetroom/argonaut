@@ -10,6 +10,10 @@ import CoreLocation
     private weak var label:UILabel!
     private var widget:Widget?
     private let location = CLLocationManager()
+ 
+    deinit {
+        location.stopUpdatingLocation()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +31,7 @@ import CoreLocation
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = false
         label.font = .systemFont(ofSize:15, weight:.light)
-        label.text = "Select Map"
+        label.text = NSLocalizedString("View.label", comment:String())
         label.textColor = .black
         label.textAlignment = .center
         label.isHidden = true
@@ -87,6 +91,7 @@ import CoreLocation
         } else {
             label.isHidden = false
             image.isHidden = false
+            location.stopUpdatingLocation()
             completionHandler(.noData)
         }
     }

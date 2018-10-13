@@ -10,10 +10,22 @@ class HomePresenter:Presenter {
     
     func refresh() { session.load { [weak self] (projects:[Project]) in self?.loaded(projects:projects) } }
     
+    func delete(item:HomeItem) {
+        let view = HomeDeleteView(presenter:self)
+        view.viewModel = item
+        Application.navigation.present(view, animated:true)
+    }
+    
     func deleteConfirm(project:Project) {
         Application.navigation.dismiss(animated:true)
         session.delete(project:project)
         refresh()
+    }
+    
+    func viewFor(cell:HomeCellView) -> TravelView {
+        let view = TravelView()
+        view.presenter.project = cell.viewModel.project
+        return view
     }
     
     @objc func planMap() {
@@ -21,9 +33,7 @@ class HomePresenter:Presenter {
     }
     
     @objc func open(cell:HomeCellView) {
-        let view = TravelView()
-        view.presenter.project = cell.viewModel.project
-        Application.navigation.setViewControllers([view], animated:true)
+        Application.navigation.setViewControllers([viewFor(cell:cell)], animated:true)
     }
     
     @objc func settings() {
@@ -31,9 +41,7 @@ class HomePresenter:Presenter {
     }
     
     @objc func delete(button:UIButton) {
-        let view = HomeDeleteView(presenter:self)
-        view.viewModel = (button.superview as! HomeCellView).viewModel
-        Application.navigation.present(view, animated:true)
+        delete(item:(button.superview as! HomeCellView).viewModel)
     }
     
     @objc func deleteCancel() {
@@ -54,7 +62,7 @@ class HomePresenter:Presenter {
         string += formatter.string(from:project.duration)!
         if #available(iOS 10.0, *) {
             let distance = MeasurementFormatter()
-            distance.unitStyle = .medium
+            distance.unitStyle = .long
             distance.unitOptions = .naturalScale
             distance.numberFormatter.maximumFractionDigits = 1
             string += " - " + distance.string(from:Measurement(value:project.distance, unit:UnitLength.meters))
