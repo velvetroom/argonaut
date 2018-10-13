@@ -31,7 +31,7 @@ import CoreLocation
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = false
         label.font = .systemFont(ofSize:15, weight:.light)
-        label.text = "Select Map"
+        label.text = NSLocalizedString("View.label", comment:String())
         label.textColor = .black
         label.textAlignment = .center
         label.isHidden = true
