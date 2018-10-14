@@ -46,7 +46,7 @@ class HomeDeleteView:View<HomePresenter> {
         cancel.addTarget(presenter, action:#selector(presenter.deleteCancel), for:.touchUpInside)
         cancel.setTitleColor(UIColor(white:0, alpha:0.6), for:.normal)
         cancel.setTitleColor(UIColor(white:0, alpha:0.2), for:.highlighted)
-        cancel.setTitle(NSLocalizedString("HomeDeleteView.cancel", comment:String()), for:[])
+        cancel.setTitle(.local("HomeDeleteView.cancel"), for:[])
         cancel.titleLabel!.font = .systemFont(ofSize:14, weight:.regular)
         base.addSubview(cancel)
         
@@ -56,7 +56,7 @@ class HomeDeleteView:View<HomePresenter> {
         delete.backgroundColor = .bloodRed
         delete.setTitleColor(.white, for:.normal)
         delete.setTitleColor(UIColor(white:1, alpha:0.3), for:.highlighted)
-        delete.setTitle(NSLocalizedString("HomeDeleteView.delete", comment:String()), for:[])
+        delete.setTitle(.local("HomeDeleteView.delete"), for:[])
         delete.titleLabel!.font = .systemFont(ofSize:14, weight:.bold)
         delete.layer.cornerRadius = 6
         base.addSubview(delete)

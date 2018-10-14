@@ -15,9 +15,9 @@ class TestShooter:XCTestCase {
     }
     
     override func tearDown() {
+        Factory.session = nil
         MockShooter.image = nil
         try? FileManager.default.removeItem(at:map.path)
-        map = nil
     }
     
     func testHappyPath() {
@@ -25,7 +25,7 @@ class TestShooter:XCTestCase {
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude:0, longitude:0)
         MockShooter.image = makeImage(width:1, height:1)
-        map.onSuccess = { url in expect.fulfill() }
+        map.onSuccess = { _ in expect.fulfill() }
         map.makeMap(points:[annotation], route:nil)
         waitForExpectations(timeout:2)
     }

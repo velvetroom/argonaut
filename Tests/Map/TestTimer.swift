@@ -15,6 +15,7 @@ class TestTimer:XCTestCase {
     }
     
     override func tearDown() {
+        Factory.session = nil
         MockShooter.image = nil
         MockShooter.error = nil
         try? FileManager.default.removeItem(at:map.path)

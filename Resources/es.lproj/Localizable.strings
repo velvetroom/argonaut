@@ -16,6 +16,7 @@ SettingsView.contact="Contacto";
 SettingsView.share="Compartir";
 SettingsView.review="Calificar";
 SettingsView.labelName="ARGONAUT";
+SettingsView.labelHq="## Alta calidad\n¿Crear mapas en _Alta Calidad_?\n\nMas opciones de zoom y mejor experiencia pero es mas tardado crear un mapa y usa mas espacio de almacenamiento.";
 SettingsView.sendEmailSubject="Contacto";
 SettingsView.sendEmailBody="Querido Argonaut,\n";
 SettingsView.sendEmailFailed="No has configurado una cuenta de email en tu dispositivo";

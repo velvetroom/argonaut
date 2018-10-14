@@ -7,12 +7,14 @@ public class Map {
     public var onClean:(() -> Void)?
     var builder = Builder()
     var shooterType:Shooter.Type = MapShooter.self
-    var zooms = Zoom.zooms()
+    var zooms = Zoom.zooms(profile:Factory.makeSession().profile())
     var path = FileManager.default.urls(for:.documentDirectory, in:.userDomainMask)[0].appendingPathComponent("map")
     let session = Factory.makeSession()
     private weak var shooter:Shooter?
     private let queue = DispatchQueue(label:String(), qos:.background, target:.global(qos:.background))
+    
     public init() { }
+    public func cleanDisk() { queue.async { self.clean(projects:self.session.profile().projects) } }
     
     public func makeMap(points:[MKAnnotation], route:MKRoute?) {
         queue.async { [weak self] in
@@ -21,13 +23,6 @@ public class Map {
             self?.makeShots(points:points)
             self?.makeUrl()
             self?.retry()
-        }
-    }
-    
-    public func cleanDisk() {
-        queue.async { [weak self] in
-            guard let projects = self?.session.profile().projects else { return }
-            self?.clean(projects:projects)
         }
     }
     

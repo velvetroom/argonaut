@@ -65,6 +65,7 @@
 		DABF545F215E2FB00035E84F /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF545E215E2FB00035E84F /* LoadingView.swift */; };
 		DABF5462215E2FE60035E84F /* MakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF5461215E2FE60035E84F /* MakeView.swift */; };
 		DABF5464215E2FED0035E84F /* MakePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF5463215E2FED0035E84F /* MakePresenter.swift */; };
+		DAD5B1FD217345B700BDD7F4 /* TestZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5B1FC217345B700BDD7F4 /* TestZoom.swift */; };
 		DAD81C07216A0BE9008E88CD /* TestTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD81C06216A0BE9008E88CD /* TestTimer.swift */; };
 		DAD81C09216A1591008E88CD /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD81C08216A1591008E88CD /* Builder.swift */; };
 		DAD81C0B216A1CF5008E88CD /* Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD81C0A216A1CF5008E88CD /* Make.swift */; };
@@ -186,6 +187,7 @@
 		DABF545E215E2FB00035E84F /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		DABF5461215E2FE60035E84F /* MakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeView.swift; sourceTree = "<group>"; };
 		DABF5463215E2FED0035E84F /* MakePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakePresenter.swift; sourceTree = "<group>"; };
+		DAD5B1FC217345B700BDD7F4 /* TestZoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestZoom.swift; sourceTree = "<group>"; };
 		DAD81C06216A0BE9008E88CD /* TestTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTimer.swift; sourceTree = "<group>"; };
 		DAD81C08216A1591008E88CD /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
 		DAD81C0A216A1CF5008E88CD /* Make.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Make.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 				DAA83B04214FD7A500CD66B6 /* TestImages.swift */,
 				DA9A5710214E9E1A0042558D /* TestShots.swift */,
 				DAD81C06216A0BE9008E88CD /* TestTimer.swift */,
+				DAD5B1FC217345B700BDD7F4 /* TestZoom.swift */,
 				DA4E02D421523CD800FFE200 /* MockShooter.swift */,
 			);
 			path = Map;
@@ -732,6 +735,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAD5B1FD217345B700BDD7F4 /* TestZoom.swift in Sources */,
 				DA4E02D721523D8500FFE200 /* TestShooter.swift in Sources */,
 				DAA79C7F2164C11F008378F3 /* TestFactory.swift in Sources */,
 				DAA79C812164C147008378F3 /* MockStorage.swift in Sources */,

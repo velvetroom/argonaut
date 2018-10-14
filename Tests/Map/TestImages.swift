@@ -12,6 +12,7 @@ class TestImages:XCTestCase {
     }
     
     override func tearDown() {
+        Factory.session = nil
         try? FileManager.default.removeItem(at:map.path)
     }
     

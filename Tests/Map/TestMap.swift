@@ -14,8 +14,8 @@ class TestMap:XCTestCase {
     }
     
     override func tearDown() {
+        Factory.session = nil
         MockShooter.error = nil
-        (map.session.storage as! MockStorage).onSaveProfile = nil
         try? FileManager.default.removeItem(at:map.path)
     }
     

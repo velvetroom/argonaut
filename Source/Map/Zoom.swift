@@ -11,9 +11,10 @@ struct Zoom {
 }
 
 extension Zoom {
-    static func zooms() -> [Zoom] {
+    static func zooms(profile:Profile) -> [Zoom] {
         var items = [Zoom]()
-        for index in 15 ... 20 {
+        let range = profile.highQuality ? Range(15 ... 20) : Range(16 ... 17)
+        for index in range {
             items.append(Zoom(index))
         }
         return items
