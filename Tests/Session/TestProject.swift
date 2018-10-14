@@ -9,11 +9,6 @@ class TestProject:XCTestCase {
         session = Session()
     }
     
-    override func tearDown() {
-        (session.storage as! MockStorage).onSaveProfile = nil
-        (session.storage as! MockStorage).onSaveProject = nil
-    }
-    
     func testLoadProject() {
         let expect = expectation(description:String())
         DispatchQueue.global(qos:.background).async {

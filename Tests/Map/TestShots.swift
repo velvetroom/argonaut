@@ -10,6 +10,10 @@ class TestShots:XCTestCase {
         map = Map()
     }
     
+    override func tearDown() {
+        Factory.session = nil
+    }
+    
     func testCreate1() {
         let shots = map.makeShots(rect:MKMapRect(x:0, y:0, width:1, height:1), zoom:Zoom(2))
         XCTAssertEqual(0, shots[0].tileX)
