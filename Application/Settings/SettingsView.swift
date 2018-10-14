@@ -1,7 +1,9 @@
 import CleanArchitecture
+import MarkdownHero
 import MessageUI
 
 class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate {
+    private let hero = Hero()
     private let url = "itunes.apple.com/\(Locale.current.regionCode!.lowercased())/app/argonaut/id1436394937"
     override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
     
@@ -54,7 +56,7 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
         
         let contact = UIButton()
         contact.translatesAutoresizingMaskIntoConstraints = false
-        contact.setTitle(NSLocalizedString("SettingsView.contact", comment:String()), for:[])
+        contact.setTitle(.local("SettingsView.contact"), for:[])
         contact.setTitleColor(.white, for:.normal)
         contact.setTitleColor(UIColor(white:0, alpha:0.2), for:.highlighted)
         contact.titleLabel!.font = .systemFont(ofSize:14, weight:.light)
@@ -63,7 +65,7 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
         
         let share = UIButton()
         share.translatesAutoresizingMaskIntoConstraints = false
-        share.setTitle(NSLocalizedString("SettingsView.share", comment:String()), for:[])
+        share.setTitle(.local("SettingsView.share"), for:[])
         share.setTitleColor(.white, for:.normal)
         share.setTitleColor(UIColor(white:0, alpha:0.1), for:.highlighted)
         share.titleLabel!.font = .systemFont(ofSize:14, weight:.light)
@@ -72,7 +74,7 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
         
         let review = UIButton()
         review.translatesAutoresizingMaskIntoConstraints = false
-        review.setTitle(NSLocalizedString("SettingsView.review", comment:String()), for:[])
+        review.setTitle(.local("SettingsView.review"), for:[])
         review.setTitleColor(.white, for:.normal)
         review.setTitleColor(UIColor(white:0, alpha:0.1), for:.highlighted)
         review.titleLabel!.font = .systemFont(ofSize:14, weight:.light)
@@ -90,6 +92,22 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
         separatorRight.isUserInteractionEnabled = false
         separatorRight.backgroundColor = UIColor(white:1, alpha:0.2)
         view.addSubview(separatorRight)
+        
+        let labelHq = UILabel()
+        labelHq.translatesAutoresizingMaskIntoConstraints = false
+        labelHq.isUserInteractionEnabled = false
+        labelHq.numberOfLines = 0
+        labelHq.textColor = .white
+        labelHq.attributedText = hero.parse(string:.local("SettingsView.labelHq"))
+        view.addSubview(labelHq)
+        
+        let hq = UISwitch()
+        hq.translatesAutoresizingMaskIntoConstraints = false
+        hq.onTintColor = .greekBlue
+        hq.tintColor = .greekBlue
+        hq.setOn(presenter.profile.highQuality, animated:false)
+        hq.addTarget(presenter, action:#selector(presenter.hqChange(hq:)), for:.valueChanged)
+        view.addSubview(hq)
         
         icon.topAnchor.constraint(equalTo:bar.bottomAnchor, constant:60).isActive = true
         icon.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
@@ -126,6 +144,13 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
         separatorRight.leftAnchor.constraint(equalTo:contact.rightAnchor).isActive = true
         separatorRight.widthAnchor.constraint(equalToConstant:1).isActive = true
         separatorRight.heightAnchor.constraint(equalToConstant:14).isActive = true
+        
+        hq.topAnchor.constraint(equalTo:contact.bottomAnchor, constant:80).isActive = true
+        hq.rightAnchor.constraint(equalTo:view.rightAnchor, constant:-20).isActive = true
+        
+        labelHq.topAnchor.constraint(equalTo:hq.topAnchor).isActive = true
+        labelHq.leftAnchor.constraint(equalTo:view.leftAnchor, constant:20).isActive = true
+        labelHq.rightAnchor.constraint(equalTo:view.rightAnchor, constant:-20).isActive = true
     }
     
     @objc private func email() {
@@ -133,8 +158,8 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
             mail.setToRecipients(["argonaut@iturbi.de"])
-            mail.setSubject(NSLocalizedString("SettingsView.sendEmailSubject", comment:String()))
-            mail.setMessageBody(NSLocalizedString("SettingsView.sendEmailBody", comment:String()), isHTML:false)
+            mail.setSubject(.local("SettingsView.sendEmailSubject"))
+            mail.setMessageBody(.local("SettingsView.sendEmailBody"), isHTML:false)
             Application.navigation.present(mail, animated:true)
         } else {
             let alert = UIAlertController(

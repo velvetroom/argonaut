@@ -42,7 +42,7 @@ public class Session {
         storage.delete(project:project)
     }
     
-    func profile() -> Profile {
+    public func profile() -> Profile {
         if cachedProfile == nil {
             if let loaded = try? storage.load() {
                 cachedProfile = loaded
@@ -55,7 +55,7 @@ public class Session {
         return cachedProfile
     }
     
-    func save() {
+    public func save() {
         storage.save(profile:cachedProfile)
     }
     

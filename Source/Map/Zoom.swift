@@ -13,7 +13,7 @@ struct Zoom {
 extension Zoom {
     static func zooms(profile:Profile) -> [Zoom] {
         var items = [Zoom]()
-        let range = profile.highQuality ? Range(15 ... 20) : Range(16 ... 18)
+        let range = profile.highQuality ? Range(15 ... 20) : Range(16 ... 17)
         for index in range {
             items.append(Zoom(index))
         }

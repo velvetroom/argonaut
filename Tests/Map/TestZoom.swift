@@ -17,9 +17,8 @@ class TestZoom:XCTestCase {
         let session = Session()
         session.profile().highQuality = false
         let zooms = Zoom.zooms(profile:session.profile())
-        XCTAssertEqual(3, zooms.count)
+        XCTAssertEqual(2, zooms.count)
         XCTAssertEqual(16, zooms[0].level)
         XCTAssertEqual(17, zooms[1].level)
-        XCTAssertEqual(18, zooms[2].level)
     }
 }
