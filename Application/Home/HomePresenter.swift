@@ -3,7 +3,6 @@ import Argonaut
 import MarkdownHero
 
 class HomePresenter:Presenter {
-    private let map = Map()
     private let session = Factory.makeSession()
     private let hero = Hero()
     private let formatter = DateComponentsFormatter()
@@ -81,7 +80,7 @@ class HomePresenter:Presenter {
         }
         update(viewModel:viewModel)
         makeShortcuts(projects:projects)
-        DispatchQueue.global(qos:.background).async { [weak self] in self?.map.cleanDisk() }
+        Map().cleanDisk()
     }
     
     private func makeItems(projects:[Project]) -> [HomeItem] {
