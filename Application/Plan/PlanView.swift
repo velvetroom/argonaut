@@ -135,10 +135,8 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         map.trip = trip
         
         let results = UIScrollView()
-        results.backgroundColor = .clear
         results.alwaysBounceVertical = true
         results.alwaysBounceHorizontal = false
-        results.showsHorizontalScrollIndicator = false
         results.showsVerticalScrollIndicator = true
         results.translatesAutoresizingMaskIntoConstraints = false
         results.indicatorStyle = .white
