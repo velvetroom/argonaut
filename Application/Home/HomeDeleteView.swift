@@ -15,37 +15,37 @@ class HomeDeleteView:View<HomePresenter> {
     func makeOutlets() {
         let blur = UIVisualEffectView(effect:UIBlurEffect(style:.dark))
         blur.translatesAutoresizingMaskIntoConstraints = false
-        blur.isUserInteractionEnabled = false
-        blur.alpha = 0.8
         view.addSubview(blur)
         
         let back = UIControl()
         back.translatesAutoresizingMaskIntoConstraints = false
         back.addTarget(presenter, action:#selector(presenter.deleteCancel), for:.touchUpInside)
-        view.addSubview(back)
+        blur.contentView.addSubview(back)
         
         let base = UIView()
         base.translatesAutoresizingMaskIntoConstraints = false
-        base.backgroundColor = .white
-        base.layer.cornerRadius = 8
+        base.backgroundColor = .midnightBlue
         base.clipsToBounds = true
-        view.addSubview(base)
+        base.layer.borderColor = UIColor.black.cgColor
+        base.layer.borderWidth = 1
+        base.layer.cornerRadius = 8
+        blur.contentView.addSubview(base)
         
         let label = UILabel()
         label.isUserInteractionEnabled = false
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
+        label.textColor = .white
         label.font = .systemFont(ofSize:18, weight:.light)
         label.attributedText = viewModel.title
         label.textAlignment = .center
         label.numberOfLines = 0
-        view.addSubview(label)
+        base.addSubview(label)
         
         let cancel = UIButton()
         cancel.translatesAutoresizingMaskIntoConstraints = false
         cancel.addTarget(presenter, action:#selector(presenter.deleteCancel), for:.touchUpInside)
-        cancel.setTitleColor(UIColor(white:0, alpha:0.6), for:.normal)
-        cancel.setTitleColor(UIColor(white:0, alpha:0.2), for:.highlighted)
+        cancel.setTitleColor(UIColor(white:1, alpha:0.6), for:.normal)
+        cancel.setTitleColor(UIColor(white:1, alpha:0.2), for:.highlighted)
         cancel.setTitle(.local("HomeDeleteView.cancel"), for:[])
         cancel.titleLabel!.font = .systemFont(ofSize:14, weight:.regular)
         base.addSubview(cancel)
