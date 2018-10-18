@@ -5,6 +5,7 @@ def podlist
     pod 'CleanArchitecture'
     pod 'MarkdownHero'
     pod 'CodableHero'
+    pod 'Firebase/Core'
 end
 
 target 'Application' do

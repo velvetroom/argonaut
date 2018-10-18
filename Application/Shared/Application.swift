@@ -1,5 +1,6 @@
 import UIKit
 import Argonaut
+import Firebase
 
 @UIApplicationMain class Application:UIResponder, UIApplicationDelegate {
     var window:UIWindow?
@@ -8,10 +9,8 @@ import Argonaut
     func application(_:UIApplication, didFinishLaunchingWithOptions options:[UIApplication.LaunchOptionsKey:
         Any]?) -> Bool {
         Factory.storage = Storage.self
-        window = UIWindow(frame:UIScreen.main.bounds)
-        window!.backgroundColor = .black
-        window!.makeKeyAndVisible()
-        window!.rootViewController = Application.navigation
+        services()
+        makeWindow()
         return launch(options:options)
     }
     
@@ -69,5 +68,17 @@ import Argonaut
             return id
         }
         throw Exception.invalidId
+    }
+    
+    private func services() {
+        FirebaseConfiguration.shared.setLoggerLevel(.min)
+        FirebaseApp.configure()
+    }
+    
+    private func makeWindow() {
+        window = UIWindow(frame:UIScreen.main.bounds)
+        window!.backgroundColor = .black
+        window!.makeKeyAndVisible()
+        window!.rootViewController = Application.navigation
     }
 }

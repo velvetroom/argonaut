@@ -12,6 +12,7 @@
 		DA0000C1214D50F900AD02D2 /* PlanPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000C0214D50F900AD02D2 /* PlanPresenter.swift */; };
 		DA0000C2214D514C00AD02D2 /* libArgonaut.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA46C8B8214D3362002E882A /* libArgonaut.a */; };
 		DA0000C9214D56BB00AD02D2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000C8214D56BB00AD02D2 /* MapView.swift */; };
+		DA033AB72178546E00D8DA28 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA033AB62178546E00D8DA28 /* GoogleService-Info.plist */; };
 		DA0F0D5F216B4C8A0097DCB4 /* HomeDeleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0F0D5E216B4C8A0097DCB4 /* HomeDeleteView.swift */; };
 		DA0FA4F02150EB350087ECFF /* Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0FA4EF2150EB350087ECFF /* Zoom.swift */; };
 		DA219171215D05F0002C11DD /* PlanResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA219170215D05F0002C11DD /* PlanResultView.swift */; };
@@ -127,6 +128,7 @@
 		DA0000BE214D50DB00AD02D2 /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
 		DA0000C0214D50F900AD02D2 /* PlanPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanPresenter.swift; sourceTree = "<group>"; };
 		DA0000C8214D56BB00AD02D2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		DA033AB62178546E00D8DA28 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DA0F0D5E216B4C8A0097DCB4 /* HomeDeleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDeleteView.swift; sourceTree = "<group>"; };
 		DA0FA4EF2150EB350087ECFF /* Zoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zoom.swift; sourceTree = "<group>"; };
 		DA219170215D05F0002C11DD /* PlanResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanResultView.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 		DA46C8BB214D33C2002E882A /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				DA033AB62178546E00D8DA28 /* GoogleService-Info.plist */,
 				DA525CE1216F22A7002BEB6B /* widget.plist */,
 				DAF48451214D4E03000CD005 /* application.plist */,
 				DA46C8BC214D33C2002E882A /* tests.plist */,
@@ -668,6 +671,7 @@
 				DA578B342156833B00C5D285 /* brand.xcassets in Resources */,
 				DADCD67B21591470009C3653 /* assets.xcassets in Resources */,
 				DA8011EF21720C0700686BE1 /* InfoPlist.strings in Resources */,
+				DA033AB72178546E00D8DA28 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
