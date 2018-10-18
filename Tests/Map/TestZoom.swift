@@ -2,6 +2,10 @@ import XCTest
 @testable import Argonaut
 
 class TestZoom:XCTestCase {
+    override func setUp() {
+        Factory.storage = MockStorage.self
+    }
+    
     func testWithHQ() {
         let zooms = Zoom.zooms(profile:Session().profile())
         XCTAssertEqual(6, zooms.count)
