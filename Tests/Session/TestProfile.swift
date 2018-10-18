@@ -31,12 +31,6 @@ class TestProfile:XCTestCase {
         waitForExpectations(timeout:1)
     }
     
-    func testLoadNoHQ() {
-        let data = try! JSONSerialization.data(withJSONObject:["projects":[], "rates":[], "planed":0])
-        let profile = try! JSONDecoder().decode(Profile.self, from:data)
-        XCTAssertTrue(profile.highQuality)
-    }
-    
     func testLoadWithHQ() {
         let original = Profile()
         original.highQuality = false

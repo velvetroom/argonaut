@@ -50,7 +50,7 @@ class TestTimer:XCTestCase {
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude:0, longitude:0)
         map.makeMap(points:[annotation], route:nil)
-        waitForExpectations(timeout:2)
+        waitForExpectations(timeout:3)
     }
     
     private func makeImage(width:Double, height:Double) -> UIImage {
