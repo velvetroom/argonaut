@@ -47,7 +47,7 @@ class HomeDeleteView:View<HomePresenter> {
         cancel.setTitleColor(UIColor(white:1, alpha:0.6), for:.normal)
         cancel.setTitleColor(UIColor(white:1, alpha:0.2), for:.highlighted)
         cancel.setTitle(.local("HomeDeleteView.cancel"), for:[])
-        cancel.titleLabel!.font = .systemFont(ofSize:14, weight:.regular)
+        cancel.titleLabel!.font = .systemFont(ofSize:14, weight:.medium)
         base.addSubview(cancel)
         
         let delete = UIButton()

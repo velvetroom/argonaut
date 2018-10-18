@@ -114,9 +114,8 @@ class HomeView:View<HomePresenter>, UIViewControllerPreviewingDelegate {
             items.addSubview(cell)
             
             cell.topAnchor.constraint(equalTo:top, constant:20).isActive = true
-            cell.leftAnchor.constraint(equalTo:self.items.leftAnchor, constant:20).isActive = true
-            cell.rightAnchor.constraint(equalTo:self.items.rightAnchor, constant:-20).isActive = true
-            cell.heightAnchor.constraint(equalToConstant:60).isActive = true
+            cell.leftAnchor.constraint(equalTo:self.items.leftAnchor).isActive = true
+            cell.rightAnchor.constraint(equalTo:self.items.rightAnchor).isActive = true
             top = cell.bottomAnchor
         }
         layoutItems(size:view.bounds.size)
@@ -125,7 +124,7 @@ class HomeView:View<HomePresenter>, UIViewControllerPreviewingDelegate {
     }
     
     private func layoutItems(size:CGSize) {
-        items.frame = CGRect(x:0, y:0, width:size.width, height:(CGFloat(items.subviews.count) * 80) + 20)
+        items.frame = CGRect(x:0, y:0, width:size.width, height:(CGFloat(items.subviews.count) * 90) + 20)
         scroll.contentSize = CGSize(width:size.width, height:items.frame.height)
     }
 }
