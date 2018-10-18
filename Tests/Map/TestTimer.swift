@@ -7,8 +7,8 @@ class TestTimer:XCTestCase {
     private var shooter:MapShooter!
     
     override func setUp() {
-        shooter = MapShooter(shot:Shot(tileX:0, tileY:0, zoom:Zoom(2)))
         Factory.storage = MockStorage.self
+        shooter = MapShooter(shot:Shot(tileX:0, tileY:0, zoom:Zoom(2)))
         map = Map()
         map.shooterType = MockShooter.self
         map.path = URL(fileURLWithPath:NSTemporaryDirectory()).appendingPathComponent("test")
@@ -50,7 +50,7 @@ class TestTimer:XCTestCase {
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude:0, longitude:0)
         map.makeMap(points:[annotation], route:nil)
-        waitForExpectations(timeout:2)
+        waitForExpectations(timeout:3)
     }
     
     private func makeImage(width:Double, height:Double) -> UIImage {

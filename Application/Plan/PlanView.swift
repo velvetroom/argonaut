@@ -4,11 +4,12 @@ import MapKit
 class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterDelegate {
     private weak var map:PlanMapView!
     private weak var type:PlanTypeView!
-    private weak var results:UIScrollView!
+    private weak var scroll:UIScrollView!
+    private weak var results:UIView!
     private weak var search:UISearchBar!
     private weak var field:UITextField!
     private weak var searchWidth:NSLayoutConstraint!
-    private weak var resultsHeight:NSLayoutConstraint!
+    private weak var scrollHeight:NSLayoutConstraint!
     private weak var typeCenter:NSLayoutConstraint!
     private var completer:NSObject!
     override var preferredStatusBarStyle:UIStatusBarStyle { return .lightContent }
@@ -73,12 +74,18 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         super.viewDidAppear(animated)
         map.location.startUpdatingHeading()
         map.location.startUpdatingLocation()
+        layoutItems(size:view.bounds.size)
     }
     
     override func viewWillDisappear(_ animated:Bool) {
         super.viewWillDisappear(animated)
         map.location.stopUpdatingHeading()
         map.location.stopUpdatingLocation()
+    }
+    
+    override func viewWillTransition(to size:CGSize, with coordinator:UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to:size, with:coordinator)
+        layoutItems(size:size)
     }
     
     private func makeOutlets() {
@@ -128,74 +135,85 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         let trip = UILabel()
         trip.translatesAutoresizingMaskIntoConstraints = false
         trip.isUserInteractionEnabled = false
-        trip.font = .systemFont(ofSize:13, weight:.light)
+        trip.font = .systemFont(ofSize:14, weight:.light)
         trip.textColor = .white
         trip.numberOfLines = 2
         view.addSubview(trip)
         map.trip = trip
         
-        let results = UIScrollView()
-        results.backgroundColor = .clear
-        results.alwaysBounceVertical = true
-        results.alwaysBounceHorizontal = false
-        results.showsHorizontalScrollIndicator = false
-        results.showsVerticalScrollIndicator = true
-        results.translatesAutoresizingMaskIntoConstraints = false
-        results.indicatorStyle = .white
-        view.addSubview(results)
+        let scroll = UIScrollView()
+        scroll.alwaysBounceVertical = true
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        scroll.indicatorStyle = .white
+        view.addSubview(scroll)
+        self.scroll = scroll
+        
+        let results = UIView()
+        scroll.addSubview(results)
         self.results = results
         
         map.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         map.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         map.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
-        map.topAnchor.constraint(equalTo:results.bottomAnchor, constant:10).isActive = true
+        map.topAnchor.constraint(equalTo:scroll.bottomAnchor, constant:10).isActive = true
         
-        type.topAnchor.constraint(equalTo:bar.bottomAnchor, constant:10).isActive = true
+        type.topAnchor.constraint(equalTo:bar.bottomAnchor, constant:5).isActive = true
         typeCenter = type.centerXAnchor.constraint(equalTo:view.centerXAnchor)
         typeCenter.isActive = true
         
         search.centerYAnchor.constraint(equalTo:type.centerYAnchor).isActive = true
         search.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
-        search.heightAnchor.constraint(equalToConstant:32).isActive = true
+        search.heightAnchor.constraint(equalToConstant:36).isActive = true
         searchWidth = search.widthAnchor.constraint(equalToConstant:49)
         searchWidth.isActive = true
         
-        trip.topAnchor.constraint(equalTo:bar.topAnchor, constant:26).isActive = true
-        trip.bottomAnchor.constraint(equalTo:bar.bottomAnchor).isActive = true
+        trip.topAnchor.constraint(equalTo:bar.topAnchor, constant:10).isActive = true
         trip.leftAnchor.constraint(equalTo:cancel.rightAnchor).isActive = true
         trip.rightAnchor.constraint(equalTo:centre.leftAnchor).isActive = true
         
-        results.topAnchor.constraint(equalTo:type.bottomAnchor, constant:10).isActive = true
-        results.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
-        results.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
-        resultsHeight = results.heightAnchor.constraint(equalToConstant:0)
-        resultsHeight.isActive = true
+        scroll.topAnchor.constraint(equalTo:type.bottomAnchor, constant:5).isActive = true
+        scroll.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
+        scroll.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
+        scrollHeight = scroll.heightAnchor.constraint(equalToConstant:0)
+        scrollHeight.isActive = true
         
-        bar.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
         bar.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         bar.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         
         if #available(iOS 11.0, *) {
             completer = MKLocalSearchCompleter()
             (completer as! MKLocalSearchCompleter).delegate = self
+            bar.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
+        } else {
+            bar.topAnchor.constraint(equalTo:view.topAnchor, constant:20).isActive = true
         }
     }
     
     @available(iOS 9.3, *)
     private func update(viewModel:[(NSAttributedString, MKLocalSearchCompletion)]) {
-        results.subviews.forEach { view in view.removeFromSuperview() }
-        let width = results.bounds.width
-        let height:CGFloat = viewModel.reduce(into:0) { top, item in
-            let view = PlanResultView(frame:CGRect(x:0, y:top, width:width, height:45))
+        results.subviews.forEach { $0.removeFromSuperview() }
+        var top = results.topAnchor
+        viewModel.forEach { item in
+            let view = PlanResultView()
             view.configure(text:item.0)
             view.item = item.1
             view.addTarget(self, action:#selector(selected(view:)), for:.touchUpInside)
             results.addSubview(view)
-            top += view.bounds.height
+            
+            view.topAnchor.constraint(equalTo:top).isActive = true
+            view.leftAnchor.constraint(equalTo:results.leftAnchor).isActive = true
+            view.rightAnchor.constraint(equalTo:results.rightAnchor).isActive = true
+            top = view.bottomAnchor
         }
         view.layoutIfNeeded()
-        results.contentSize = CGSize(width:width, height:height)
-        resultsHeight.constant = min(height, 152)
+        layoutItems(size:view.bounds.size)
+    }
+    
+    private func layoutItems(size:CGSize) {
+        let height = results.subviews.isEmpty ? 0 : (CGFloat(results.subviews.count) * 56) + 20
+        results.frame = CGRect(x:0, y:0, width:size.width, height:height)
+        scroll.contentSize = CGSize(width:size.width, height:height)
+        scrollHeight.constant = min(height, 152)
         UIView.animate(withDuration:0.3) { [weak self] in self?.view.layoutIfNeeded() }
     }
     

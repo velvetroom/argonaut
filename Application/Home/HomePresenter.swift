@@ -48,6 +48,7 @@ class HomePresenter:Presenter {
     }
     
     override func didLoad() {
+        hero.font = .systemFont(ofSize:12, weight:.ultraLight)
         formatter.unitsStyle = .full
         formatter.allowedUnits = [.minute, .hour]
     }
@@ -57,7 +58,7 @@ class HomePresenter:Presenter {
     }
     
     private func makeTitle(project:Project) -> NSAttributedString {
-        var string = "**\(project.name)**\n"
+        var string = "## \(project.name)\n"
         string += formatter.string(from:project.duration)!
         if #available(iOS 10.0, *) {
             let distance = MeasurementFormatter()

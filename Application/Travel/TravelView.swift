@@ -46,9 +46,14 @@ class TravelView:View<TravelPresenter> {
         map.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         map.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         
-        bar.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
         bar.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         bar.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
+        
+        if #available(iOS 11.0, *) {
+            bar.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
+        } else {
+            bar.topAnchor.constraint(equalTo:view.topAnchor, constant:20).isActive = true
+        }
     }
     
     private func configureViewModel() {

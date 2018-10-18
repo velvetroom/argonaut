@@ -80,6 +80,8 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
                 marker.animatesDrop = true
                 point = marker
             }
+            point.canShowCallout = true
+            point.leftCalloutAccessoryView = UIImageView(image:#imageLiteral(resourceName: "iconLocation.pdf"))
         }
         return point
     }

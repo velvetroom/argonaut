@@ -6,6 +6,7 @@ class HomeCellView:UIControl {
     }}
     private(set) weak var button:UIButton!
     private weak var label:UILabel!
+    override var intrinsicContentSize:CGSize { return CGSize(width:UIView.noIntrinsicMetric, height:70) }
     
     init() {
         super.init(frame:.zero)
@@ -40,20 +41,22 @@ class HomeCellView:UIControl {
         
         label.topAnchor.constraint(equalTo:topAnchor).isActive = true
         label.bottomAnchor.constraint(equalTo:bottomAnchor).isActive = true
-        label.leftAnchor.constraint(equalTo:leftAnchor, constant:10).isActive = true
-        label.rightAnchor.constraint(equalTo:rightAnchor, constant:-10).isActive = true
+        label.leftAnchor.constraint(equalTo:leftAnchor, constant:15).isActive = true
+        label.rightAnchor.constraint(equalTo:button.leftAnchor).isActive = true
         
         button.topAnchor.constraint(equalTo:topAnchor).isActive = true
         button.bottomAnchor.constraint(equalTo:bottomAnchor).isActive = true
         button.rightAnchor.constraint(equalTo:rightAnchor).isActive = true
-        button.widthAnchor.constraint(equalToConstant:60).isActive = true
+        button.widthAnchor.constraint(equalToConstant:65).isActive = true
     }
     
     private func update() {
         if isSelected || isHighlighted {
-            alpha = 0.2
+            backgroundColor = .greekBlue
+            label.textColor = .black
         } else {
-            alpha = 1
+            backgroundColor = .midnightBlue
+            label.textColor = .white
         }
     }
 }

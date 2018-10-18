@@ -102,35 +102,23 @@ import CoreLocation
     }
     
     private func show() {
-        let user = UIImageView(image:#imageLiteral(resourceName: "iconUser.pdf"))
-        user.translatesAutoresizingMaskIntoConstraints = false
-        user.clipsToBounds = true
-        user.isUserInteractionEnabled = false
-        user.contentMode = .center
-        effect.contentView.addSubview(user)
-        
-        let origin = WidgetCellView(widget!.origin, align:.left)
+        let origin = WidgetCellView(widget!.origin)
         effect.contentView.addSubview(origin)
         self.origin = origin
         
-        let destination = WidgetCellView(widget!.destination, align:.right)
+        let destination = WidgetCellView(widget!.destination)
         effect.contentView.addSubview(destination)
         self.destination = destination
         
-        user.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
-        user.centerYAnchor.constraint(equalTo:view.centerYAnchor).isActive = true
-        user.widthAnchor.constraint(equalToConstant:78).isActive = true
-        user.heightAnchor.constraint(equalToConstant:38).isActive = true
-        
-        origin.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
-        origin.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
+        origin.topAnchor.constraint(equalTo:view.topAnchor, constant:12).isActive = true
+        origin.bottomAnchor.constraint(equalTo:view.centerYAnchor).isActive = true
         origin.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
-        origin.widthAnchor.constraint(equalTo:view.widthAnchor, multiplier:0.5).isActive = true
+        origin.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         
-        destination.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
-        destination.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
+        destination.topAnchor.constraint(equalTo:view.centerYAnchor).isActive = true
+        destination.bottomAnchor.constraint(equalTo:view.bottomAnchor, constant:-12).isActive = true
         destination.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
-        destination.widthAnchor.constraint(equalTo:view.widthAnchor, multiplier:0.5).isActive = true
+        destination.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
     }
     
     @objc private func highlight() { view.alpha = 0.2 }

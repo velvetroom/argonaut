@@ -91,7 +91,7 @@ class PlanMapView:MapView {
             var string = formatter.string(from:line.expectedTravelTime)!
             if #available(iOS 10.0, *) {
                 let distance = MeasurementFormatter()
-                distance.unitStyle = .medium
+                distance.unitStyle = .long
                 distance.unitOptions = .naturalScale
                 distance.numberFormatter.maximumFractionDigits = 1
                 string += "\n" + distance.string(from:Measurement(value:line.distance, unit:UnitLength.meters))
