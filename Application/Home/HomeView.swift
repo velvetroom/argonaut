@@ -76,11 +76,10 @@ class HomeView:View<HomePresenter>, UIViewControllerPreviewingDelegate {
         view.addSubview(button)
         self.button = button
         
-        bar.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
         bar.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         bar.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
         
-        scroll.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
+        scroll.topAnchor.constraint(equalTo:bar.bottomAnchor).isActive = true
         scroll.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
         scroll.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         scroll.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
@@ -92,6 +91,12 @@ class HomeView:View<HomePresenter>, UIViewControllerPreviewingDelegate {
         
         button.centerXAnchor.constraint(equalTo:view.centerXAnchor).isActive = true
         button.topAnchor.constraint(equalTo:icon.bottomAnchor, constant:20).isActive = true
+        
+        if #available(iOS 11.0, *) {
+            bar.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
+        } else {
+            bar.topAnchor.constraint(equalTo:view.topAnchor, constant:20).isActive = true
+        }
     }
     
     private func configureViewModel() {
@@ -120,7 +125,7 @@ class HomeView:View<HomePresenter>, UIViewControllerPreviewingDelegate {
     }
     
     private func layoutItems(size:CGSize) {
-        items.frame = CGRect(x:0, y:70, width:size.width, height:(CGFloat(items.subviews.count) * 80) + 20)
-        scroll.contentSize = CGSize(width:size.width, height:items.frame.maxY)
+        items.frame = CGRect(x:0, y:0, width:size.width, height:(CGFloat(items.subviews.count) * 80) + 20)
+        scroll.contentSize = CGSize(width:size.width, height:items.frame.height)
     }
 }

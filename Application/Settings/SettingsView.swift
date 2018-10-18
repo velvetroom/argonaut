@@ -18,14 +18,13 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
     }
     
     private func makeOutlets() {
-        let close = Button(#imageLiteral(resourceName: "iconCancel.pdf"))
+        let close = Button(#imageLiteral(resourceName: "iconSave.pdf"))
         close.addTarget(presenter, action:#selector(presenter.close), for:.touchUpInside)
-        let bar = Bar(.local("SettingsView.title"), left:[close])
+        let bar = Bar(.local("SettingsView.title"), right:[close])
         view.addSubview(bar)
         
         bar.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         bar.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
-        bar.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
         
         let icon = UIImageView()
         icon.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +40,7 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
         labelName.textColor = .white
         labelName.textAlignment = .center
         labelName.text = .local("SettingsView.labelName")
-        labelName.font = .systemFont(ofSize:16, weight:.medium)
+        labelName.font = .systemFont(ofSize:18, weight:.medium)
         view.addSubview(labelName)
         
         let labelVersion = UILabel()
@@ -51,7 +50,7 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
         labelVersion.textAlignment = .center
         labelVersion.numberOfLines = 0
         labelVersion.text = "\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
-        labelVersion.font = .systemFont(ofSize:11, weight:.ultraLight)
+        labelVersion.font = .systemFont(ofSize:10, weight:.ultraLight)
         view.addSubview(labelVersion)
         
         let contact = UIButton()
@@ -151,6 +150,12 @@ class SettingsView:View<SettingsPresenter>, MFMailComposeViewControllerDelegate 
         labelHq.topAnchor.constraint(equalTo:hq.topAnchor).isActive = true
         labelHq.leftAnchor.constraint(equalTo:view.leftAnchor, constant:20).isActive = true
         labelHq.rightAnchor.constraint(equalTo:view.rightAnchor, constant:-20).isActive = true
+        
+        if #available(iOS 11.0, *) {
+            bar.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
+        } else {
+            bar.topAnchor.constraint(equalTo:view.topAnchor, constant:20).isActive = true
+        }
     }
     
     @objc private func email() {
