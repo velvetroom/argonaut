@@ -2,6 +2,7 @@ import MapKit
 
 class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
     let location = CLLocationManager()
+    private var lastLocation:CLLocation?
     private var indicator = UIImageView(image:#imageLiteral(resourceName: "iconHeading.pdf"))
     
     init() {
@@ -28,7 +29,6 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         indicator.translatesAutoresizingMaskIntoConstraints = false
         setUserTrackingMode(.followWithHeading, animated:true)
         location.delegate = self
-        location.desiredAccuracy = kCLLocationAccuracyKilometer
     }
     
     deinit {
@@ -66,7 +66,7 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
             let view = view(for:selected) {
             updateDistance(view:view)
         } else {
-            centre(coordinate:location.coordinate)
+            updateUser(location:location)
         }
     }
     
@@ -123,6 +123,19 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
             let heading = newHeading.trueHeading > 0 ? newHeading.trueHeading : newHeading.magneticHeading
             let transform = CGAffineTransform(rotationAngle:CGFloat((heading / 180) * Double.pi))
             UIView.animate(withDuration:0.3) { [weak self] in self?.indicator.transform = transform }
+        }
+    }
+    
+    private func updateUser(location:MKUserLocation) {
+        if let lastLocation = self.lastLocation {
+            if let newLocation = location.location,
+                lastLocation.distance(from:newLocation) > 35 {
+                self.lastLocation = newLocation
+                centre(coordinate:newLocation.coordinate)
+            }
+        } else {
+            self.lastLocation = location.location
+            centre(coordinate:location.coordinate)
         }
     }
 }
