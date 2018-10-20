@@ -1,6 +1,7 @@
 import MapKit
 
-class MapView:MKMapView, MKMapViewDelegate {
+class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
+    let location = CLLocationManager()
     private var indicator = UIImageView(image:#imageLiteral(resourceName: "iconHeading.pdf"))
     
     init() {
@@ -14,17 +15,24 @@ class MapView:MKMapView, MKMapViewDelegate {
         showsScale = false
         showsTraffic = false
         showsUserLocation = true
-        userTrackingMode = .followWithHeading
         layer.cornerRadius = 20
         mapType = .standard
         delegate = self
         var region = MKCoordinateRegion()
+        region.center = userLocation.coordinate
         region.span.latitudeDelta = 0.01
         region.span.longitudeDelta = 0.01
         setRegion(region, animated:false)
         indicator.clipsToBounds = true
         indicator.contentMode = .center
         indicator.translatesAutoresizingMaskIntoConstraints = false
+        setUserTrackingMode(.followWithHeading, animated:true)
+        location.delegate = self
+        location.desiredAccuracy = kCLLocationAccuracyKilometer
+    }
+    
+    deinit {
+        location.stopUpdatingHeading()
     }
     
     required init?(coder:NSCoder) { return nil }
@@ -54,7 +62,6 @@ class MapView:MKMapView, MKMapViewDelegate {
     }
     
     func mapView(_:MKMapView, didUpdate location:MKUserLocation) {
-        if let heading = location.heading { update(heading:heading) }
         if let selected = selectedAnnotations.first as? MKPointAnnotation,
             let view = view(for:selected) {
             updateDistance(view:view)
@@ -111,10 +118,10 @@ class MapView:MKMapView, MKMapViewDelegate {
         }
     }
     
-    private func update(heading:CLHeading) {
-        if heading.headingAccuracy > 0 {
-            let amount = heading.trueHeading > 0 ? heading.trueHeading : heading.magneticHeading
-            let transform = CGAffineTransform(rotationAngle:CGFloat((amount / 180) * Double.pi))
+    func locationManager(_:CLLocationManager, didUpdateHeading newHeading:CLHeading) {
+        if newHeading.headingAccuracy > 0 {
+            let heading = newHeading.trueHeading > 0 ? newHeading.trueHeading : newHeading.magneticHeading
+            let transform = CGAffineTransform(rotationAngle:CGFloat((heading / 180) * Double.pi))
             UIView.animate(withDuration:0.3) { [weak self] in self?.indicator.transform = transform }
         }
     }

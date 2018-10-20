@@ -24,7 +24,6 @@ class TravelView:View<TravelPresenter> {
     
     override func viewDidAppear(_ animated:Bool) {
         super.viewDidAppear(animated)
-        map.location.startUpdatingLocation()
         map.location.startUpdatingHeading()
     }
     

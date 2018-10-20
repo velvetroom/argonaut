@@ -59,8 +59,8 @@ class PlanMapView:MapView {
         }
     }
     
-    override func locationManager(_ manager:CLLocationManager, didUpdateLocations locations:[CLLocation]) {
-        super.locationManager(manager, didUpdateLocations: locations)
+    override func mapView(_ map:MKMapView, didUpdate location:MKUserLocation) {
+        super.mapView(map, didUpdate:location)
         if plan.isEmpty { plan.append(userLocation) }
     }
     
