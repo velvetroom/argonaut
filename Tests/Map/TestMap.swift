@@ -135,8 +135,8 @@ class TestMap:XCTestCase {
         let destination = CLLocationCoordinate2D(latitude:51.487404, longitude:-0.127049)
         let route = MKRoute()
         map.builder = Builder()
-        map.makeProject(points:[MKPlacemark(coordinate:origin, addressDictionary:nil),
-                                MKPlacemark(coordinate:destination, addressDictionary:nil)], route:route)
+        let _ = map.makeProject(points:[MKPlacemark(coordinate:origin, addressDictionary:nil),
+                                        MKPlacemark(coordinate:destination, addressDictionary:nil)], route:route)
         XCTAssertFalse(map.builder.project.id.isEmpty)
         XCTAssertEqual(51.482393, map.builder.project.origin.point.latitude)
         XCTAssertEqual(-0.121620, map.builder.project.origin.point.longitude)

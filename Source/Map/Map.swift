@@ -19,10 +19,11 @@ public class Map {
     public func makeMap(points:[MKAnnotation], route:MKRoute?) {
         queue.async { [weak self] in
             self?.builder = Builder()
-            self?.makeProject(points:points, route:route)
-            self?.makeShots(points:points)
-            self?.makeUrl()
-            self?.retry()
+            if let coordinates = self?.makeProject(points:points, route:route) {
+                self?.makeShots(coordinates:coordinates)
+                self?.makeUrl()
+                self?.retry()
+            }
         }
     }
     
@@ -32,7 +33,7 @@ public class Map {
         }
     }
     
-    func makeProject(points:[MKAnnotation], route:MKRoute?) {
+    func makeProject(points:[MKAnnotation], route:MKRoute?) -> [CLLocationCoordinate2D] {
         builder.project.id = UUID().uuidString
         if let name = route?.name { builder.project.name = name }
         if let origin = points.first {
@@ -45,22 +46,26 @@ public class Map {
             builder.project.destination.point.latitude = points[1].coordinate.latitude
             builder.project.destination.point.longitude = points[1].coordinate.longitude
         }
+        var coordinates = points.map { $0.coordinate }
         if let route = route {
             let points = route.polyline.points()
             for index in 0 ..< route.polyline.pointCount {
                 var point = Point()
-                point.latitude = points[index].coordinate.latitude
-                point.longitude = points[index].coordinate.longitude
+                let coordinate = points[index].coordinate
+                coordinates.append(coordinate)
+                point.latitude = coordinate.latitude
+                point.longitude = coordinate.longitude
                 builder.project.route.append(point)
             }
             builder.project.distance = route.distance
             builder.project.duration = route.expectedTravelTime
         }
+        return coordinates
     }
     
     func makeUrl() {
         builder.url = path.appendingPathComponent(builder.project.id)
-        try! FileManager.default.createDirectory(at:builder.url, withIntermediateDirectories:true)
+        try? FileManager.default.createDirectory(at:builder.url, withIntermediateDirectories:true)
     }
     
     func makeShots(rect:MKMapRect, zoom:Zoom) -> [Shot] {
@@ -95,20 +100,20 @@ public class Map {
         return cropped
     }
     
-    func makeRect(points:[MKAnnotation]) -> MKMapRect {
+    func makeRect(coordinates:[CLLocationCoordinate2D]) -> MKMapRect {
         var rect = MKMapRect()
-        var points = points
-        if !points.isEmpty {
-            let first = points.removeFirst()
-            var top = first.coordinate.latitude
-            var bottom = first.coordinate.latitude
-            var left = first.coordinate.longitude
-            var right = first.coordinate.longitude
-            points.forEach { point in
-                top = max(top, point.coordinate.latitude)
-                bottom = min(bottom, point.coordinate.latitude)
-                left = min(left, point.coordinate.longitude)
-                right = max(right, point.coordinate.longitude)
+        var coordinates = coordinates
+        if !coordinates.isEmpty {
+            let first = coordinates.removeFirst()
+            var top = first.latitude
+            var bottom = first.latitude
+            var left = first.longitude
+            var right = first.longitude
+            coordinates.forEach { coordinate in
+                top = max(top, coordinate.latitude)
+                bottom = min(bottom, coordinate.latitude)
+                left = min(left, coordinate.longitude)
+                right = max(right, coordinate.longitude)
             }
             top += 0.001
             bottom -= 0.001
@@ -123,8 +128,8 @@ public class Map {
         return rect
     }
     
-    private func makeShots(points:[MKAnnotation]) {
-        let rect = makeRect(points:points)
+    private func makeShots(coordinates:[CLLocationCoordinate2D]) {
+        let rect = makeRect(coordinates:coordinates)
         builder.shots = zooms.flatMap { zoom in makeShots(rect:rect, zoom:zoom) }
     }
     
