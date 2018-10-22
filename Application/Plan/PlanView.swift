@@ -177,10 +177,11 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         
         bar.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         bar.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
-        
-        if #available(iOS 11.0, *) {
+        if #available(iOS 9.3, *) {
             completer = MKLocalSearchCompleter()
             (completer as! MKLocalSearchCompleter).delegate = self
+        }
+        if #available(iOS 11.0, *) {
             bar.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
         } else {
             bar.topAnchor.constraint(equalTo:view.topAnchor, constant:20).isActive = true
