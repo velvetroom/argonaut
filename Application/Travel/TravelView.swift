@@ -22,11 +22,6 @@ class TravelView:View<TravelPresenter> {
         super.viewDidLoad()
     }
     
-    override func viewDidAppear(_ animated:Bool) {
-        super.viewDidAppear(animated)
-        map.location.startUpdatingHeading()
-    }
-    
     private func makeOutlets() {
         let map = MapView()
         map.addOverlay(tiler, level:.aboveLabels)

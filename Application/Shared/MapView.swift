@@ -27,8 +27,9 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         indicator.clipsToBounds = true
         indicator.contentMode = .center
         indicator.translatesAutoresizingMaskIntoConstraints = false
-        setUserTrackingMode(.followWithHeading, animated:true)
         location.delegate = self
+        location.startUpdatingHeading()
+        setUserTrackingMode(.followWithHeading, animated:true)
     }
     
     deinit {

@@ -72,7 +72,6 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
     
     override func viewDidAppear(_ animated:Bool) {
         super.viewDidAppear(animated)
-        map.location.startUpdatingHeading()
         layoutItems(size:view.bounds.size)
     }
     
