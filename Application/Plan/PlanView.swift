@@ -72,15 +72,12 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
     
     override func viewDidAppear(_ animated:Bool) {
         super.viewDidAppear(animated)
-        map.location.startUpdatingHeading()
-        map.location.startUpdatingLocation()
         layoutItems(size:view.bounds.size)
     }
     
     override func viewWillDisappear(_ animated:Bool) {
         super.viewWillDisappear(animated)
         map.location.stopUpdatingHeading()
-        map.location.stopUpdatingLocation()
     }
     
     override func viewWillTransition(to size:CGSize, with coordinator:UIViewControllerTransitionCoordinator) {
@@ -179,10 +176,11 @@ class PlanView:View<PlanPresenter>, UISearchBarDelegate, MKLocalSearchCompleterD
         
         bar.leftAnchor.constraint(equalTo:view.leftAnchor).isActive = true
         bar.rightAnchor.constraint(equalTo:view.rightAnchor).isActive = true
-        
-        if #available(iOS 11.0, *) {
+        if #available(iOS 9.3, *) {
             completer = MKLocalSearchCompleter()
             (completer as! MKLocalSearchCompleter).delegate = self
+        }
+        if #available(iOS 11.0, *) {
             bar.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
         } else {
             bar.topAnchor.constraint(equalTo:view.topAnchor, constant:20).isActive = true

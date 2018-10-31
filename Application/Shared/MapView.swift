@@ -2,6 +2,7 @@ import MapKit
 
 class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
     let location = CLLocationManager()
+    private var lastLocation:CLLocation?
     private var indicator = UIImageView(image:#imageLiteral(resourceName: "iconHeading.pdf"))
     
     init() {
@@ -15,11 +16,11 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         showsScale = false
         showsTraffic = false
         showsUserLocation = true
-        userTrackingMode = .followWithHeading
         layer.cornerRadius = 20
         mapType = .standard
         delegate = self
         var region = MKCoordinateRegion()
+        region.center = userLocation.coordinate
         region.span.latitudeDelta = 0.01
         region.span.longitudeDelta = 0.01
         setRegion(region, animated:false)
@@ -27,13 +28,12 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         indicator.contentMode = .center
         indicator.translatesAutoresizingMaskIntoConstraints = false
         location.delegate = self
-        location.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        location.distanceFilter = 35
+        location.startUpdatingHeading()
+        setUserTrackingMode(.followWithHeading, animated:true)
     }
     
     deinit {
         location.stopUpdatingHeading()
-        location.stopUpdatingLocation()
     }
     
     required init?(coder:NSCoder) { return nil }
@@ -59,6 +59,15 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
             formatter.unitOptions = .naturalScale
             formatter.numberFormatter.maximumFractionDigits = 1
             mark.subtitle = formatter.string(from:Measurement(value:distance, unit:UnitLength.meters)) as String
+        }
+    }
+    
+    func mapView(_:MKMapView, didUpdate location:MKUserLocation) {
+        if let selected = selectedAnnotations.first as? MKPointAnnotation,
+            let view = view(for:selected) {
+            updateDistance(view:view)
+        } else {
+            updateUser(location:location)
         }
     }
     
@@ -100,13 +109,6 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    func mapView(_:MKMapView, didUpdate:MKUserLocation) {
-        if let selected = selectedAnnotations.first as? MKPointAnnotation,
-            let view = view(for:selected) {
-            updateDistance(view:view)
-        }
-    }
-    
     func mapView(_:MKMapView, didAdd views:[MKAnnotationView]) {
         if  let user = views.first(where: { view in view.annotation is MKUserLocation }) {
             user.addSubview(indicator)
@@ -117,17 +119,24 @@ class MapView:MKMapView, MKMapViewDelegate, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(_:CLLocationManager, didUpdateLocations locations:[CLLocation]) {
-        if !(selectedAnnotations.first is MKPointAnnotation) {
-            centre(coordinate:locations.last!.coordinate)
-        }
-    }
-    
     func locationManager(_:CLLocationManager, didUpdateHeading newHeading:CLHeading) {
         if newHeading.headingAccuracy > 0 {
             let heading = newHeading.trueHeading > 0 ? newHeading.trueHeading : newHeading.magneticHeading
             let transform = CGAffineTransform(rotationAngle:CGFloat((heading / 180) * Double.pi))
             UIView.animate(withDuration:0.3) { [weak self] in self?.indicator.transform = transform }
+        }
+    }
+    
+    private func updateUser(location:MKUserLocation) {
+        if let lastLocation = self.lastLocation {
+            if let newLocation = location.location,
+                lastLocation.distance(from:newLocation) > 35 {
+                self.lastLocation = newLocation
+                centre(coordinate:newLocation.coordinate)
+            }
+        } else {
+            self.lastLocation = location.location
+            centre(coordinate:location.coordinate)
         }
     }
 }

@@ -27,7 +27,7 @@ class TestShooter:XCTestCase {
         MockShooter.image = makeImage(width:1, height:1)
         map.onSuccess = { _ in expect.fulfill() }
         map.makeMap(points:[annotation], route:nil)
-        waitForExpectations(timeout:2)
+        waitForExpectations(timeout:3)
     }
     
     func testMultipleZoom() {

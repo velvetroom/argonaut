@@ -13,9 +13,11 @@
 		DA0000C2214D514C00AD02D2 /* libArgonaut.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA46C8B8214D3362002E882A /* libArgonaut.a */; };
 		DA0000C9214D56BB00AD02D2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0000C8214D56BB00AD02D2 /* MapView.swift */; };
 		DA033AB72178546E00D8DA28 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA033AB62178546E00D8DA28 /* GoogleService-Info.plist */; };
-		DA033ABF21787CE900D8DA28 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DA033AB921787CE900D8DA28 /* Localizable.strings */; };
-		DA033AC021787CE900D8DA28 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DA033ABB21787CE900D8DA28 /* InfoPlist.strings */; };
-		DA033AC521787CF500D8DA28 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DA033AC221787CF500D8DA28 /* Localizable.strings */; };
+		DA0839F3217FD14E00DD1CF3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DA0839EC217FD14E00DD1CF3 /* Localizable.strings */; };
+		DA0839F4217FD14E00DD1CF3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DA0839EE217FD14E00DD1CF3 /* InfoPlist.strings */; };
+		DA0839F5217FD14E00DD1CF3 /* assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA0839F2217FD14E00DD1CF3 /* assets.xcassets */; };
+		DA0839FB217FD15900DD1CF3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DA0839F7217FD15900DD1CF3 /* Localizable.strings */; };
+		DA0839FC217FD15900DD1CF3 /* assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA0839FA217FD15900DD1CF3 /* assets.xcassets */; };
 		DA0F0D5F216B4C8A0097DCB4 /* HomeDeleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0F0D5E216B4C8A0097DCB4 /* HomeDeleteView.swift */; };
 		DA0FA4F02150EB350087ECFF /* Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0FA4EF2150EB350087ECFF /* Zoom.swift */; };
 		DA219171215D05F0002C11DD /* PlanResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA219170215D05F0002C11DD /* PlanResultView.swift */; };
@@ -38,7 +40,6 @@
 		DA525CE6216F33D7002BEB6B /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA525CE4216F33D7002BEB6B /* Widget.swift */; };
 		DA525CEB216F35EC002BEB6B /* WidgetMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA525CEA216F35EC002BEB6B /* WidgetMark.swift */; };
 		DA525CEC216F35EC002BEB6B /* WidgetMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA525CEA216F35EC002BEB6B /* WidgetMark.swift */; };
-		DA525CEE216F3C70002BEB6B /* widget.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA525CED216F3C70002BEB6B /* widget.xcassets */; };
 		DA578B342156833B00C5D285 /* brand.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA578B332156833B00C5D285 /* brand.xcassets */; };
 		DA6EC958215389F9005D5795 /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6EC957215389F9005D5795 /* PermissionView.swift */; };
 		DA6EC95A21538A17005D5795 /* PermissionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6EC95921538A17005D5795 /* PermissionPresenter.swift */; };
@@ -72,7 +73,6 @@
 		DAD81C0B216A1CF5008E88CD /* Make.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD81C0A216A1CF5008E88CD /* Make.swift */; };
 		DAD81C0D216A1F37008E88CD /* ButtonBlue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD81C0C216A1F37008E88CD /* ButtonBlue.swift */; };
 		DADCD679215911C6009C3653 /* PlanTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCD678215911C6009C3653 /* PlanTypeView.swift */; };
-		DADCD67B21591470009C3653 /* assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DADCD67A21591470009C3653 /* assets.xcassets */; };
 		DAE2D6BA216F7815009D67D4 /* WidgetCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE2D6B9216F7815009D67D4 /* WidgetCellView.swift */; };
 		DAE35794216234130006611B /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE35793216234130006611B /* HomePresenter.swift */; };
 		DAE35796216234230006611B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE35795216234230006611B /* HomeView.swift */; };
@@ -129,12 +129,14 @@
 		DA0000C0214D50F900AD02D2 /* PlanPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanPresenter.swift; sourceTree = "<group>"; };
 		DA0000C8214D56BB00AD02D2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		DA033AB62178546E00D8DA28 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		DA033ABA21787CE900D8DA28 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		DA033ABC21787CE900D8DA28 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		DA033ABD21787CE900D8DA28 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		DA033ABE21787CE900D8DA28 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		DA033AC321787CF500D8DA28 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		DA033AC421787CF500D8DA28 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DA0839ED217FD14E00DD1CF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DA0839EF217FD14E00DD1CF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DA0839F0217FD14E00DD1CF3 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DA0839F1217FD14E00DD1CF3 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DA0839F2217FD14E00DD1CF3 /* assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = assets.xcassets; sourceTree = "<group>"; };
+		DA0839F8217FD15900DD1CF3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DA0839F9217FD15900DD1CF3 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DA0839FA217FD15900DD1CF3 /* assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = assets.xcassets; sourceTree = "<group>"; };
 		DA0F0D5E216B4C8A0097DCB4 /* HomeDeleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDeleteView.swift; sourceTree = "<group>"; };
 		DA0FA4EF2150EB350087ECFF /* Zoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zoom.swift; sourceTree = "<group>"; };
 		DA219170215D05F0002C11DD /* PlanResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanResultView.swift; sourceTree = "<group>"; };
@@ -160,7 +162,6 @@
 		DA525CE3216F2E65002BEB6B /* Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Widget.entitlements; sourceTree = "<group>"; };
 		DA525CE4216F33D7002BEB6B /* Widget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widget.swift; sourceTree = "<group>"; };
 		DA525CEA216F35EC002BEB6B /* WidgetMark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetMark.swift; sourceTree = "<group>"; };
-		DA525CED216F3C70002BEB6B /* widget.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = widget.xcassets; sourceTree = "<group>"; };
 		DA578B322156832600C5D285 /* Design */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Design; sourceTree = "<group>"; };
 		DA578B332156833B00C5D285 /* brand.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = brand.xcassets; sourceTree = "<group>"; };
 		DA6EC957215389F9005D5795 /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
@@ -195,7 +196,6 @@
 		DAD81C0A216A1CF5008E88CD /* Make.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Make.swift; sourceTree = "<group>"; };
 		DAD81C0C216A1F37008E88CD /* ButtonBlue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBlue.swift; sourceTree = "<group>"; };
 		DADCD678215911C6009C3653 /* PlanTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTypeView.swift; sourceTree = "<group>"; };
-		DADCD67A21591470009C3653 /* assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = assets.xcassets; sourceTree = "<group>"; };
 		DAE2D6B9216F7815009D67D4 /* WidgetCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetCellView.swift; sourceTree = "<group>"; };
 		DAE35793216234130006611B /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		DAE35795216234230006611B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -259,21 +259,23 @@
 			path = Plan;
 			sourceTree = "<group>";
 		};
-		DA033AB821787CE900D8DA28 /* application */ = {
+		DA0839EB217FD14E00DD1CF3 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				DA033AB921787CE900D8DA28 /* Localizable.strings */,
-				DA033ABB21787CE900D8DA28 /* InfoPlist.strings */,
+				DA0839EC217FD14E00DD1CF3 /* Localizable.strings */,
+				DA0839EE217FD14E00DD1CF3 /* InfoPlist.strings */,
+				DA0839F2217FD14E00DD1CF3 /* assets.xcassets */,
 			);
-			path = application;
+			path = Application;
 			sourceTree = "<group>";
 		};
-		DA033AC121787CF500D8DA28 /* widget */ = {
+		DA0839F6217FD15900DD1CF3 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
-				DA033AC221787CF500D8DA28 /* Localizable.strings */,
+				DA0839F7217FD15900DD1CF3 /* Localizable.strings */,
+				DA0839FA217FD15900DD1CF3 /* assets.xcassets */,
 			);
-			path = widget;
+			path = Widget;
 			sourceTree = "<group>";
 		};
 		DA3558B62160C49500D8B7AB /* Travel */ = {
@@ -289,6 +291,8 @@
 		DA46C8BB214D33C2002E882A /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				DA525CE3216F2E65002BEB6B /* Widget.entitlements */,
+				DA525CE2216F2E38002BEB6B /* Application.entitlements */,
 				DA033AB62178546E00D8DA28 /* GoogleService-Info.plist */,
 				DA525CE1216F22A7002BEB6B /* widget.plist */,
 				DAF48451214D4E03000CD005 /* application.plist */,
@@ -300,11 +304,9 @@
 		DA46C8BD214D33CA002E882A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DA033AB821787CE900D8DA28 /* application */,
-				DA033AC121787CF500D8DA28 /* widget */,
+				DA0839EB217FD14E00DD1CF3 /* Application */,
+				DA0839F6217FD15900DD1CF3 /* Widget */,
 				DA578B332156833B00C5D285 /* brand.xcassets */,
-				DADCD67A21591470009C3653 /* assets.xcassets */,
-				DA525CED216F3C70002BEB6B /* widget.xcassets */,
 				DAF48452214D4E84000CD005 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
@@ -342,7 +344,6 @@
 		DA525CD1216F2178002BEB6B /* Widget */ = {
 			isa = PBXGroup;
 			children = (
-				DA525CE3216F2E65002BEB6B /* Widget.entitlements */,
 				DA525CDF216F21F0002BEB6B /* WidgetView.swift */,
 				DAE2D6B9216F7815009D67D4 /* WidgetCellView.swift */,
 				DA525CE4216F33D7002BEB6B /* Widget.swift */,
@@ -484,7 +485,6 @@
 		DAF4843D214D4CD0000CD005 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				DA525CE2216F2E38002BEB6B /* Application.entitlements */,
 				DAF4844E214D4D51000CD005 /* Shared */,
 				DA6EC956215389D9005D5795 /* Permission */,
 				DAE35792216234010006611B /* Home */,
@@ -658,8 +658,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA525CEE216F3C70002BEB6B /* widget.xcassets in Resources */,
-				DA033AC521787CF500D8DA28 /* Localizable.strings in Resources */,
+				DA0839FC217FD15900DD1CF3 /* assets.xcassets in Resources */,
+				DA0839FB217FD15900DD1CF3 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,12 +674,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA033ABF21787CE900D8DA28 /* Localizable.strings in Resources */,
-				DA033AC021787CE900D8DA28 /* InfoPlist.strings in Resources */,
 				DAF48453214D4E84000CD005 /* LaunchScreen.storyboard in Resources */,
+				DA0839F3217FD14E00DD1CF3 /* Localizable.strings in Resources */,
+				DA0839F5217FD14E00DD1CF3 /* assets.xcassets in Resources */,
 				DA578B342156833B00C5D285 /* brand.xcassets in Resources */,
-				DADCD67B21591470009C3653 /* assets.xcassets in Resources */,
 				DA033AB72178546E00D8DA28 /* GoogleService-Info.plist in Resources */,
+				DA0839F4217FD14E00DD1CF3 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -815,29 +815,29 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		DA033AB921787CE900D8DA28 /* Localizable.strings */ = {
+		DA0839EC217FD14E00DD1CF3 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				DA033ABA21787CE900D8DA28 /* en */,
-				DA033ABD21787CE900D8DA28 /* es */,
+				DA0839ED217FD14E00DD1CF3 /* en */,
+				DA0839F0217FD14E00DD1CF3 /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		DA033ABB21787CE900D8DA28 /* InfoPlist.strings */ = {
+		DA0839EE217FD14E00DD1CF3 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				DA033ABC21787CE900D8DA28 /* en */,
-				DA033ABE21787CE900D8DA28 /* es */,
+				DA0839EF217FD14E00DD1CF3 /* en */,
+				DA0839F1217FD14E00DD1CF3 /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		DA033AC221787CF500D8DA28 /* Localizable.strings */ = {
+		DA0839F7217FD15900DD1CF3 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				DA033AC321787CF500D8DA28 /* en */,
-				DA033AC421787CF500D8DA28 /* es */,
+				DA0839F8217FD15900DD1CF3 /* en */,
+				DA0839F9217FD15900DD1CF3 /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -848,7 +848,7 @@
 		DA525CDC216F2178002BEB6B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = Widget/Widget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Configuration/Widget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7AMWG3RLHN;
 				INFOPLIST_FILE = Configuration/widget.plist;
@@ -868,7 +868,7 @@
 		DA525CDD216F2178002BEB6B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = Widget/Widget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Configuration/Widget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7AMWG3RLHN;
@@ -1066,7 +1066,7 @@
 			baseConfigurationReference = 10DBF3AC6D0CA1F7461C4DCA /* Pods-Application.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Application/Application.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Configuration/Application.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7AMWG3RLHN;
 				INFOPLIST_FILE = Configuration/application.plist;
@@ -1086,7 +1086,7 @@
 			baseConfigurationReference = 7F47E5337ECCAFEBCD67BCA7 /* Pods-Application.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Application/Application.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Configuration/Application.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7AMWG3RLHN;
 				INFOPLIST_FILE = Configuration/application.plist;
